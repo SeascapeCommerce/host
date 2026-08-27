@@ -61,3 +61,36 @@ setInterval(() => {
     }
   });
 }, 3500);
+
+
+// ─── SECTION MORPHING (free path-attribute tween) ───
+gsap.registerPlugin(ScrollTrigger); // already registered; safe to repeat
+
+// Define the END shape for each divider.
+// Keep point count identical to the start shape in the HTML.
+const morphTargets = {
+  // Philosophy → Services: ends as a sharper zig-zag wave
+  "M0,40 C150,90 300,10 600,70 C900,130 1050,20 1200,80 L1200,120 L0,120 Z": null,
+  // Services → Process: ends as a rounded hill
+  "M0,80 C200,20 400,100 600,40 C800,100 1000,20 1200,80 L1200,120 L0,120 Z": null
+};
+
+document.querySelectorAll("[data-morph]").forEach((divider) => {
+  const path = divider.querySelector(".morph-path");
+  const startD = path.getAttribute("d");
+
+  // Pick a target shape — alternate so adjacent dividers differ
+  const targets = Object.keys(morphTargets);
+  const endD = targets[gsap.utils.random(0, targets.length - 1, 1)];
+
+  gsap.to(path, {
+    scrollTrigger: {
+      trigger: divider,
+      start: "top 85%",
+      end:   "bottom 30%",
+      scrub: true                 // morph tied to scroll, not a one-shot play
+    },
+    attr: { d: endD },            // tween the path's d attribute
+    ease: "none"                  // linear feels right for scrubbed scroll morphs
+  });
+});
