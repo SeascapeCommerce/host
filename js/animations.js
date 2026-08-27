@@ -1,5 +1,5 @@
 // Register ONLY the plugins you actually loaded from the CDN.
-gsap.registerPlugin(ScrollTrigger, Draggable);
+gsap.registerPlugin(ScrollTrigger, Draggable, "#diamond", { duration: 1, morphSVG: "#lightning" });
 
 const phones = gsap.utils.toArray(".draggable-phone");
 
@@ -64,7 +64,6 @@ setInterval(() => {
 
 
 // ─── SECTION MORPHING (free path-attribute tween) ───
-gsap.registerPlugin(ScrollTrigger); // already registered; safe to repeat
 
 // Define the END shape for each divider.
 // Keep point count identical to the start shape in the HTML.
