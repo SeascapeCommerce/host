@@ -402,22 +402,15 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
 
 <div class="divider"></div>
 
-  <!-- 1. Load GSAP core -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <!-- 2. Load ScrollTrigger plugin -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <!-- 3. Register the plugin BEFORE your animation code runs -->
-  <script>gsap.registerPlugin(ScrollTrigger);</script>
-  <!-- 4. Now load your animation file -->
-  <script src="js/animations.js"></script>
+ 
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Seascape Commerce — AI Retail</title>
-  <link rel="stylesheet" href__="css/style.css">
-  <link href__="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -428,10 +421,9 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
     <p>Your ads, optimized in real time…</p>
   </div>
 
-  <div class="phone-wrapper">
     <div class="phone-frame">
+    <div class="phone-screen">
       <img src="Screenshot2.png" class="hardware-render" alt="iPhone">
-      <div class="phone-screen">
         <img src="Screenshot1.png" class="ad-image" alt="Seascape Ad">
         <ul class="menu">
           <li>Seascape AI Dashboard</li>
@@ -444,7 +436,14 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
     </div>
   </div>
 </section>
-
+ <!-- 1. Load GSAP core -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <!-- 2. Load ScrollTrigger plugin -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <!-- 3. Register the plugin BEFORE your animation code runs -->
+  <script>gsap.registerPlugin(ScrollTrigger);</script>
+  <!-- 4. Now load your animation file -->
+  <script src="js/animations.js"></script>
 
 
 
