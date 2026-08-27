@@ -51,9 +51,10 @@ gsap.from(".text-block > *", {
 
 // Rotating ad images inside the phone screen
 const ads = [
-  "screenshot2",
-  "screenshot1.png",
-  "images/ad-3.png"
+  "Screenshot2.png",
+  "Screenshot1.png",
+  "Screenshot3.png",
+  "Screenshot4.png"
 ];
 
 let index = 0;
