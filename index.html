@@ -323,6 +323,105 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
   .cta-input{border-right:1px solid rgba(46,220,240,.22);border-bottom:none}
   #ai-highlight{padding:0}
 }
+
+
+:root {
+  --bg: #05070A;
+  --cyan: #00F0FF;
+  --white: #F8FAFC;
+}
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+.phone-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4rem;
+  padding: 8rem 5%;
+  min-height: 100vh;
+}
+
+.phone-wrapper {
+  perspective: 1000px;
+}
+
+.phone-frame {
+  position: relative;
+  width: 320px;
+  height: 650px;
+}
+
+.hardware-render {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.phone-screen {
+  position: absolute;
+  top: 2%;
+  left: 5%;
+  width: 90%;
+  height: 96%;
+  border-radius: 40px;
+  overflow: hidden;
+  z-index: 1;
+  background: #000;
+}
+
+.ad-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+}
+
+.menu {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  list-style: none;
+  margin: 0;
+  padding: 1.5rem;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px);
+}
+
+.menu li {
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  font-size: 0.9rem;
+}
+
+.text-block {
+  max-width: 30rem;
+}
+
+.text-block h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.text-block p {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: #A0A8B0;
+  margin-bottom: 1rem;
+}
+  
+  
 </style>
 </head>
 <body>
@@ -401,6 +500,49 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
 <div class="divider"></div>
 
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seascape Commerce — AI Retail</title>
+  <link rel="stylesheet" href__="css/style.css">
+  <link href__="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <section class="phone-section" id="motion-trigger">
+    <div class="phone-wrapper">
+      <div class="phone-frame">
+        <img src="screen2.png" class="hardware-render" alt="iPhone">
+        <div class="phone-screen">
+          <img src="screenshot1.png" class="ad-image" alt="Seascape Ad">
+          <ul class="menu">
+            <li>Seascape AI Dashboard</li>
+            <li>Smart Ads</li>
+            <li>Predictive Commerce</li>
+            <li>AI Shopper Insights</li>
+            <li>Logout</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-block">
+      <h2>Opening up to AI Commerce</h2>
+      <p>Seascape intelligently navigates AI-driven retail…</p>
+      <p>Your ads, optimized in real time…</p>
+    </div>
+  </section>
+
+  <!-- 1. Load GSAP core -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <!-- 2. Load ScrollTrigger plugin -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <!-- 3. Register the plugin BEFORE your animation code runs -->
+  <script>gsap.registerPlugin(ScrollTrigger);</script>
+  <!-- 4. Now load your animation file -->
+  <script src="js/animations.js"></script>
 
 
 
