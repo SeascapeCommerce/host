@@ -12,58 +12,64 @@ body {
   overflow-x: hidden;
 }
 
-.phone-section {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 4rem;
-  padding: 8rem 5%;
-  min-height: 100vh;
+.info-bar {
+  text-align: center;
+  padding: 5rem 5% 2rem;
+  max-width: 40rem;
+  margin: 0 auto;
 }
+.info-bar h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+.info-bar p { font-size: 1.125rem; line-height: 1.6; color: #A0A8B0; margin-bottom: 1rem; }
 
-.phone-wrapper {
-  perspective: 1000px;
-}
-
-.phone-frame {
+/* The drag zone — phones can only move inside this box */
+.phones-arena {
   position: relative;
-  width: 320px;
-  height: 650px;
-  background: #111;
-  border: 10px solid #1a1a1a;
-  border-radius: 48px;
-  box-shadow: 0 0 0 2px #333, 0 30px 60px rgba(0,240,255,0.15);
-}
-.phone-frame::before {  /* the notch */
-  content: "";
-  position: absolute;
-  top: 14px; left: 50%;
-  transform: translateX(-50%);
-  width: 110px; height: 28px;
-  background: #000;
-  border-radius: 20px;
-  z-index: 3;
-}
-
-.hardware-render {
   width: 100%;
-  height: 100%;
-  object-fit: contain;
-  position: relative;
-  z-index: 2;
-  pointer-events: none;
+  min-height: 90vh;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  border: 1px dashed rgba(0,240,255,0.25);
+  border-radius: 24px;
+  margin-bottom: 4rem;
 }
 
+/* Each phone */
+.phone {
+  position: absolute;
+  width: 220px;
+  height: 450px;
+  cursor: grab;
+  touch-action: none;        /* lets mobile drag work */
+  will-change: transform;
+}
+.phone:active { cursor: grabbing; }
+
+/* Stagger the 4 starting positions so they don't overlap */
+.phone:nth-child(1) { top: 8%;  left: 2%;  }
+.phone:nth-child(2) { top: 12%; left: 28%; }
+.phone:nth-child(3) { top: 40%; left: 55%; }
+.phone:nth-child(4) { top: 6%;  left: 78%; }
+
+/* The device bezel (drawn with CSS — no image needed) */
 .phone-screen {
   position: absolute;
-  top: 2%;
-  left: 5%;
-  width: 90%;
-  height: 96%;
+  inset: 0;
+  border: 10px solid #1a1a1a;
   border-radius: 40px;
-  overflow: hidden;
-  z-index: 1;
   background: #000;
+  overflow: hidden;
+  box-shadow: 0 0 0 2px #333, 0 20px 50px rgba(0,240,255,0.18);
+}
+.phone-screen::before {            /* the notch */
+  content: "";
+  position: absolute;
+  top: 10px; left: 50%;
+  transform: translateX(-50%);
+  width: 80px; height: 22px;
+  background: #000;
+  border-radius: 16px;
+  z-index: 3;
 }
 
 .ad-image {
@@ -81,19 +87,19 @@ body {
   right: 0;
   list-style: none;
   margin: 0;
-  padding: 1.5rem;
+  padding: 1rem;
   background: rgba(0,0,0,0.6);
   backdrop-filter: blur(10px);
 }
-
 .menu li {
-  padding: 0.6rem 0;
+  padding: 0.5rem 0;
   border-bottom: 1px solid rgba(255,255,255,0.1);
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
 
-.text-block {
-  max-width: 30rem;
+@media (max-width: 700px) {
+  .phone { width: 160px; height: 330px; }
+  .phone-screen { border-radius: 30px; border-width: 7px; }
 }
 
 .text-block h2 {
