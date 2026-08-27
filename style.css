@@ -29,6 +29,20 @@ body {
   position: relative;
   width: 320px;
   height: 650px;
+  background: #111;
+  border: 10px solid #1a1a1a;
+  border-radius: 48px;
+  box-shadow: 0 0 0 2px #333, 0 30px 60px rgba(0,240,255,0.15);
+}
+.phone-frame::before {  /* the notch */
+  content: "";
+  position: absolute;
+  top: 14px; left: 50%;
+  transform: translateX(-50%);
+  width: 110px; height: 28px;
+  background: #000;
+  border-radius: 20px;
+  z-index: 3;
 }
 
 .hardware-render {
