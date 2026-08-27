@@ -1,4 +1,4 @@
-// Phone slides upward
+// Phone wrapper slides up into view
 gsap.from(".phone-wrapper", {
   scrollTrigger: {
     trigger: ".phone-section",
@@ -23,7 +23,7 @@ gsap.from(".phone-screen", {
   ease: "power2.out"
 });
 
-// Menu items stagger
+// Menu items stagger in
 gsap.from(".menu li", {
   scrollTrigger: {
     trigger: ".phone-section",
@@ -48,4 +48,24 @@ gsap.from(".text-block > *", {
   ease: "power2.out",
   stagger: 0.15
 });
-gsap.registerPlugin(ScrollTrigger);
+
+// Rotating ad images inside the phone screen
+const ads = [
+  "screenshot2",
+  "screenshot1.png",
+  "images/ad-3.png"
+];
+
+let index = 0;
+setInterval(() => {
+  index = (index + 1) % ads.length;
+  gsap.to(".ad-image", {
+    opacity: 0,
+    duration: 0.4,
+    onComplete: () => {
+      const img = document.querySelector(".ad-image");
+      if (img) img.src = ads[index];
+      gsap.to(".ad-image", { opacity: 1, duration: 0.4 });
+    }
+  });
+}, 3500);
