@@ -441,7 +441,8 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
   <!-- 2. Load ScrollTrigger plugin -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <!-- 3. Register the plugin BEFORE your animation code runs -->
-  <script>gsap.registerPlugin(ScrollTrigger);</script>
+  <script>gsap.registerPlugin(ScrollTrigger, MotionPathPlugin, raggable, DrawSVGPlugin, EaselPlugin, Flip,
+GSDevTools, InertiaPlugin, MorphSVGPlugin, MotionPathHelper, Observer, Physics2DPlugin, PhysicsPropsPlugin, PixiPlugin, ScrambleTextPlugin);</script>
   <!-- 4. Now load your animation file -->
   <script src="js/animations.js"></script>
 
