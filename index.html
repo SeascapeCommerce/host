@@ -420,89 +420,74 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
+<body>
+ <section class="phone-section phones-arena" id="motion-trigger">
 
-  <section class="phone-section" id="motion-trigger">
-  <div class="text-block">
-    <h2>Magnify Your Webspace</h2>
-    <p>Seascape intelligently navigates AI-driven retail and online business objectives. </p>
-    <p>Your ads and presence-optimized in real time.</p>
-    <p> Custom Designed E-Commerce Websites that look incredible. </p>
-    <p>Secure and Reliable</p>
-    <p>Desktop and Mobile Friendly</p>
-    <p>AI-Powered Integrations</p>
-    <p>Fluid Motion Animations</p>
-    <p>Upscale Designs Available</p>
-  </div>
-
-    <!-- Phone 1 -->
-    <div class="phone draggable-phone" data-rot="-6">
-      <div class="phone-screen">
-        <img src="Screenshot1.png" class="ad-image" alt="Seascape Ad">
-        <ul class="menu">
-          <li>Seascape AI Dashboard</li>
-          <li>Smart Ads</li>
-          <li>Predictive Commerce</li>
-          <li>AI Shopper Insights</li>
-          <li>Logout</li>
-        </ul>
+    <!-- FOREGROUND: text sits ABOVE the phones (z-index 20) -->
+    <div class="content-overlay">
+      <div class="text-block">
+        <h2>Magnify Your Webspace</h2>
+        <p>Seascape intelligently navigates AI-driven retail and online business objectives.</p>
+        <p>Your ads and presence — optimized in real time.</p>
+        <p>Custom Designed E-Commerce Websites that look incredible.</p>
+        <p>Secure and Reliable</p>
+        <p>Desktop and Mobile Friendly</p>
+        <p>AI-Powered Integrations</p>
+        <p>Fluid Motion Animations</p>
+        <p>Upscale Designs Available</p>
       </div>
     </div>
 
-    <!-- Phone 2 -->
-    <div class="phone draggable-phone" data-rot="4">
-      <div class="phone-screen">
-        <img src="Screenshot2.png" class="ad-image" alt="Seascape Ad">
-        <ul class="menu">
-          <li>Seascape AI Dashboard</li>
-          <li>Smart Ads</li>
-          <li>Predictive Commerce</li>
-          <li>AI Shopper Insights</li>
-          <li>Logout</li>
-        </ul>
+    <!-- BACKGROUND: the 4 draggable phones (z-index 1–15, always below text) -->
+    <div class="interaction-layer">
+      <div class="phone draggable-phone" data-rot="-6">
+        <div class="phone-screen">
+          <img src="Screenshot1.png" class="ad-image" alt="Seascape Ad">
+          <ul class="menu">
+            <li>Seascape AI Dashboard</li><li>Smart Ads</li><li>Predictive Commerce</li>
+            <li>AI Shopper Insights</li><li>Logout</li>
+          </ul>
+        </div>
+      </div>
+      <div class="phone draggable-phone" data-rot="4">
+        <div class="phone-screen">
+          <img src="Screenshot2.png" class="ad-image" alt="Seascape Ad">
+          <ul class="menu">
+            <li>Seascape AI Dashboard</li><li>Smart Ads</li><li>Predictive Commerce</li>
+            <li>AI Shopper Insights</li><li>Logout</li>
+          </ul>
+        </div>
+      </div>
+      <div class="phone draggable-phone" data-rot="-3">
+        <div class="phone-screen">
+          <img src="Screenshot3.png" class="ad-image" alt="Seascape Ad">
+          <ul class="menu">
+            <li>Seascape AI Dashboard</li><li>Smart Ads</li><li>Predictive Commerce</li>
+            <li>AI Shopper Insights</li><li>Logout</li>
+          </ul>
+        </div>
+      </div>
+      <div class="phone draggable-phone" data-rot="5">
+        <div class="phone-screen">
+          <img src="Screenshot4.png" class="ad-image" alt="Seascape Ad">
+          <ul class="menu">
+            <li>Seascape AI Dashboard</li><li>Smart Ads</li><li>Predictive Commerce</li>
+            <li>AI Shopper Insights</li><li>Logout</li>
+          </ul>
+        </div>
       </div>
     </div>
 
-    <!-- Phone 3 -->
-    <div class="phone draggable-phone" data-rot="-3">
-      <div class="phone-screen">
-        <img src="Screenshot3.png" class="ad-image" alt="Seascape Ad">
-        <ul class="menu">
-          <li>Seascape AI Dashboard</li>
-          <li>Smart Ads</li>
-          <li>Predictive Commerce</li>
-          <li>AI Shopper Insights</li>
-          <li>Logout</li>
-        </ul>
-      </div>
-    </div>
+  </section>
 
-    <!-- Phone 4 -->
-    <div class="phone draggable-phone" data-rot="5">
-      <div class="phone-screen">
-        <img src="Screenshot4.png" class="ad-image" alt="Seascape Ad">
-        <ul class="menu">
-          <li>Seascape AI Dashboard</li>
-          <li>Smart Ads</li>
-          <li>Predictive Commerce</li>
-          <li>AI Shopper Insights</li>
-          <li>Logout</li>
-        </ul>
-      </div>
-    </div>
-</section>
-
-  
- <!-- 1. GSAP core -->
+  <!-- GSAP core + the two plugins you actually use -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <!-- 2. ScrollTrigger (scroll animations) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <!-- 3. Draggable (click-and-hold dragging) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
-  <!-- 4. Register the plugin BEFORE your animation code runs -->
-  <script>gsap.registerPlugin(ScrollTrigger, MotionPathPlugin, Draggable, DrawSVGPlugin, EaselPlugin, Flip,
-GSDevTools, InertiaPlugin, MorphSVGPlugin, MotionPathHelper, Observer, Physics2DPlugin, PhysicsPropsPlugin, PixiPlugin, ScrambleTextPlugin);</script>
-  <!-- 5. Now load your animation file -->
+  <script>gsap.registerPlugin(ScrollTrigger, Draggable);</script>
   <script src="js/animations.js"></script>
+</body>
+</html>
 
 
 
