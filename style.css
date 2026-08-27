@@ -12,15 +12,6 @@ body {
   overflow-x: hidden;
 }
 
-.info-bar {
-  text-align: center;
-  padding: 5rem 5% 2rem;
-  max-width: 40rem;
-  margin: 0 auto;
-}
-.info-bar h2 { font-size: 2.5rem; margin-bottom: 1rem; }
-.info-bar p { font-size: 1.125rem; line-height: 1.6; color: #A0A8B0; margin-bottom: 1rem; }
-
 /* The drag zone — phones can only move inside this box */
 .phones-arena {
   position: relative;
@@ -29,29 +20,51 @@ body {
   margin: 0 auto;
   padding: 4rem 2rem;
   max-width: 1200px;
-  border: 1px dashed rgba(0,240,255,0.25);
+  border: 1px dashed rgba(0, 240, 255, 0.25);
   border-radius: 24px;
   margin-bottom: 4rem;
+  overflow: hidden;
+}
+
+/* FOREGROUND: text always above phones. pointer-events:none lets you
+   click/drag the phones that sit visually behind the text. */
+.content-overlay {
+  position: relative;
+  z-index: 20;
+  pointer-events: none;
+  text-align: center;
+  max-width: 40rem;
+  margin: 0 auto;
+}
+
+.text-block h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+.text-block p {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: #A0A8B0;
+  margin-bottom: 1rem;
+}
+
+/* BACKGROUND: the phones live here, always below the text */
+.interaction-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
 }
 
 /* Each phone */
 .phone {
-  position: absolute;
+  position: absolute;          /* GSAP positions them into a row */
   width: 220px;
   height: 450px;
   cursor: grab;
-  touch-action: none;        /* lets mobile drag work */
+  touch-action: none;           /* lets mobile drag work */
   will-change: transform;
+  z-index: 5;                  /* below text (20), above interaction-layer bg */
 }
 .phone:active { cursor: grabbing; }
 
-/* Stagger the 4 starting positions so they don't overlap */
-.phone:nth-child(1) { top: 8%;  left: 2%;  }
-.phone:nth-child(2) { top: 12%; left: 28%; }
-.phone:nth-child(3) { top: 40%; left: 55%; }
-.phone:nth-child(4) { top: 6%;  left: 78%; }
-
-/* The device bezel (drawn with CSS — no image needed) */
+/* Device bezel (CSS only — no image) */
 .phone-screen {
   position: absolute;
   inset: 0;
@@ -59,9 +72,9 @@ body {
   border-radius: 40px;
   background: #000;
   overflow: hidden;
-  box-shadow: 0 0 0 2px #333, 0 20px 50px rgba(0,240,255,0.18);
+  box-shadow: 0 0 0 2px #333, 0 20px 50px rgba(0, 240, 255, 0.18);
 }
-.phone-screen::before {            /* the notch */
+.phone-screen::before {            /* notch */
   content: "";
   position: absolute;
   top: 10px; left: 50%;
@@ -82,34 +95,20 @@ body {
 
 .menu {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: 0; left: 0; right: 0;
   list-style: none;
   margin: 0;
   padding: 1rem;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(10px);
 }
 .menu li {
   padding: 0.5rem 0;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   font-size: 0.8rem;
 }
 
 @media (max-width: 700px) {
   .phone { width: 160px; height: 330px; }
   .phone-screen { border-radius: 30px; border-width: 7px; }
-}
-
-.text-block h2 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
-
-.text-block p {
-  font-size: 1.125rem;
-  line-height: 1.6;
-  color: #A0A8B0;
-  margin-bottom: 1rem;
 }
