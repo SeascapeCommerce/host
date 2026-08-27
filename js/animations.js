@@ -1,5 +1,3 @@
-gsap.registerPlugin(ScrollTrigger);
-
 // Phone slides upward
 gsap.from(".phone-wrapper", {
   scrollTrigger: {
@@ -50,4 +48,4 @@ gsap.from(".text-block > *", {
   ease: "power2.out",
   stagger: 0.15
 });
-
+gsap.registerPlugin(ScrollTrigger);
