@@ -402,7 +402,15 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
 
 <div class="divider"></div>
 
+
+
+  
+
  
+
+
+
+  
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -426,6 +434,66 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
     <p>Fluid Motion Animations</p>
     <p>Upscale Designs Available</p>
   </div>
+ 
+    <section class="phones-arena" id="motion-trigger">
+
+    <!-- Phone 1 -->
+    <div class="phone draggable-phone" data-rot="-6">
+      <div class="phone-screen">
+        <img src="Screenshot1.png" class="ad-image" alt="Seascape Ad">
+        <ul class="menu">
+          <li>Seascape AI Dashboard</li>
+          <li>Smart Ads</li>
+          <li>Predictive Commerce</li>
+          <li>AI Shopper Insights</li>
+          <li>Logout</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Phone 2 -->
+    <div class="phone draggable-phone" data-rot="4">
+      <div class="phone-screen">
+        <img src="Screenshot2.png" class="ad-image" alt="Seascape Ad">
+        <ul class="menu">
+          <li>Seascape AI Dashboard</li>
+          <li>Smart Ads</li>
+          <li>Predictive Commerce</li>
+          <li>AI Shopper Insights</li>
+          <li>Logout</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Phone 3 -->
+    <div class="phone draggable-phone" data-rot="-3">
+      <div class="phone-screen">
+        <img src="Screenshot3.png" class="ad-image" alt="Seascape Ad">
+        <ul class="menu">
+          <li>Seascape AI Dashboard</li>
+          <li>Smart Ads</li>
+          <li>Predictive Commerce</li>
+          <li>AI Shopper Insights</li>
+          <li>Logout</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Phone 4 -->
+    <div class="phone draggable-phone" data-rot="5">
+      <div class="phone-screen">
+        <img src="Screenshot4.png" class="ad-image" alt="Seascape Ad">
+        <ul class="menu">
+          <li>Seascape AI Dashboard</li>
+          <li>Smart Ads</li>
+          <li>Predictive Commerce</li>
+          <li>AI Shopper Insights</li>
+          <li>Logout</li>
+        </ul>
+      </div>
+    </div>
+
+  </section>
 
     <div class="phone-frame">
     <div class="phone-screen">
@@ -442,14 +510,16 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
     </div>
   </div>
 </section>
- <!-- 1. Load GSAP core -->
+ <!-- 1. GSAP core -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <!-- 2. Load ScrollTrigger plugin -->
+  <!-- 2. ScrollTrigger (scroll animations) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <!-- 3. Register the plugin BEFORE your animation code runs -->
-  <script>gsap.registerPlugin(ScrollTrigger, MotionPathPlugin, raggable, DrawSVGPlugin, EaselPlugin, Flip,
+  <!-- 3. Draggable (click-and-hold dragging) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
+  <!-- 4. Register the plugin BEFORE your animation code runs -->
+  <script>gsap.registerPlugin(ScrollTrigger, MotionPathPlugin, Draggable, DrawSVGPlugin, EaselPlugin, Flip,
 GSDevTools, InertiaPlugin, MorphSVGPlugin, MotionPathHelper, Observer, Physics2DPlugin, PhysicsPropsPlugin, PixiPlugin, ScrambleTextPlugin);</script>
-  <!-- 4. Now load your animation file -->
+  <!-- 5. Now load your animation file -->
   <script src="js/animations.js"></script>
 
 
