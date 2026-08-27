@@ -1,5 +1,5 @@
 // Register ONLY the plugins you actually loaded from the CDN.
-gsap.registerPlugin(ScrollTrigger, Draggable, path, { attr: { d: endD } });
+gsap.registerPlugin(ScrollTrigger, Draggable,);
 
 const phones = gsap.utils.toArray(".draggable-phone");
 
