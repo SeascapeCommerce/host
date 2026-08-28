@@ -137,3 +137,80 @@ body {
 @media (max-width: 700px) {
   .morph-divider { height: 70px; }
 }
+
+
+/* ==========================================
+   CURVED IMAGE REEL SECTION
+   ========================================== */
+.reel-section {
+  position: relative;
+  width: 100%;
+  padding: 6rem 0 8rem 0; /* Space above and below */
+  overflow: hidden;
+  background: var(--bg); /* Matches your dark theme */
+  perspective: 1200px; /* Creates the 3D space */
+  z-index: 2;
+}
+
+.reel-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: visible; /* Allows the 3D effect to show */
+  transform-style: preserve-3d;
+}
+
+.reel-track {
+  display: flex;
+  gap: 2rem; /* Space between images */
+  padding: 0 2rem;
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+
+.reel-item {
+  flex: 0 0 280px; /* Fixed width */
+  height: 380px; /* Fixed height */
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+  cursor: default; /* Not clickable, as you requested */
+}
+
+.reel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none; /* Prevents drag interference */
+}
+
+/* 3D Hover Effect: Each card tilts and scales */
+.reel-item:hover {
+  transform: scale(1.08) rotateY(-8deg) rotateX(4deg) translateZ(40px);
+  box-shadow: 0 30px 60px rgba(0, 240, 255, 0.25);
+  z-index: 10;
+}
+
+/* Sibling items react to hover for a "carousel" feel */
+.reel-track:hover .reel-item:not(:hover) {
+  transform: scale(0.92) translateZ(-20px);
+  opacity: 0.6;
+  filter: blur(1px);
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .reel-item {
+    flex: 0 0 200px;
+    height: 280px;
+  }
+  .reel-track {
+    gap: 1rem;
+  }
+  .reel-section {
+    padding: 3rem 0 4rem 0;
+  }
+}
