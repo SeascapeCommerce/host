@@ -1201,12 +1201,7 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
 <div class="divider"></div>
 
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Robot Logo · Pixel Reveal</title>
-    
+
     <!-- GSAP and SplitText from CDN -->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/SplitText.min.js"></script>
@@ -1233,78 +1228,7 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
             overflow-y: auto; /* Allow scrolling */
         }
 
-        /* ===== PIXEL REVEAL SECTION ===== */
-        .cloneable {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            min-height: 100vh;
-            padding: 20px;
-            margin-bottom: 40px;
-        }
-
-        .pixelated-image-card {
-            background-color: #000000;
-            color: #ffffff;
-            border-radius: 0;
-            width: 85vmin;
-            height: 85vmin;
-            max-width: 85vmin;
-            max-height: 85vmin;
-            position: relative;
-            overflow: hidden;
-            box-shadow: none;
-            cursor: pointer;
-            border: none;
-        }
-
-        .before__100 {
-            padding-top: 100%;
-            width: 100%;
-            height: 0;
-            display: block;
-        }
-
-        .pixelated-image-card__default,
-        .pixelated-image-card__active,
-        .pixelated-image-card__pixels,
-        .pixelated-image-card__img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        .pixelated-image-card__img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: block;
-            user-select: none;
-            pointer-events: none;
-        }
-
-        .pixelated-image-card__active {
-            display: none;
-            pointer-events: none;
-        }
-
-        .pixelated-image-card__pixels {
-            pointer-events: none;
-            z-index: 5;
-        }
-
-        .pixelated-image-card__pixel {
-            background-color: #ffffff;
-            display: none;
-            position: absolute;
-            will-change: transform, opacity;
-            backface-visibility: hidden;
-            border: 0.5px solid rgba(0, 0, 0, 0.15);
-            box-sizing: border-box;
-        }
+     
 
         /* ===== TEXT SCROLLING ANIMATION SECTION ===== */
         .text-scrolling-section {
@@ -1400,40 +1324,7 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
             border-color: rgba(255, 255, 255, 0.4);
         }
 
-        /* ===== CREDITS ===== */
-        .osmo-credits {
-            z-index: 999;
-            pointer-events: none;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            padding: 20px;
-            margin-top: 40px;
-            font-family: 'PP Neue Montreal', Arial, sans-serif;
-        }
-
-        .osmo-credits__p {
-            pointer-events: auto;
-            color: rgba(255, 255, 255, 0.3);
-            text-align: center;
-            margin: 0;
-            font-size: 0.9em;
-            font-weight: 500;
-            line-height: 1.3;
-        }
-
-        .osmo-credits__p-a {
-            color: rgba(255, 255, 255, 0.6);
-            text-decoration: none;
-            border-bottom: 1px solid transparent;
-            transition: border-color 0.2s, color 0.2s;
-        }
-
-        .osmo-credits__p-a:hover {
-            color: rgba(255, 255, 255, 0.9);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
+       
 
         @font-face {
             font-family: 'PP Neue Montreal';
@@ -1484,29 +1375,7 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
 </head>
 <body>
 
-    <!-- ===== PIXEL REVEAL SECTION ===== -->
-    <section class="cloneable">
-        <div data-hover data-pixelated-image-reveal class="pixelated-image-card">
-            <div class="before__100"></div>
-            <div class="pixelated-image-card__default">
-                <img 
-                    src="Informative.png" 
-                    alt="Robot Logo" 
-                    class="pixelated-image-card__img"
-                    loading="eager"
-                />
-            </div>
-            <div data-pixelated-image-reveal-active class="pixelated-image-card__active">
-                <img 
-                    src="Informative.png" 
-                    alt="Robot Logo Revealed" 
-                    class="pixelated-image-card__img"
-                    loading="eager"
-                />
-            </div>
-            <div data-pixelated-image-reveal-grid class="pixelated-image-card__pixels"></div>
-        </div>
-    </section>
+   
 
     <!-- ===== TEXT SCROLLING ANIMATION SECTION (NEW) ===== -->
     <section class="text-scrolling-section">
@@ -1533,113 +1402,7 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
         document.addEventListener('DOMContentLoaded', function() {
             'use strict';
 
-            // ---- Pixel Reveal Configuration ----
-            const ANIMATION_DURATION = 0.3;
-            const GRID_SIZE = 7;
-            const PIXEL_SIZE = 100 / GRID_SIZE;
-
-            const cards = document.querySelectorAll('[data-pixelated-image-reveal]');
-            if (cards.length) {
-                const isTouchDevice = (
-                    'ontouchstart' in window ||
-                    navigator.maxTouchPoints > 0 ||
-                    window.matchMedia('(pointer: coarse)').matches
-                );
-
-                cards.forEach(function(card) {
-                    const pixelGrid = card.querySelector('[data-pixelated-image-reveal-grid]');
-                    const activeCard = card.querySelector('[data-pixelated-image-reveal-active]');
-
-                    if (!pixelGrid || !activeCard) return;
-
-                    const existingPixels = pixelGrid.querySelectorAll('.pixelated-image-card__pixel');
-                    existingPixels.forEach(function(pixel) {
-                        pixel.remove();
-                    });
-
-                    for (let row = 0; row < GRID_SIZE; row++) {
-                        for (let col = 0; col < GRID_SIZE; col++) {
-                            const pixel = document.createElement('div');
-                            pixel.classList.add('pixelated-image-card__pixel');
-                            pixel.style.width = PIXEL_SIZE + '%';
-                            pixel.style.height = PIXEL_SIZE + '%';
-                            pixel.style.left = (col * PIXEL_SIZE) + '%';
-                            pixel.style.top = (row * PIXEL_SIZE) + '%';
-                            pixelGrid.appendChild(pixel);
-                        }
-                    }
-
-                    const pixels = pixelGrid.querySelectorAll('.pixelated-image-card__pixel');
-                    const totalPixels = pixels.length;
-                    const staggerDuration = ANIMATION_DURATION / totalPixels;
-
-                    let isActive = false;
-                    let delayedCall = null;
-
-                    function animatePixels(activate) {
-                        gsap.killTweensOf(pixels);
-                        if (delayedCall) {
-                            delayedCall.kill();
-                            delayedCall = null;
-                        }
-
-                        isActive = activate;
-                        gsap.set(pixels, { display: 'none' });
-
-                        gsap.to(pixels, {
-                            display: 'block',
-                            duration: 0,
-                            stagger: {
-                                each: staggerDuration,
-                                from: 'random'
-                            },
-                            ease: 'power1.inOut'
-                        });
-
-                        delayedCall = gsap.delayedCall(ANIMATION_DURATION, function() {
-                            if (activate) {
-                                activeCard.style.display = 'block';
-                                activeCard.style.pointerEvents = 'none';
-                            } else {
-                                activeCard.style.display = 'none';
-                            }
-                        });
-
-                        gsap.to(pixels, {
-                            display: 'none',
-                            duration: 0,
-                            delay: ANIMATION_DURATION,
-                            stagger: {
-                                each: staggerDuration,
-                                from: 'random'
-                            },
-                            ease: 'power1.inOut'
-                        });
-                    }
-
-                    if (isTouchDevice) {
-                        card.addEventListener('click', function(e) {
-                            e.stopPropagation();
-                            animatePixels(!isActive);
-                        });
-                    } else {
-                        card.addEventListener('mouseenter', function() {
-                            if (!isActive) {
-                                animatePixels(true);
-                            }
-                        });
-                        card.addEventListener('mouseleave', function() {
-                            if (isActive) {
-                                animatePixels(false);
-                            }
-                        });
-                    }
-
-                    activeCard.style.display = 'none';
-                    activeCard.style.pointerEvents = 'none';
-                });
-            }
-
+        
             // ============================================================
             //  Text Scrolling Animation - SplitText
             // ============================================================
