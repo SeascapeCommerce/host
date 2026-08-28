@@ -12,6 +12,8 @@
   height: 100%;
   object-fit: cover; /* Ensures the video covers the area */
   border: 0; /* Remove default iframe border */
+  pointer-events: none;
+
 }
 
 
