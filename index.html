@@ -1200,16 +1200,16 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
 </section>
 <div class="divider"></div>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pixelated Robot Logo Reveal</title>
+    <title>Robot Logo · Pixel Reveal</title>
     
-    <!-- GSAP from CDN -->
+    <!-- GSAP and SplitText from CDN -->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/SplitText.min.js"></script>
     
     <style>
         /* ===== RESET & BASE ===== */
@@ -1219,59 +1219,46 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
             box-sizing: border-box;
         }
 
-        :root {
-            --color-neutral-900: #0a0a0a;
-            --color-neutral-800: #1a1a1a;
-            --color-primary: #f0f0f0;
-            --color-light: #f5f5f5;
-            --container-padding: 2rem;
-        }
-
+        /* ===== PURE BLACK BACKGROUND ===== */
         body {
-            background-color: var(--color-neutral-900);
-            color: var(--color-light);
+            background-color: #000000;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start; /* Changed from center to allow scrolling */
             align-items: center;
             font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
             margin: 0;
-            padding: 0;
-            cursor: default;
+            padding: 20px;
+            overflow-y: auto; /* Allow scrolling */
         }
 
-        /* ===== MAIN CONTAINER ===== */
+        /* ===== PIXEL REVEAL SECTION ===== */
         .cloneable {
-            padding: var(--container-padding);
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
             width: 100%;
-            position: relative;
+            min-height: 100vh;
+            padding: 20px;
+            margin-bottom: 40px;
         }
 
-        /* ===== CARD - 85% of actual image size ===== */
         .pixelated-image-card {
-            background-color: var(--color-neutral-800);
-            color: var(--color-primary);
-            border-radius: 0.5em;
-            /* 85% of viewport size, capped at 600px */
-            width: min(85vw, 85vh, 600px);
-            aspect-ratio: 1 / 1;
+            background-color: #000000;
+            color: #ffffff;
+            border-radius: 0;
+            width: 85vmin;
+            height: 85vmin;
+            max-width: 85vmin;
+            max-height: 85vmin;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.8);
-            transition: box-shadow 0.3s ease;
+            box-shadow: none;
             cursor: pointer;
+            border: none;
         }
 
-        .pixelated-image-card:hover {
-            box-shadow: 0 24px 48px -8px rgba(0, 0, 0, 0.9);
-        }
-
-        /* Aspect ratio fallback */
         .before__100 {
             padding-top: 100%;
             width: 100%;
@@ -1279,7 +1266,6 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
             display: block;
         }
 
-        /* ===== ALL LAYERS (absolute) ===== */
         .pixelated-image-card__default,
         .pixelated-image-card__active,
         .pixelated-image-card__pixels,
@@ -1291,37 +1277,127 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
             height: 100%;
         }
 
-        /* Images: cover the square */
         .pixelated-image-card__img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             display: block;
             user-select: none;
             pointer-events: none;
         }
 
-        /* Active layer hidden by default */
         .pixelated-image-card__active {
             display: none;
             pointer-events: none;
         }
 
-        /* Pixel grid overlay */
         .pixelated-image-card__pixels {
             pointer-events: none;
             z-index: 5;
         }
 
-        /* Individual pixel */
         .pixelated-image-card__pixel {
-            background-color: currentColor;
+            background-color: #ffffff;
             display: none;
             position: absolute;
             will-change: transform, opacity;
             backface-visibility: hidden;
-            border: 0.5px solid rgba(0, 0, 0, 0.06);
+            border: 0.5px solid rgba(0, 0, 0, 0.15);
             box-sizing: border-box;
+        }
+
+        /* ===== TEXT SCROLLING ANIMATION SECTION ===== */
+        .text-scrolling-section {
+            width: 100%;
+            max-width: 1200px;
+            padding: 60px 20px;
+            margin: 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            border-radius: 9px;
+        }
+
+        .text {
+            color: #dfdcff;
+            font-size: clamp(2rem, 5vw, 5rem);
+            line-height: 1.4;
+            box-sizing: border-box;
+            padding: 5%;
+            width: 100%;
+            text-align: center;
+            perspective: 500px;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* SplitText individual elements */
+        .text .word {
+            display: inline-block;
+            white-space: nowrap;
+            margin-right: 0.3em;
+        }
+
+        .text .char {
+            display: inline-block;
+        }
+
+        .text .line {
+            display: block;
+            width: 100%;
+        }
+
+        .button-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .button {
+            background: transparent;
+            color: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 12px 28px;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .button:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .button:active {
+            transform: translateY(0px);
+        }
+
+        .button.active {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.4);
         }
 
         /* ===== CREDITS ===== */
@@ -1329,37 +1405,34 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
             z-index: 999;
             pointer-events: none;
             display: flex;
-            flex-flow: column;
             justify-content: center;
             align-items: center;
             width: 100%;
-            padding: 1em;
-            position: fixed;
-            bottom: 0;
-            left: 0;
+            padding: 20px;
+            margin-top: 40px;
             font-family: 'PP Neue Montreal', Arial, sans-serif;
         }
 
         .osmo-credits__p {
             pointer-events: auto;
-            color: rgba(239, 238, 236, 0.5);
+            color: rgba(255, 255, 255, 0.3);
             text-align: center;
             margin: 0;
-            font-size: 1.125em;
+            font-size: 0.9em;
             font-weight: 500;
             line-height: 1.3;
-            letter-spacing: 0.01em;
         }
 
         .osmo-credits__p-a {
-            color: #efeeec;
+            color: rgba(255, 255, 255, 0.6);
             text-decoration: none;
             border-bottom: 1px solid transparent;
-            transition: border-color 0.2s;
+            transition: border-color 0.2s, color 0.2s;
         }
 
         .osmo-credits__p-a:hover {
-            border-color: #efeeec;
+            color: rgba(255, 255, 255, 0.9);
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
         @font-face {
@@ -1371,211 +1444,326 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
         }
 
         /* ===== RESPONSIVE ===== */
-        @media (max-width: 480px) {
+        @media (max-width: 768px) {
             .pixelated-image-card {
-                width: 85vw;
-                max-width: 85vw;
+                width: 85vmin;
+                height: 85vmin;
+            }
+            .text {
+                font-size: clamp(1.5rem, 4vw, 2.5rem);
+                min-height: 150px;
+                padding: 10%;
+            }
+            .button {
+                padding: 10px 20px;
+                font-size: 0.85rem;
             }
             .osmo-credits__p {
-                font-size: 1rem;
+                font-size: 0.8em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .pixelated-image-card {
+                width: 85vmin;
+                height: 85vmin;
+            }
+            .text {
+                font-size: clamp(1.2rem, 3.5vw, 2rem);
+                min-height: 120px;
+            }
+            .button-wrapper {
+                gap: 10px;
+            }
+            .button {
+                padding: 8px 16px;
+                font-size: 0.75rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== MAIN SECTION ===== -->
+    <!-- ===== PIXEL REVEAL SECTION ===== -->
     <section class="cloneable">
         <div data-hover data-pixelated-image-reveal class="pixelated-image-card">
-            <!-- Aspect ratio placeholder -->
             <div class="before__100"></div>
-
-            <!-- DEFAULT image (always visible) -->
             <div class="pixelated-image-card__default">
                 <img 
-                    src="ROBOTLOGO.png" 
+                    src="Informative.png" 
                     alt="Robot Logo" 
                     class="pixelated-image-card__img"
                     loading="eager"
                 />
             </div>
-
-            <!-- ACTIVE image (revealed after pixel animation) -->
             <div data-pixelated-image-reveal-active class="pixelated-image-card__active">
                 <img 
-                    src="ROBOTLOGO.png" 
+                    src="Informative.png" 
                     alt="Robot Logo Revealed" 
                     class="pixelated-image-card__img"
                     loading="eager"
                 />
             </div>
+            <div data-pixelated-image-reveal-grid class="pixelated-image-card__pixels"></div>
+        </div>
+    </section>
 
-            <!-- PIXEL GRID container -->
-            <div data-pixelated-image-reveal-grid class="pixelated-image-card__pixels">
-                <!-- Pixels injected by JavaScript -->
+    <!-- ===== TEXT SCROLLING ANIMATION SECTION (NEW) ===== -->
+    <section class="text-scrolling-section">
+        <div class="container">
+            <div class="button-wrapper">
+                <button id="chars" class="button active">Characters</button>
+                <button id="words" class="button">Words</button>
+                <button id="lines" class="button">Lines</button>
+            </div>
+            <div class="text" id="animated-text">
+                Fashion. Construction. Technology. Aerospace. Automotive. IT. Energy. Healthcare. Retail. Social Media. Education. Manufacturing. Public Safety. Entertainment. FinTech. AI. Travel. Leisure.
             </div>
         </div>
     </section>
 
-    <!-- ===== CREDITS ===== -->
-    <div class="osmo-credits">
-        <p class="osmo-credits__p">
-            Resource by 
-            <a target="_blank" href="https://www.osmo.supply?utm_source=github&utm_medium=page&utm_campaign=pixelated-image-reveal" class="osmo-credits__p-a">
-                Osmo
-            </a>
-        </p>
-    </div>
+
 
     <!-- ===== ANIMATION JAVASCRIPT ===== -->
     <script>
         // ============================================================
         //  Pixelated Image Reveal - GSAP Animation
-        //  Fully compatible with GitHub Pages
         // ============================================================
 
         document.addEventListener('DOMContentLoaded', function() {
             'use strict';
 
-            // ---- Configuration ----
-            const ANIMATION_DURATION = 0.3;      // seconds for full reveal
-            const GRID_SIZE = 7;                 // 7x7 = 49 pixels
-
-            // ---- Calculate pixel size ----
+            // ---- Pixel Reveal Configuration ----
+            const ANIMATION_DURATION = 0.3;
+            const GRID_SIZE = 7;
             const PIXEL_SIZE = 100 / GRID_SIZE;
 
-            // ---- Select all cards ----
             const cards = document.querySelectorAll('[data-pixelated-image-reveal]');
-            if (!cards.length) return;
+            if (cards.length) {
+                const isTouchDevice = (
+                    'ontouchstart' in window ||
+                    navigator.maxTouchPoints > 0 ||
+                    window.matchMedia('(pointer: coarse)').matches
+                );
 
-            // ---- Detect touch device ----
-            const isTouchDevice = (
-                'ontouchstart' in window ||
-                navigator.maxTouchPoints > 0 ||
-                window.matchMedia('(pointer: coarse)').matches
-            );
+                cards.forEach(function(card) {
+                    const pixelGrid = card.querySelector('[data-pixelated-image-reveal-grid]');
+                    const activeCard = card.querySelector('[data-pixelated-image-reveal-active]');
 
-            // ---- Process each card ----
-            cards.forEach(function(card) {
-                const pixelGrid = card.querySelector('[data-pixelated-image-reveal-grid]');
-                const activeCard = card.querySelector('[data-pixelated-image-reveal-active]');
+                    if (!pixelGrid || !activeCard) return;
 
-                if (!pixelGrid || !activeCard) return;
+                    const existingPixels = pixelGrid.querySelectorAll('.pixelated-image-card__pixel');
+                    existingPixels.forEach(function(pixel) {
+                        pixel.remove();
+                    });
 
-                // ---- Clear existing pixels ----
-                const existingPixels = pixelGrid.querySelectorAll('.pixelated-image-card__pixel');
-                existingPixels.forEach(function(pixel) {
-                    pixel.remove();
+                    for (let row = 0; row < GRID_SIZE; row++) {
+                        for (let col = 0; col < GRID_SIZE; col++) {
+                            const pixel = document.createElement('div');
+                            pixel.classList.add('pixelated-image-card__pixel');
+                            pixel.style.width = PIXEL_SIZE + '%';
+                            pixel.style.height = PIXEL_SIZE + '%';
+                            pixel.style.left = (col * PIXEL_SIZE) + '%';
+                            pixel.style.top = (row * PIXEL_SIZE) + '%';
+                            pixelGrid.appendChild(pixel);
+                        }
+                    }
+
+                    const pixels = pixelGrid.querySelectorAll('.pixelated-image-card__pixel');
+                    const totalPixels = pixels.length;
+                    const staggerDuration = ANIMATION_DURATION / totalPixels;
+
+                    let isActive = false;
+                    let delayedCall = null;
+
+                    function animatePixels(activate) {
+                        gsap.killTweensOf(pixels);
+                        if (delayedCall) {
+                            delayedCall.kill();
+                            delayedCall = null;
+                        }
+
+                        isActive = activate;
+                        gsap.set(pixels, { display: 'none' });
+
+                        gsap.to(pixels, {
+                            display: 'block',
+                            duration: 0,
+                            stagger: {
+                                each: staggerDuration,
+                                from: 'random'
+                            },
+                            ease: 'power1.inOut'
+                        });
+
+                        delayedCall = gsap.delayedCall(ANIMATION_DURATION, function() {
+                            if (activate) {
+                                activeCard.style.display = 'block';
+                                activeCard.style.pointerEvents = 'none';
+                            } else {
+                                activeCard.style.display = 'none';
+                            }
+                        });
+
+                        gsap.to(pixels, {
+                            display: 'none',
+                            duration: 0,
+                            delay: ANIMATION_DURATION,
+                            stagger: {
+                                each: staggerDuration,
+                                from: 'random'
+                            },
+                            ease: 'power1.inOut'
+                        });
+                    }
+
+                    if (isTouchDevice) {
+                        card.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            animatePixels(!isActive);
+                        });
+                    } else {
+                        card.addEventListener('mouseenter', function() {
+                            if (!isActive) {
+                                animatePixels(true);
+                            }
+                        });
+                        card.addEventListener('mouseleave', function() {
+                            if (isActive) {
+                                animatePixels(false);
+                            }
+                        });
+                    }
+
+                    activeCard.style.display = 'none';
+                    activeCard.style.pointerEvents = 'none';
                 });
+            }
 
-                // ---- Generate pixel grid ----
-                for (let row = 0; row < GRID_SIZE; row++) {
-                    for (let col = 0; col < GRID_SIZE; col++) {
-                        const pixel = document.createElement('div');
-                        pixel.classList.add('pixelated-image-card__pixel');
+            // ============================================================
+            //  Text Scrolling Animation - SplitText
+            // ============================================================
 
-                        // Position and size
-                        pixel.style.width = PIXEL_SIZE + '%';
-                        pixel.style.height = PIXEL_SIZE + '%';
-                        pixel.style.left = (col * PIXEL_SIZE) + '%';
-                        pixel.style.top = (row * PIXEL_SIZE) + '%';
+            // Register SplitText plugin
+            gsap.registerPlugin(SplitText);
 
-                        pixelGrid.appendChild(pixel);
+            let split, animation;
+            const textElement = document.querySelector('.text');
+            const charsBtn = document.querySelector('#chars');
+            const wordsBtn = document.querySelector('#words');
+            const linesBtn = document.querySelector('#lines');
+
+            // Function to setup SplitText
+            function setupSplitText() {
+                if (split) {
+                    split.revert();
+                }
+                if (animation) {
+                    animation.revert();
+                    animation = null;
+                }
+                split = new SplitText(textElement, {
+                    type: 'chars,words,lines'
+                });
+                
+                // Reset text visibility
+                gsap.set(split.chars, { opacity: 1 });
+                gsap.set(split.words, { opacity: 1 });
+                gsap.set(split.lines, { opacity: 1 });
+                
+                // Update button states
+                updateButtonStates('chars');
+            }
+
+            // Function to update active button
+            function updateButtonStates(activeId) {
+                [charsBtn, wordsBtn, linesBtn].forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelector(`#${activeId}`).classList.add('active');
+            }
+
+            // Animation functions
+            function animateChars() {
+                if (animation) {
+                    animation.revert();
+                }
+                updateButtonStates('chars');
+                animation = gsap.from(split.chars, {
+                    x: 150,
+                    opacity: 0,
+                    duration: 0.7,
+                    ease: 'power4.out',
+                    stagger: 0.04,
+                    onComplete: () => {
+                        gsap.set(split.chars, { opacity: 1 });
                     }
+                });
+            }
+
+            function animateWords() {
+                if (animation) {
+                    animation.revert();
                 }
-
-                // ---- Get all pixels ----
-                const pixels = pixelGrid.querySelectorAll('.pixelated-image-card__pixel');
-                const totalPixels = pixels.length;
-
-                // Stagger duration: distribute evenly across ANIMATION_DURATION
-                const staggerDuration = ANIMATION_DURATION / totalPixels;
-
-                // ---- State ----
-                let isActive = false;
-                let delayedCall = null;
-
-                // ---- Animation function ----
-                function animatePixels(activate) {
-                    // Kill any ongoing tweens and delayed calls
-                    gsap.killTweensOf(pixels);
-                    if (delayedCall) {
-                        delayedCall.kill();
-                        delayedCall = null;
+                updateButtonStates('words');
+                animation = gsap.from(split.words, {
+                    y: -100,
+                    opacity: 0,
+                    rotation: 'random(-80, 80)',
+                    duration: 0.7,
+                    ease: 'back.out(1.7)',
+                    stagger: 0.15,
+                    onComplete: () => {
+                        gsap.set(split.words, { opacity: 1 });
                     }
+                });
+            }
 
-                    isActive = activate;
-
-                    // 1. Hide all pixels instantly
-                    gsap.set(pixels, { display: 'none' });
-
-                    // 2. Show pixels randomly (stagger from random start)
-                    gsap.to(pixels, {
-                        display: 'block',
-                        duration: 0,
-                        stagger: {
-                            each: staggerDuration,
-                            from: 'random'
-                        },
-                        ease: 'power1.inOut'
-                    });
-
-                    // 3. After ANIMATION_DURATION, show/hide the active card
-                    delayedCall = gsap.delayedCall(ANIMATION_DURATION, function() {
-                        if (activate) {
-                            activeCard.style.display = 'block';
-                            activeCard.style.pointerEvents = 'none';
-                        } else {
-                            activeCard.style.display = 'none';
-                        }
-                    });
-
-                    // 4. Hide pixels randomly after the same delay
-                    gsap.to(pixels, {
-                        display: 'none',
-                        duration: 0,
-                        delay: ANIMATION_DURATION,
-                        stagger: {
-                            each: staggerDuration,
-                            from: 'random'
-                        },
-                        ease: 'power1.inOut'
-                    });
+            function animateLines() {
+                if (animation) {
+                    animation.revert();
                 }
+                updateButtonStates('lines');
+                animation = gsap.from(split.lines, {
+                    rotationX: -100,
+                    transformOrigin: '50% 50% -160px',
+                    opacity: 0,
+                    duration: 0.8,
+                    ease: 'power3.out',
+                    stagger: 0.25,
+                    onComplete: () => {
+                        gsap.set(split.lines, { opacity: 1 });
+                    }
+                });
+            }
 
-                // ---- Bind interactions ----
-                if (isTouchDevice) {
-                    // Touch: toggle on click
-                    card.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        animatePixels(!isActive);
-                    });
-                } else {
-                    // Desktop: hover
-                    card.addEventListener('mouseenter', function() {
-                        if (!isActive) {
-                            animatePixels(true);
-                        }
-                    });
-                    card.addEventListener('mouseleave', function() {
-                        if (isActive) {
-                            animatePixels(false);
-                        }
-                    });
-                }
+            // Event listeners
+            charsBtn.addEventListener('click', animateChars);
+            wordsBtn.addEventListener('click', animateWords);
+            linesBtn.addEventListener('click', animateLines);
 
-                // ---- Ensure active card starts hidden ----
-                activeCard.style.display = 'none';
-                activeCard.style.pointerEvents = 'none';
+            // Initialize
+            setupSplitText();
+
+            // Handle window resize
+            let resizeTimeout;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(function() {
+                    setupSplitText();
+                    // Trigger default animation after resize
+                    animateChars();
+                }, 250);
             });
+
+            // Trigger initial animation
+            setTimeout(animateChars, 300);
 
         }); // end DOMContentLoaded
     </script>
 
 </body>
 </html>
-
-
 
 <!-- ════════ WHY US ════════ -->
 <section id="why">
