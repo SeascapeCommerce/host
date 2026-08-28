@@ -140,46 +140,53 @@ body {
 
 
 /* ==========================================
-   CURVED IMAGE REEL SECTION
+   FILM REEL – JESPER STYLE
    ========================================== */
-.reel-section {
+.film-reel-section {
   position: relative;
   width: 100%;
-  padding: 6rem 0 8rem 0; /* Space above and below */
+  height: 100vh; /* Full viewport height */
   overflow: hidden;
-  background: var(--bg); /* Matches your dark theme */
-  perspective: 1200px; /* Creates the 3D space */
+  background: var(--bg);
+  perspective: 800px; /* Strong perspective for dramatic curve */
+  perspective-origin: 50% 50%;
   z-index: 2;
 }
 
-.reel-wrapper {
+.reel-container {
   position: relative;
   width: 100%;
-  overflow: visible; /* Allows the 3D effect to show */
-  transform-style: preserve-3d;
-}
-
-.reel-track {
+  height: 100%;
   display: flex;
-  gap: 2rem; /* Space between images */
-  padding: 0 2rem;
-  will-change: transform;
+  align-items: center;
+  justify-content: center;
   transform-style: preserve-3d;
+  overflow: visible;
 }
 
-.reel-item {
-  flex: 0 0 280px; /* Fixed width */
-  height: 380px; /* Fixed height */
-  border-radius: 16px;
+.reel-strip {
+  display: flex;
+  gap: 0; /* No gap – images touch like a film strip */
+  padding: 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+  /* The curvature is applied via JS, but we set a base */
+}
+
+.reel-frame {
+  flex: 0 0 60vw; /* MASSIVE – takes up 60% of viewport width */
+  height: 75vh; /* Tall, dramatic */
+  margin: 0 -8vw; /* Negative margin creates overlap + curve illusion */
+  transform-style: preserve-3d;
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s ease;
-  transform-style: preserve-3d;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
   will-change: transform;
-  cursor: default; /* Not clickable, as you requested */
+  transition: transform 0.15s cubic-bezier(0.23, 1, 0.32, 1);
+  cursor: default;
 }
 
-.reel-item img {
+.reel-frame img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -187,30 +194,29 @@ body {
   pointer-events: none; /* Prevents drag interference */
 }
 
-/* 3D Hover Effect: Each card tilts and scales */
-.reel-item:hover {
-  transform: scale(1.08) rotateY(-8deg) rotateX(4deg) translateZ(40px);
-  box-shadow: 0 30px 60px rgba(0, 240, 255, 0.25);
+/* HOVER: Individual frame tilts toward cursor */
+.reel-frame:hover {
+  transform: rotateY(-12deg) rotateX(6deg) scale(1.05) translateZ(60px);
+  box-shadow: 0 40px 100px rgba(0, 240, 255, 0.3);
   z-index: 10;
 }
 
-/* Sibling items react to hover for a "carousel" feel */
-.reel-track:hover .reel-item:not(:hover) {
-  transform: scale(0.92) translateZ(-20px);
-  opacity: 0.6;
-  filter: blur(1px);
+/* Sibling frames fade back on hover */
+.reel-strip:hover .reel-frame:not(:hover) {
+  transform: scale(0.92) translateZ(-40px) rotateY(4deg);
+  opacity: 0.5;
+  filter: blur(2px);
 }
 
 /* Responsive */
-@media (max-width: 700px) {
-  .reel-item {
-    flex: 0 0 200px;
-    height: 280px;
+@media (max-width: 768px) {
+  .reel-frame {
+    flex: 0 0 80vw;
+    height: 60vh;
+    margin: 0 -12vw;
   }
-  .reel-track {
-    gap: 1rem;
-  }
-  .reel-section {
-    padding: 3rem 0 4rem 0;
+  .film-reel-section {
+    height: 80vh;
+    perspective: 500px;
   }
 }
