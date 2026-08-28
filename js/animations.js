@@ -93,3 +93,36 @@ document.querySelectorAll("[data-morph]").forEach((divider) => {
     ease: "none"                  // linear feels right for scrubbed scroll morphs
   });
 });
+
+
+// ==========================================
+// CURVED IMAGE REEL ANIMATION
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+  // Only run if the reel exists
+  const track = document.getElementById('reel-track');
+  if (!track) return;
+
+  // Calculate the width of the track (half of it, since we duplicated)
+  const trackWidth = track.scrollWidth / 2;
+  
+  // Set up the animation
+  let animation = gsap.to(track, {
+    x: -trackWidth, // Move left by half the track width
+    duration: 25, // Speed of the scroll (adjust as needed)
+    ease: "none",
+    repeat: -1, // Infinite loop
+    modifiers: {
+      x: (x) => {
+        // When we've moved exactly half the track, loop back seamlessly
+        return parseFloat(x) % -trackWidth;
+      }
+    }
+  });
+
+  // Pause animation when user hovers over the reel section
+  const reelSection = document.getElementById('image-reel-section');
+  reelSection.addEventListener('mouseenter', () => animation.pause());
+  reelSection.addEventListener('mouseleave', () => animation.play());
+
+  
