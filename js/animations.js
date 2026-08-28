@@ -205,4 +205,148 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-  
+  <!-- ===== ANIMATION JAVASCRIPT ===== -->
+    <script>
+        // ============================================================
+        //  Pixelated Image Reveal - GSAP Animation
+        //  Black background · 85% size · Centered
+        // ============================================================
+
+        document.addEventListener('DOMContentLoaded', function() {
+            'use strict';
+
+            // ---- Configuration ----
+            const ANIMATION_DURATION = 0.3;      // seconds for full reveal
+            const GRID_SIZE = 7;                 // 7x7 = 49 pixels
+
+            // ---- Calculate pixel size ----
+            const PIXEL_SIZE = 100 / GRID_SIZE;
+
+            // ---- Select all cards ----
+            const cards = document.querySelectorAll('[data-pixelated-image-reveal]');
+            if (!cards.length) return;
+
+            // ---- Detect touch device ----
+            const isTouchDevice = (
+                'ontouchstart' in window ||
+                navigator.maxTouchPoints > 0 ||
+                window.matchMedia('(pointer: coarse)').matches
+            );
+
+            // ---- Process each card ----
+            cards.forEach(function(card) {
+                const pixelGrid = card.querySelector('[data-pixelated-image-reveal-grid]');
+                const activeCard = card.querySelector('[data-pixelated-image-reveal-active]');
+
+                if (!pixelGrid || !activeCard) return;
+
+                // ---- Clear existing pixels ----
+                const existingPixels = pixelGrid.querySelectorAll('.pixelated-image-card__pixel');
+                existingPixels.forEach(function(pixel) {
+                    pixel.remove();
+                });
+
+                // ---- Generate pixel grid ----
+                for (let row = 0; row < GRID_SIZE; row++) {
+                    for (let col = 0; col < GRID_SIZE; col++) {
+                        const pixel = document.createElement('div');
+                        pixel.classList.add('pixelated-image-card__pixel');
+
+                        // Position and size
+                        pixel.style.width = PIXEL_SIZE + '%';
+                        pixel.style.height = PIXEL_SIZE + '%';
+                        pixel.style.left = (col * PIXEL_SIZE) + '%';
+                        pixel.style.top = (row * PIXEL_SIZE) + '%';
+
+                        pixelGrid.appendChild(pixel);
+                    }
+                }
+
+                // ---- Get all pixels ----
+                const pixels = pixelGrid.querySelectorAll('.pixelated-image-card__pixel');
+                const totalPixels = pixels.length;
+
+                // Stagger duration: distribute evenly across ANIMATION_DURATION
+                const staggerDuration = ANIMATION_DURATION / totalPixels;
+
+                // ---- State ----
+                let isActive = false;
+                let delayedCall = null;
+
+                // ---- Animation function ----
+                function animatePixels(activate) {
+                    // Kill any ongoing tweens and delayed calls
+                    gsap.killTweensOf(pixels);
+                    if (delayedCall) {
+                        delayedCall.kill();
+                        delayedCall = null;
+                    }
+
+                    isActive = activate;
+
+                    // 1. Hide all pixels instantly
+                    gsap.set(pixels, { display: 'none' });
+
+                    // 2. Show pixels randomly (stagger from random start)
+                    gsap.to(pixels, {
+                        display: 'block',
+                        duration: 0,
+                        stagger: {
+                            each: staggerDuration,
+                            from: 'random'
+                        },
+                        ease: 'power1.inOut'
+                    });
+
+                    // 3. After ANIMATION_DURATION, show/hide the active card
+                    delayedCall = gsap.delayedCall(ANIMATION_DURATION, function() {
+                        if (activate) {
+                            activeCard.style.display = 'block';
+                            activeCard.style.pointerEvents = 'none';
+                        } else {
+                            activeCard.style.display = 'none';
+                        }
+                    });
+
+                    // 4. Hide pixels randomly after the same delay
+                    gsap.to(pixels, {
+                        display: 'none',
+                        duration: 0,
+                        delay: ANIMATION_DURATION,
+                        stagger: {
+                            each: staggerDuration,
+                            from: 'random'
+                        },
+                        ease: 'power1.inOut'
+                    });
+                }
+
+                // ---- Bind interactions ----
+                if (isTouchDevice) {
+                    // Touch: toggle on click
+                    card.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        animatePixels(!isActive);
+                    });
+                } else {
+                    // Desktop: hover
+                    card.addEventListener('mouseenter', function() {
+                        if (!isActive) {
+                            animatePixels(true);
+                        }
+                    });
+                    card.addEventListener('mouseleave', function() {
+                        if (isActive) {
+                            animatePixels(false);
+                        }
+                    });
+                }
+
+                // ---- Ensure active card starts hidden ----
+                activeCard.style.display = 'none';
+                activeCard.style.pointerEvents = 'none';
+            });
+
+        }); // end DOMContentLoaded
+    </script>
+
