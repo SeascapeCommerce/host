@@ -96,33 +96,111 @@ document.querySelectorAll("[data-morph]").forEach((divider) => {
 
 
 // ==========================================
-// CURVED IMAGE REEL ANIMATION
+// FILM REEL – JESPER STYLE
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
-  // Only run if the reel exists
-  const track = document.getElementById('reel-track');
-  if (!track) return;
+  const strip = document.getElementById('reel-strip');
+  if (!strip) return;
 
-  // Calculate the width of the track (half of it, since we duplicated)
-  const trackWidth = track.scrollWidth / 2;
-  
-  // Set up the animation
-  let animation = gsap.to(track, {
-    x: -trackWidth, // Move left by half the track width
-    duration: 25, // Speed of the scroll (adjust as needed)
-    ease: "none",
-    repeat: -1, // Infinite loop
+  const frames = gsap.utils.toArray('.reel-frame');
+  const totalFrames = frames.length;
+  const halfFrames = totalFrames / 2;
+
+  // ─── 1. SCROLL-DRIVEN ROTATION ───
+  // The strip rotates horizontally as you scroll
+  gsap.to(strip, {
+    x: -strip.scrollWidth / 2, // Move half the strip width
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.film-reel-section',
+      scrub: 2, // Smooth, draggy feel
+      start: 'top bottom',
+      end: 'bottom top',
+      invalidateOnRefresh: true
+    },
     modifiers: {
       x: (x) => {
-        // When we've moved exactly half the track, loop back seamlessly
-        return parseFloat(x) % -trackWidth;
+        // Seamless loop: reset when we've moved half the strip
+        const halfWidth = strip.scrollWidth / 2;
+        return parseFloat(x) % -halfWidth;
       }
     }
   });
 
-  // Pause animation when user hovers over the reel section
-  const reelSection = document.getElementById('image-reel-section');
-  reelSection.addEventListener('mouseenter', () => animation.pause());
-  reelSection.addEventListener('mouseleave', () => animation.play());
+  // ─── 2. 3D CURVATURE ───
+  // Each frame gets a Y rotation based on its position in the strip
+  // This creates the "film reel" curve effect
+  function applyCurve() {
+    const rect = strip.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
 
+    frames.forEach((frame, i) => {
+      const frameRect = frame.getBoundingClientRect();
+      const frameCenterX = frameRect.left + frameRect.width / 2;
+      const offset = (frameCenterX - centerX) / (rect.width / 2);
+      
+      // Clamp and map to rotation: -45deg to +45deg
+      const clamped = Math.max(-1, Math.min(1, offset));
+      const rotationY = clamped * 40; // Max 40 degrees of curve
+      
+      gsap.set(frame, {
+        rotationY: rotationY,
+        z: -Math.abs(clamped) * 30, // Push back at edges
+        transformPerspective: 800
+      });
+    });
+  }
+
+  // Apply curve on load, scroll, and resize
+  applyCurve();
+  window.addEventListener('scroll', applyCurve);
+  window.addEventListener('resize', applyCurve);
+
+  // ─── 3. CURSOR TRACKING FOR HOVER ───
+  // Make individual frames tilt toward the cursor
+  frames.forEach((frame) => {
+    frame.addEventListener('mousemove', (e) => {
+      const rect = frame.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 to 0.5
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      
+      // Subtle tilt: max 8 degrees
+      const rotY = x * 16;
+      const rotX = -y * 10;
+      const translateZ = 40 + Math.abs(x) * 30;
+      
+      gsap.to(frame, {
+        rotationY: rotY,
+        rotationX: rotX,
+        z: translateZ,
+        duration: 0.15,
+        ease: 'power1.out',
+        overwrite: 'auto'
+      });
+    });
+
+    frame.addEventListener('mouseleave', () => {
+      // Reset to the scroll-driven curve position
+      gsap.to(frame, {
+        rotationY: 0,
+        rotationX: 0,
+        z: 0,
+        duration: 0.4,
+        ease: 'power2.out'
+      });
+      // Re-apply the curve after reset
+      setTimeout(applyCurve, 400);
+    });
+  });
+
+  // ─── 4. AUTO-PLAY PAUSE ON HOVER ───
+  const section = document.getElementById('film-reel');
+  section.addEventListener('mouseenter', () => {
+    // Pause scroll-triggered animation if needed
+    ScrollTrigger.getById('reel-scroll')?.pause();
+  });
+  section.addEventListener('mouseleave', () => {
+    ScrollTrigger.getById('reel-scroll')?.resume();
+  });
+});
   
