@@ -234,4 +234,42 @@ body {
   }
 }
 
+--------------------------------------
+//CSS for INDUSTRIES TEXT ANIMATION--////
+-------------------------------
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  overflow: hidden;
+}
 
+.container {
+  position: relative;
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  border-radius: 9px;
+}
+
+.text {
+  color: #dfdcff;
+  font-size: clamp(2rem, 12rem, 5vw);
+  line-height: 1.2;
+  box-sizing: border-box;
+  padding: 5%;
+  width: 100%;
+  text-align: center;
+  perspective: 500px;
+}
+
+.button-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
