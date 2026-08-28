@@ -4,6 +4,17 @@
   --white: #F8FAFC;
 }
 
+/* Add this to your CSS file (root {.txt) */
+.ad-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the video covers the area */
+  border: 0; /* Remove default iframe border */
+}
+
+
 body {
   background: var(--bg);
   color: var(--white);
