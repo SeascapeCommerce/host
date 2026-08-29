@@ -269,6 +269,11 @@ body {
   overflow:hidden;
   transition:.35s ease;
   backdrop-filter:blur(12px);
+
+  /* Equal-height cards */
+  display:flex;
+  flex-direction:column;
+  height:100%;
 }
 
 .store-card:hover{
@@ -277,14 +282,22 @@ body {
 }
 
 .store-image{
-  aspect-ratio:16/10;
+  height:350px;              /* Consistent image area */
+  display:flex;
+  align-items:center;
+  justify-content:center;
   overflow:hidden;
+  padding:1rem;
+  background:rgba(255,255,255,.02);
 }
 
 .store-image img{
   width:100%;
   height:100%;
-  object-fit:cover;
+
+  /* Shows the entire product without cropping */
+  object-fit:contain;
+
   display:block;
 }
 
@@ -298,6 +311,9 @@ body {
   padding:0 1.5rem;
   opacity:.8;
   line-height:1.7;
+
+  /* Keeps footer aligned across cards */
+  flex-grow:1;
 }
 
 .store-footer{
@@ -305,7 +321,7 @@ body {
   justify-content:space-between;
   align-items:center;
   padding:1.5rem;
-  margin-top:.75rem;
+  margin-top:auto;
 }
 
 .store-price{
