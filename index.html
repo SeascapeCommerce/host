@@ -373,7 +373,6 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
   </div>
 </section>
 
-</body>
 
   
 
@@ -546,7 +545,7 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
                 <!-- Pixels injected by JavaScript -->
             </div>
         </div>
-    </section></html>
+    </section>
     <!-- ===== ANIMATION JAVASCRIPT ===== -->
     <script>
         // ============================================================
@@ -712,7 +711,7 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
-<body>
+
  <section class="phone-section phones-arena" id="motion-trigger">
 
     <!-- FOREGROUND: text sits ABOVE the phones (z-index 20) -->
@@ -790,18 +789,10 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
   <script>gsap.registerPlugin(ScrollTrigger, Draggable);</script>
   <script src="js/animations.js"></script>
-</body>
-</html>
 
-<!-- MORPH DIVIDER: Philosophy → Services -->
-<div class="morph-divider" data-morph>
-  <svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="morph-svg">
-    <!-- start shape: gentle wave -->
-    <path class="morph-path"
-          d="M0,60 C150,20 300,100 600,60 C900,20 1050,100 1200,60 L1200,120 L0,120 Z"
-          fill="var(--midnight)" />
-  </svg>
-</div>
+
+
+
 
 
   
@@ -1178,6 +1169,136 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
   </div>
 </section>
 <div class="divider"></div>
+
+
+
+<!-- ════════ SNIPCART ════════ -->
+<script>
+window.SnipcartSettings = {
+  publicApiKey: 'NDhkMzg4NzgtYzJiYi00YzYyLTk0OTgtMjRkNDQ0NzdhM2VkNjM5MjM2MzAwNDEzNDA1MDAw',
+  loadStrategy: 'on-user-interaction'
+};
+</script>
+
+<script async src="https://cdn.snipcart.com/themes/v3.4.1/default/snipcart.js"></script>
+<link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.4.1/default/snipcart.css">
+
+<div hidden id="snipcart"
+     data-api-key="NDhkMzg4NzgtYzJiYi00YzYyLTk0OTgtMjRkNDQ0NzdhM2VkNjM5MjM2MzAwNDEzNDA1MDAw">
+</div>
+
+</section>
+
+<div class="divider"></div>
+
+<!-- ════════ STORE ════════ -->
+<section id="store">
+  <div style="max-width:720px;margin:0 auto 5rem;text-align:center">
+    <span class="section-label reveal">Store</span>
+
+    <h2 class="section-title reveal reveal-delay-1">
+      Featured<br><em>Products</em>
+    </h2>
+
+    <p class="section-body reveal reveal-delay-2" style="max-width:100%">
+      Explore products, tools, and digital resources powered by Seascape Commerce.
+      Secure checkout, automated fulfillment, and AI-enhanced shopping experiences.
+    </p>
+
+    <a href="#" class="snipcart-checkout btn-primary reveal reveal-delay-3"
+       style="margin-top:1.5rem;display:inline-block">
+      Cart (<span class="snipcart-items-count">0</span>)
+    </a>
+  </div>
+
+  <div class="store-grid">
+
+    <!-- Product 1 -->
+    <div class="store-card reveal">
+      <div class="store-image">
+        <img src="images/product1.jpg" alt="Featured Product">
+      </div>
+
+      <h3 class="store-title">Premium Digital Toolkit</h3>
+
+      <p class="store-desc">
+        A collection of professional resources designed to accelerate business growth.
+      </p>
+
+      <div class="store-footer">
+        <span class="store-price">$49.99</span>
+
+        <button
+          class="btn-primary snipcart-add-item"
+          data-item-id="toolkit-001"
+          data-item-price="49.99"
+          data-item-url="/"
+          data-item-name="Premium Digital Toolkit">
+          Add to Cart
+        </button>
+      </div>
+    </div>
+
+    <!-- Product 2 -->
+    <div class="store-card reveal reveal-delay-1">
+      <div class="store-image">
+        <img src="images/product2.jpg" alt="AI Resource Pack">
+      </div>
+
+      <h3 class="store-title">AI Resource Pack</h3>
+
+      <p class="store-desc">
+        Templates, prompts, workflows, and automation assets.
+      </p>
+
+      <div class="store-footer">
+        <span class="store-price">$29.99</span>
+
+        <button
+          class="btn-primary snipcart-add-item"
+          data-item-id="ai-pack-001"
+          data-item-price="29.99"
+          data-item-url="/"
+          data-item-name="AI Resource Pack">
+          Add to Cart
+        </button>
+      </div>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="store-card reveal reveal-delay-2">
+      <div class="store-image">
+        <img src="images/product3.jpg" alt="Business Bundle">
+      </div>
+
+      <h3 class="store-title">Business Growth Bundle</h3>
+
+      <p class="store-desc">
+        A premium package built for scaling brands and online stores.
+      </p>
+
+      <div class="store-footer">
+        <span class="store-price">$99.99</span>
+
+        <button
+          class="btn-primary snipcart-add-item"
+          data-item-id="bundle-001"
+          data-item-price="99.99"
+          data-item-url="/"
+          data-item-name="Business Growth Bundle">
+          Add to Cart
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+  
+
+  
 
 <!-- ════════ FAQ ════════ -->
 <section id="faq">
