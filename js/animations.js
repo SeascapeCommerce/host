@@ -355,3 +355,31 @@ showcaseTL
   y:30,
   duration:.7
 },"-=0.2");
+
+
+
+
+gsap.to(".box", {
+  duration: 1,
+  rotation: 360,
+  opacity: 1,
+  delay: 0.5,
+  stagger: 0.1, // stagger in from the left with a 0.1 second gap in between animations
+  ease: "sine.out"
+});
+
+document.querySelectorAll(".box").forEach((box, index) => {
+  box.addEventListener("click", () => {
+    gsap.to(".box", {
+      duration: 0.5,
+      opacity: 0,
+      y: -100,
+      stagger: {
+        from: index, // stagger in from the clicked element's index
+        amount: 1 // spread the entire stagger out over 1 second
+      },
+      ease: "back.in",
+      overwrite: "auto"
+    });
+  });
+});
