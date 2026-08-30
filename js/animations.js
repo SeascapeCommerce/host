@@ -289,6 +289,72 @@ document.querySelectorAll(".service-card").forEach(card => {
 });
 
 
+  // ─── Image Animation Scroll PAUSE ON HOVER ───
+const showcaseTL = gsap.timeline({
+
+  scrollTrigger:{
+    trigger:"#platform-showcase",
+    start:"top 70%",
+    once:true
+  }
+
+});
+
+showcaseTL
+
+.to(".card1 .image-mask",{
+  scaleX:0,
+  duration:1
+})
+
+.to(".card1",{
+  opacity:1,
+  y:0,
+  scale:1,
+  duration:.8
+},"<")
+
+.to(".card2 .image-mask",{
+  scaleX:0,
+  duration:1
+},"-=0.5")
+
+.to(".card2",{
+  opacity:1,
+  y:0,
+  scale:1,
+  duration:.8
+},"<")
+
+.to(".card3 .image-mask",{
+  scaleX:0,
+  duration:1
+},"-=0.5")
+
+.to(".card3",{
+  opacity:1,
+  y:0,
+  scale:1,
+  duration:.8
+},"<")
+
+.to(".card4 .image-mask",{
+  scaleX:0,
+  duration:1
+},"-=0.5")
+
+.to(".card4",{
+  opacity:1,
+  y:0,
+  scale:1,
+  duration:.8
+},"<")
+
+.from(".showcase-cta",{
+  opacity:0,
+  y:30,
+  duration:.7
+},"-=0.2");
 
 
 
