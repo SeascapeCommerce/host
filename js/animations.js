@@ -205,4 +205,242 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+/* ═══════════════════════════════════════════════════════
+   SEASCAPE GSAP PARALLAX + TRAILING SYSTEM
+   ═══════════════════════════════════════════════════════ */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  if (typeof gsap === "undefined") {
+    console.warn("GSAP is not loaded.");
+    return;
+  }
+
+  if (typeof ScrollTrigger === "undefined") {
+    console.warn("GSAP ScrollTrigger is not loaded.");
+    return;
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+
+  /* =====================================================
+     1. SCROLL PARALLAX
+     ===================================================== */
+
+  const parallaxLayers = gsap.utils.toArray(
+    "#seascape-transition [data-speed]"
+  );
+
+  parallaxLayers.forEach((layer) => {
+
+    const speed = parseFloat(layer.dataset.speed) || 1;
+
+    /*
+      Higher data-speed = more movement.
+      The movement is intentionally subtle so the effect
+      feels premium rather than like a conventional
+      scrolling website animation.
+    */
+
+    const movement = (speed - 1) * 100;
+
+    gsap.fromTo(
+      layer,
+      {
+        y: -movement
+      },
+      {
+        y: movement,
+        ease: "none",
+
+        scrollTrigger: {
+          trigger: "#seascape-transition",
+
+          start: "top bottom",
+          end: "bottom top",
+
+          scrub: 1.2
+        }
+      }
+    );
+
+  });
+
+
+  /* =====================================================
+     2. ORBIT / DEPTH ROTATION
+     ===================================================== */
+
+  gsap.to(".transition-orbit", {
+    rotation: 8,
+    duration: 18,
+    ease: "none",
+    repeat: -1
+  });
+
+
+  /* =====================================================
+     3. GRID DRIFT
+     ===================================================== */
+
+  gsap.to(".transition-grid", {
+    backgroundPosition: "90px 90px",
+    duration: 12,
+    ease: "none",
+    repeat: -1
+  });
+
+
+  /* =====================================================
+     4. CURSOR TRAILING EFFECT
+     ===================================================== */
+
+  const trail = gsap.utils.toArray(
+    ".cursor-trail span"
+  );
+
+  const transition = document.querySelector(
+    "#seascape-transition"
+  );
+
+  if (!transition || !trail.length) return;
+
+  let mouseX = 0;
+  let mouseY = 0;
+
+  let currentX = 0;
+  let currentY = 0;
+
+  transition.addEventListener("pointermove", (event) => {
+
+    const rect = transition.getBoundingClientRect();
+
+    mouseX = event.clientX - rect.left;
+    mouseY = event.clientY - rect.top;
+
+  });
+
+
+  /* Smooth cursor position */
+  gsap.ticker.add(() => {
+
+    currentX += (mouseX - currentX) * 0.15;
+    currentY += (mouseY - currentY) * 0.15;
+
+    gsap.set(trail[0], {
+      x: currentX,
+      y: currentY,
+      opacity: 1,
+      scale: 1
+    });
+
+  });
+
+
+  /* Trailing particles */
+  trail.slice(1).forEach((particle, index) => {
+
+    const delay = (index + 1) * 0.065;
+
+    gsap.to(particle, {
+      x: () => currentX,
+      y: () => currentY,
+
+      duration: 0.45 + delay,
+      ease: "power3.out",
+
+      repeat: -1,
+
+      modifiers: {
+        x: () => currentX,
+        y: () => currentY
+      }
+    });
+
+  });
+
+
+  /* =====================================================
+     5. BETTER TRAIL IMPLEMENTATION
+     ===================================================== */
+
+  let trailPositions = trail.map(() => ({
+    x: 0,
+    y: 0
+  }));
+
+  gsap.ticker.add(() => {
+
+    trailPositions[0].x +=
+      (mouseX - trailPositions[0].x) * 0.25;
+
+    trailPositions[0].y +=
+      (mouseY - trailPositions[0].y) * 0.25;
+
+
+    for (let i = 1; i < trailPositions.length; i++) {
+
+      trailPositions[i].x +=
+        (trailPositions[i - 1].x - trailPositions[i].x) *
+        0.22;
+
+      trailPositions[i].y +=
+        (trailPositions[i - 1].y - trailPositions[i].y) *
+        0.22;
+
+    }
+
+
+    trail.forEach((particle, index) => {
+
+      const position = trailPositions[index];
+
+      const scale =
+        1 - (index / trail.length) * 0.7;
+
+      const opacity =
+        1 - (index / trail.length) * 0.85;
+
+      gsap.set(particle, {
+        x: position.x,
+        y: position.y,
+        scale,
+        opacity
+      });
+
+    });
+
+  });
+
+
+  /* =====================================================
+     6. ENTER / EXIT FADE
+     ===================================================== */
+
+  gsap.from(".transition-content", {
+
+    opacity: 0,
+    x: -30,
+
+    scrollTrigger: {
+      trigger: "#seascape-transition",
+      start: "top 80%",
+      end: "top 45%",
+      scrub: true
+    }
+
+  });
+
+
+  /* =====================================================
+     7. REFRESH SCROLLTRIGGER
+     ===================================================== */
+
+  window.addEventListener("load", () => {
+    ScrollTrigger.refresh();
+  });
+
+});
+
 
