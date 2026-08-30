@@ -359,27 +359,26 @@ showcaseTL
 
 
 
-gsap.to(".box", {
-  duration: 1,
-  rotation: 360,
-  opacity: 1,
-  delay: 0.5,
-  stagger: 0.1, // stagger in from the left with a 0.1 second gap in between animations
-  ease: "sine.out"
-});
+//GSAP 3 introduces advanced stagger values
+var grid = [5,13], //[rows, columns]
+    tl = gsap.timeline({repeat: -1, repeatDelay: 0.5});
 
-document.querySelectorAll(".box").forEach((box, index) => {
-  box.addEventListener("click", () => {
-    gsap.to(".box", {
-      duration: 0.5,
-      opacity: 0,
-      y: -100,
+function animateBoxes(from, axis, ease) {
+  //one stagger call does all the animation:
+  tl.to(".box", {
+      duration: 1,
+      scale: 0.1, 
+      y: 60,
+      yoyo: true, 
+      repeat: 1, 
+      ease: "power1.inOut",
       stagger: {
-        from: index, // stagger in from the clicked element's index
-        amount: 1 // spread the entire stagger out over 1 second
-      },
-      ease: "back.in",
-      overwrite: "auto"
-    });
-  });
-});
+        amount: 1.5, 
+        grid: grid, 
+        axis: axis, 
+        ease: ease,
+        from: from
+      }
+    }
+  );
+}
