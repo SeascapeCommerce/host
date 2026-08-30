@@ -422,260 +422,360 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
 
   
 
+
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Robot Logo · Pixel Reveal</title>
-    
-    <!-- GSAP from CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-    
-    <style>
-        /* ===== RESET & BASE ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
 
-        /* ===== PURE BLACK BACKGROUND ===== */
-        body {
-            background-color: #000000;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
+<html lang="en"> <head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <title>Robot Logo · Pixel Reveal</title>
 
-        /* ===== MAIN CONTAINER - Centered ===== */
-        .cloneable {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            min-height: 100vh;
-            padding: 20px;
-        }
+<!-- GSAP -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 
-        /* ===== CARD - EXACTLY 85% of viewport size ===== */
+<style>
+    /* ===== RESET & BASE ===== */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* ===== BLACK BACKGROUND ===== */
+    body {
+        background-color: #000000;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        margin: 0;
+        padding: 20px;
+    }
+
+    /* ===== MAIN CONTAINER ===== */
+    .cloneable {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        min-height: 100vh;
+        padding: 20px;
+    }
+
+    /* ===== CARD ===== */
+    .pixelated-image-card {
+        background-color: #000000;
+        color: #ffffff;
+        border-radius: 0;
+        width: 100vmin;
+        height: 100vmin;
+        max-width: 100vmin;
+        max-height: 100vmin;
+        position: relative;
+        overflow: hidden;
+        box-shadow: none;
+        cursor: pointer;
+        border: none;
+    }
+
+    /* ===== ASPECT RATIO ===== */
+    .before__100 {
+        padding-top: 100%;
+        width: 100%;
+        height: 0;
+        display: block;
+    }
+
+    /* ===== VIDEO LAYER ===== */
+    .pixelated-image-card__video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+        user-select: none;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    /* ===== PIXEL GRID ===== */
+    .pixelated-image-card__pixels {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 5;
+    }
+
+    /* ===== INDIVIDUAL PIXELS ===== */
+    .pixelated-image-card__pixel {
+        background-color: #ffffff;
+        display: none;
+        position: absolute;
+        will-change: transform, opacity;
+        backface-visibility: hidden;
+        border: 0.5px solid rgba(0, 0, 0, 0.15);
+        box-sizing: border-box;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
         .pixelated-image-card {
-            background-color: #000000;
-            color: #ffffff;
-            border-radius: 0;
-            /* 
-               85% of the smaller viewport dimension 
-               This ensures it's always 85% of screen size
-               as shown in your reference image
-            */
-            width: 100vmin;
-            height: 100vmin;
-            max-width: 100vmin;
-            max-height: 100vmin;
-            position: relative;
-            overflow: hidden;
-            box-shadow: none;
-            cursor: pointer;
-            border: none;
+            width: 75vmin;
+            height: 75vmin;
         }
+    }
 
-        /* Aspect ratio fallback (keeps it square) */
-        .before__100 {
-            padding-top: 100%;
-            width: 100%;
-            height: 0;
-            display: block;
+    @media (max-width: 480px) {
+        .pixelated-image-card {
+            width: 75vmin;
+            height: 75vmin;
         }
+    }
+</style>
 
-        /* ===== ALL LAYERS (absolute positioning) ===== */
-        .pixelated-image-card__default,
-        .pixelated-image-card__active,
-        .pixelated-image-card__pixels,
-        .pixelated-image-card__img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        /* Images: cover the square perfectly */
-        .pixelated-image-card__img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: block;
-            user-select: none;
-            pointer-events: none;
-        }
-
-        /* Active layer hidden by default */
-        .pixelated-image-card__active {
-            display: none;
-            pointer-events: none;
-        }
-
-        /* Pixel grid overlay */
-        .pixelated-image-card__pixels {
-            pointer-events: none;
-            z-index: 5;
-        }
-
-        /* Individual pixel - white on black background */
-        .pixelated-image-card__pixel {
-            background-color: #ffffff;
-            display: none;
-            position: absolute;
-            will-change: transform, opacity;
-            backface-visibility: hidden;
-            border: 0.5px solid rgba(0, 0, 0, 0.15);
-            box-sizing: border-box;
-        }
-
-      
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            .pixelated-image-card {
-                width: 75vmin;
-                height: 75vmin;
-            }
-            .osmo-credits__p {
-                font-size: 0.8em;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .pixelated-image-card {
-                width: 75vmin;
-                height: 75vmin;
-            }
-        }
-    </style>
 </head>
 
 
-    <!-- ===== MAIN SECTION ===== -->
-    <section class="cloneable">
-        <div data-hover data-pixelated-image-reveal class="pixelated-image-card">
-            <!-- Aspect ratio placeholder -->
-            <div class="before__100"></div>
 
-            <!-- DEFAULT image (always visible) -->
-            <div class="pixelated-image-card__default">
-                <img 
-                    src="Informative.png" 
-                    alt="Robot Logo" 
-                    class="pixelated-image-card__img"
-                    loading="eager"
-                />
-            </div>
+<!-- ===== MAIN SECTION ===== -->
+<section class="cloneable">
 
-            <!-- ACTIVE image (revealed after pixel animation) -->
-            <div data-pixelated-image-reveal-active class="pixelated-image-card__active">
-                <img 
-                    src="Informative.png" 
-                    alt="Robot Logo Revealed" 
-                    class="pixelated-image-card__img"
-                    loading="eager"
-                />
-            </div>
+    <div
+        data-hover
+        data-pixelated-image-reveal
+        class="pixelated-image-card"
+    >
 
-            <!-- PIXEL GRID container -->
-            <div data-pixelated-image-reveal-grid class="pixelated-image-card__pixels">
-                <!-- Pixels injected by JavaScript -->
-            </div>
+        <!-- Aspect ratio placeholder -->
+        <div class="before__100"></div>
+
+        <!-- ===== ROBOTOMAN VIDEO ===== -->
+        <video
+            id="robotomanVideo"
+            class="pixelated-image-card__video"
+            src="Robotoman.mp4"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="auto"
+            aria-label="Robot Logo"
+        ></video>
+
+        <!-- ===== PIXEL GRID ===== -->
+        <div
+            data-pixelated-image-reveal-grid
+            class="pixelated-image-card__pixels"
+        >
+            <!-- Pixels injected by JavaScript -->
         </div>
-    </section>
-    <!-- ===== ANIMATION JAVASCRIPT ===== -->
-    <script>
-        // ============================================================
-        //  Pixelated Image Reveal - GSAP Animation
-        //  Black background · 85% size · Centered
-        // ============================================================
 
-        document.addEventListener('DOMContentLoaded', function() {
-            'use strict';
+    </div>
 
-            // ---- Configuration ----
-            const ANIMATION_DURATION = 0.3;      // seconds for full reveal
-            const GRID_SIZE = 7;                 // 7x7 = 49 pixels
+</section>
 
-            // ---- Calculate pixel size ----
-            const PIXEL_SIZE = 100 / GRID_SIZE;
 
-            // ---- Select all cards ----
-            const cards = document.querySelectorAll('[data-pixelated-image-reveal]');
-            if (!cards.length) return;
+<!-- ===== ANIMATION JAVASCRIPT ===== -->
+<script>
 
-            // ---- Detect touch device ----
-            const isTouchDevice = (
-                'ontouchstart' in window ||
-                navigator.maxTouchPoints > 0 ||
-                window.matchMedia('(pointer: coarse)').matches
-            );
+    // ============================================================
+    // Pixelated Video Reveal
+    // Robotoman.mp4
+    // 7x7 pixel transition
+    // ============================================================
 
-            // ---- Process each card ----
-            cards.forEach(function(card) {
-                const pixelGrid = card.querySelector('[data-pixelated-image-reveal-grid]');
-                const activeCard = card.querySelector('[data-pixelated-image-reveal-active]');
+    document.addEventListener('DOMContentLoaded', function () {
 
-                if (!pixelGrid || !activeCard) return;
+        'use strict';
 
-                // ---- Clear existing pixels ----
-                const existingPixels = pixelGrid.querySelectorAll('.pixelated-image-card__pixel');
-                existingPixels.forEach(function(pixel) {
-                    pixel.remove();
-                });
+        // --------------------------------------------------------
+        // Configuration
+        // --------------------------------------------------------
 
-                // ---- Generate pixel grid ----
-                for (let row = 0; row < GRID_SIZE; row++) {
-                    for (let col = 0; col < GRID_SIZE; col++) {
-                        const pixel = document.createElement('div');
-                        pixel.classList.add('pixelated-image-card__pixel');
+        const ANIMATION_DURATION = 0.3;
+        const GRID_SIZE = 7;
 
-                        // Position and size
-                        pixel.style.width = PIXEL_SIZE + '%';
-                        pixel.style.height = PIXEL_SIZE + '%';
-                        pixel.style.left = (col * PIXEL_SIZE) + '%';
-                        pixel.style.top = (row * PIXEL_SIZE) + '%';
+        const PIXEL_SIZE = 100 / GRID_SIZE;
 
-                        pixelGrid.appendChild(pixel);
-                    }
+
+        // --------------------------------------------------------
+        // Find cards
+        // --------------------------------------------------------
+
+        const cards = document.querySelectorAll(
+            '[data-pixelated-image-reveal]'
+        );
+
+        if (!cards.length) return;
+
+
+        // --------------------------------------------------------
+        // Detect touch devices
+        // --------------------------------------------------------
+
+        const isTouchDevice =
+            'ontouchstart' in window ||
+            navigator.maxTouchPoints > 0 ||
+            window.matchMedia('(pointer: coarse)').matches;
+
+
+        // --------------------------------------------------------
+        // Process card
+        // --------------------------------------------------------
+
+        cards.forEach(function (card) {
+
+            const pixelGrid =
+                card.querySelector(
+                    '[data-pixelated-image-reveal-grid]'
+                );
+
+            const video =
+                card.querySelector(
+                    '.pixelated-image-card__video'
+                );
+
+
+            if (!pixelGrid || !video) return;
+
+
+            // ----------------------------------------------------
+            // Ensure video plays
+            // ----------------------------------------------------
+
+            video.muted = true;
+            video.loop = true;
+            video.playsInline = true;
+
+            const startVideo = function () {
+
+                const playPromise = video.play();
+
+                if (playPromise !== undefined) {
+                    playPromise.catch(function () {
+                        // Browser may block autoplay until interaction.
+                    });
                 }
 
-                // ---- Get all pixels ----
-                const pixels = pixelGrid.querySelectorAll('.pixelated-image-card__pixel');
-                const totalPixels = pixels.length;
+            };
 
-                // Stagger duration: distribute evenly across ANIMATION_DURATION
-                const staggerDuration = ANIMATION_DURATION / totalPixels;
+            startVideo();
 
-                // ---- State ----
-                let isActive = false;
-                let delayedCall = null;
 
-                // ---- Animation function ----
-                function animatePixels(activate) {
-                    // Kill any ongoing tweens and delayed calls
-                    gsap.killTweensOf(pixels);
-                    if (delayedCall) {
-                        delayedCall.kill();
-                        delayedCall = null;
+            // ----------------------------------------------------
+            // Generate pixel grid
+            // ----------------------------------------------------
+
+            for (
+                let row = 0;
+                row < GRID_SIZE;
+                row++
+            ) {
+
+                for (
+                    let col = 0;
+                    col < GRID_SIZE;
+                    col++
+                ) {
+
+                    const pixel =
+                        document.createElement('div');
+
+                    pixel.classList.add(
+                        'pixelated-image-card__pixel'
+                    );
+
+
+                    // Position
+                    pixel.style.width =
+                        PIXEL_SIZE + '%';
+
+                    pixel.style.height =
+                        PIXEL_SIZE + '%';
+
+                    pixel.style.left =
+                        (col * PIXEL_SIZE) + '%';
+
+                    pixel.style.top =
+                        (row * PIXEL_SIZE) + '%';
+
+
+                    pixelGrid.appendChild(pixel);
+
+                }
+
+            }
+
+
+            // ----------------------------------------------------
+            // Get pixels
+            // ----------------------------------------------------
+
+            const pixels =
+                pixelGrid.querySelectorAll(
+                    '.pixelated-image-card__pixel'
+                );
+
+            const totalPixels = pixels.length;
+
+
+            // ----------------------------------------------------
+            // Stagger
+            // ----------------------------------------------------
+
+            const staggerDuration =
+                ANIMATION_DURATION / totalPixels;
+
+
+            // ----------------------------------------------------
+            // State
+            // ----------------------------------------------------
+
+            let isActive = false;
+            let delayedCall = null;
+
+
+            // ----------------------------------------------------
+            // Pixel animation
+            // ----------------------------------------------------
+
+            function animatePixels(activate) {
+
+                // Kill existing animation
+                gsap.killTweensOf(pixels);
+
+                if (delayedCall) {
+                    delayedCall.kill();
+                    delayedCall = null;
+                }
+
+
+                isActive = activate;
+
+
+                // -----------------------------------------------
+                // Hide pixels
+                // -----------------------------------------------
+
+                gsap.set(
+                    pixels,
+                    {
+                        display: 'none'
                     }
+                );
 
-                    isActive = activate;
 
-                    // 1. Hide all pixels instantly
-                    gsap.set(pixels, { display: 'none' });
+                // -----------------------------------------------
+                // Show pixels randomly
+                // -----------------------------------------------
 
-                    // 2. Show pixels randomly (stagger from random start)
-                    gsap.to(pixels, {
+                gsap.to(
+                    pixels,
+                    {
                         display: 'block',
                         duration: 0,
                         stagger: {
@@ -683,20 +783,44 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
                             from: 'random'
                         },
                         ease: 'power1.inOut'
-                    });
+                    }
+                );
 
-                    // 3. After ANIMATION_DURATION, show/hide the active card
-                    delayedCall = gsap.delayedCall(ANIMATION_DURATION, function() {
-                        if (activate) {
-                            activeCard.style.display = 'block';
-                            activeCard.style.pointerEvents = 'none';
-                        } else {
-                            activeCard.style.display = 'none';
+
+                // -----------------------------------------------
+                // Wait for pixel transition
+                // -----------------------------------------------
+
+                delayedCall =
+                    gsap.delayedCall(
+                        ANIMATION_DURATION,
+                        function () {
+
+                            // Keep the video visible.
+                            // The pixels simply act as the
+                            // transition effect.
+
+                            if (activate) {
+
+                                startVideo();
+
+                            } else {
+
+                                startVideo();
+
+                            }
+
                         }
-                    });
+                    );
 
-                    // 4. Hide pixels randomly after the same delay
-                    gsap.to(pixels, {
+
+                // -----------------------------------------------
+                // Remove pixels
+                // -----------------------------------------------
+
+                gsap.to(
+                    pixels,
+                    {
                         display: 'none',
                         duration: 0,
                         delay: ANIMATION_DURATION,
@@ -705,42 +829,68 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
                             from: 'random'
                         },
                         ease: 'power1.inOut'
-                    });
-                }
+                    }
+                );
 
-                // ---- Bind interactions ----
-                if (isTouchDevice) {
-                    // Touch: toggle on click
-                    card.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        animatePixels(!isActive);
-                    });
-                } else {
-                    // Desktop: hover
-                    card.addEventListener('mouseenter', function() {
+            }
+
+
+            // ----------------------------------------------------
+            // Desktop hover
+            // ----------------------------------------------------
+
+            if (!isTouchDevice) {
+
+                card.addEventListener(
+                    'mouseenter',
+                    function () {
+
                         if (!isActive) {
                             animatePixels(true);
                         }
-                    });
-                    card.addEventListener('mouseleave', function() {
+
+                    }
+                );
+
+
+                card.addEventListener(
+                    'mouseleave',
+                    function () {
+
                         if (isActive) {
                             animatePixels(false);
                         }
-                    });
-                }
 
-                // ---- Ensure active card starts hidden ----
-                activeCard.style.display = 'none';
-                activeCard.style.pointerEvents = 'none';
-            });
+                    }
+                );
 
-        }); // end DOMContentLoaded
-    </script>
+            }
 
 
+            // ----------------------------------------------------
+            // Mobile / touch
+            // ----------------------------------------------------
 
+            else {
 
+                card.addEventListener(
+                    'click',
+                    function (e) {
 
+                        e.stopPropagation();
+
+                        animatePixels(!isActive);
+
+                    }
+                );
+
+            }
+
+        });
+
+    });
+
+</script>
   
 
  
