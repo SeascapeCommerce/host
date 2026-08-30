@@ -346,27 +346,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
-  /* Trailing particles */
-  trail.slice(1).forEach((particle, index) => {
-
-    const delay = (index + 1) * 0.065;
-
-    gsap.to(particle, {
-      x: () => currentX,
-      y: () => currentY,
-
-      duration: 0.45 + delay,
-      ease: "power3.out",
-
-      repeat: -1,
-
-      modifiers: {
-        x: () => currentX,
-        y: () => currentY
-      }
-    });
-
-  });
 
 
   /* =====================================================
