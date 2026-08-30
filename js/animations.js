@@ -221,9 +221,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  gsap.registerPlugin(ScrollTrigger);
-
-
   /* =====================================================
      1. SCROLL PARALLAX
      ===================================================== */
@@ -292,73 +289,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
-  /* =====================================================
-     4. CURSOR TRAILING EFFECT
-     ===================================================== */
-
-  const trail = gsap.utils.toArray(
-    ".cursor-trail span"
-  );
-
-  const transition = document.querySelector(
-    "#seascape-transition"
-  );
-
-  if (!transition || !trail.length) return;
-
-  let mouseX = 0;
-  let mouseY = 0;
-
-  let currentX = 0;
-  let currentY = 0;
-
-  transition.addEventListener("pointermove", (event) => {
-
-    const rect = transition.getBoundingClientRect();
-
-    mouseX = event.clientX - rect.left;
-    mouseY = event.clientY - rect.top;
-
-  });
-
-
-  /* Smooth cursor position */
-  gsap.ticker.add(() => {
-
-    currentX += (mouseX - currentX) * 0.15;
-    currentY += (mouseY - currentY) * 0.15;
-
-    gsap.set(trail[0], {
-      x: currentX,
-      y: currentY,
-      opacity: 1,
-      scale: 1
-    });
-
-  });
-
-
-  /* Trailing particles */
-  trail.slice(1).forEach((particle, index) => {
-
-    const delay = (index + 1) * 0.065;
-
-    gsap.to(particle, {
-      x: () => currentX,
-      y: () => currentY,
-
-      duration: 0.45 + delay,
-      ease: "power3.out",
-
-      repeat: -1,
-
-      modifiers: {
-        x: () => currentX,
-        y: () => currentY
-      }
-    });
-
-  });
 
 
   /* =====================================================
