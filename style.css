@@ -642,3 +642,31 @@ body {
   transition: transform 0.4s cubic-bezier(.25,.46,.45,.94);
   will-change: transform;
 }
+
+
+body {
+  overflow: hidden;
+}
+.section {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: row;
+  height: 100vh;
+}
+
+.box {
+  cursor: pointer;
+  opacity: 0;
+}
+
+.text {
+  position: fixed;
+  bottom: 2rem;
+  width: 100%;
+display:flex;align-items:center;justify-content:center;
+}
+
+.braces {
+  display: block;
+}
