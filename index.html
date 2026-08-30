@@ -1327,6 +1327,7 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
 <section id="industries">
   <div class="industries-header">
     <span class="section-label reveal">Industries We Serve</span>
+
     <h2 class="section-title reveal reveal-delay-1">
       Built for <em>Any</em><br>Vertical
     </h2>
@@ -1334,14 +1335,16 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
 
   <div class="industries-video reveal reveal-delay-2">
     <video
-      src="Industriesvideo.mp4"
       autoplay
       muted
       loop
       playsinline
       preload="auto"
-      aria-label="Industries We Serve"
-    ></video>
+      controls
+    >
+      <source src="Industriesvideo.mp4" type="video/mp4">
+      Your browser does not support HTML5 video.
+    </video>
   </div>
 </section>
 
@@ -1350,7 +1353,8 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
 <style>
   .industries-video {
     width: 100%;
-    height: clamp(300px, 55vw, 700px);
+    height: auto;
+    min-height: 350px;
     overflow: hidden;
     border-radius: 0.6rem;
     position: relative;
@@ -1358,17 +1362,21 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
   }
 
   .industries-video video {
+    display: block;
     width: 100%;
     height: 100%;
-    display: block;
+    min-height: 350px;
     object-fit: contain;
     object-position: center;
+    background: #000;
   }
 
-  /* Smaller screens */
   @media (max-width: 768px) {
     .industries-video {
-      height: 60vw;
+      min-height: 250px;
+    }
+
+    .industries-video video {
       min-height: 250px;
     }
   }
