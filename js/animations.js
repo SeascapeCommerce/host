@@ -374,3 +374,597 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
+
+
+
+/* ═══════════════════════════════════════════════════════
+   SEASCAPE GOOEY WEBGL TRANSITION
+   Hero → Pixel Reveal
+
+   Self-contained.
+   Does not modify body.
+   Does not modify phone section.
+   ═══════════════════════════════════════════════════════ */
+
+(function initSeascapeGooeyTransition() {
+
+    const canvas = document.querySelector(
+        "#gooey-transition #gooey-overlay"
+    );
+
+    const transition = document.querySelector(
+        "#gooey-transition"
+    );
+
+    const vertexSource = document.querySelector(
+        "#gooey-vertShader"
+    );
+
+    const fragmentSource = document.querySelector(
+        "#gooey-fragShader"
+    );
+
+
+    /*
+     * If the transition isn't present, simply exit.
+     * This protects the rest of the website.
+     */
+
+    if (
+        !canvas ||
+        !transition ||
+        !vertexSource ||
+        !fragmentSource
+    ) {
+        return;
+    }
+
+
+    /*
+     * GSAP is already loaded by your website.
+     */
+
+    if (
+        typeof gsap === "undefined" ||
+        typeof ScrollTrigger === "undefined"
+    ) {
+        console.warn(
+            "Seascape Gooey Transition: GSAP or ScrollTrigger missing."
+        );
+
+        return;
+    }
+
+
+    gsap.registerPlugin(
+        ScrollTrigger
+    );
+
+
+    /* =====================================================
+       WEBGL
+       ===================================================== */
+
+    const gl =
+        canvas.getContext("webgl", {
+            alpha: true,
+            antialias: false
+        }) ||
+        canvas.getContext(
+            "experimental-webgl"
+        );
+
+
+    if (!gl) {
+
+        console.warn(
+            "Seascape Gooey Transition: WebGL unavailable."
+        );
+
+        return;
+    }
+
+
+    /* =====================================================
+       PARAMETERS
+       ===================================================== */
+
+    const params = {
+
+        scrollProgress: 0,
+
+        colWidth: 0.7,
+
+        speed: 0.2,
+
+        scale: 0.25,
+
+        seed: 0.231,
+
+        /*
+         * Seascape cyan.
+         * WebGL uses normalized RGB.
+         */
+
+        color: [
+            0.0,
+            0.941,
+            1.0
+        ],
+
+        opacity: 0.9
+
+    };
+
+
+    /* =====================================================
+       SHADER COMPILATION
+       ===================================================== */
+
+    function createShader(
+        type,
+        source
+    ) {
+
+        const shader =
+            gl.createShader(type);
+
+        gl.shaderSource(
+            shader,
+            source
+        );
+
+        gl.compileShader(shader);
+
+
+        if (
+            !gl.getShaderParameter(
+                shader,
+                gl.COMPILE_STATUS
+            )
+        ) {
+
+            console.error(
+                "Seascape Gooey Shader Error:",
+                gl.getShaderInfoLog(shader)
+            );
+
+            gl.deleteShader(shader);
+
+            return null;
+        }
+
+
+        return shader;
+    }
+
+
+    const vertexShader =
+        createShader(
+            gl.VERTEX_SHADER,
+            vertexSource.textContent
+        );
+
+
+    const fragmentShader =
+        createShader(
+            gl.FRAGMENT_SHADER,
+            fragmentSource.textContent
+        );
+
+
+    if (
+        !vertexShader ||
+        !fragmentShader
+    ) {
+        return;
+    }
+
+
+    /* =====================================================
+       PROGRAM
+       ===================================================== */
+
+    const program =
+        gl.createProgram();
+
+
+    gl.attachShader(
+        program,
+        vertexShader
+    );
+
+    gl.attachShader(
+        program,
+        fragmentShader
+    );
+
+    gl.linkProgram(
+        program
+    );
+
+
+    if (
+        !gl.getProgramParameter(
+            program,
+            gl.LINK_STATUS
+        )
+    ) {
+
+        console.error(
+            "Seascape Gooey Program Error:",
+            gl.getProgramInfoLog(program)
+        );
+
+        return;
+    }
+
+
+    gl.useProgram(
+        program
+    );
+
+
+    /* =====================================================
+       UNIFORMS
+       ===================================================== */
+
+    const uniforms = {};
+
+    [
+        "u_resolution",
+        "u_scroll_progr",
+        "u_col_width",
+        "u_seed",
+        "u_scale",
+        "u_time",
+        "u_speed",
+        "u_opacity",
+        "u_color"
+
+    ].forEach(
+        name => {
+
+            uniforms[name] =
+                gl.getUniformLocation(
+                    program,
+                    name
+                );
+
+        }
+    );
+
+
+    /* =====================================================
+       FULLSCREEN QUAD
+       ===================================================== */
+
+    const vertices =
+        new Float32Array([
+
+            -1, -1,
+
+             1, -1,
+
+            -1,  1,
+
+             1,  1
+
+        ]);
+
+
+    const buffer =
+        gl.createBuffer();
+
+
+    gl.bindBuffer(
+        gl.ARRAY_BUFFER,
+        buffer
+    );
+
+
+    gl.bufferData(
+        gl.ARRAY_BUFFER,
+        vertices,
+        gl.STATIC_DRAW
+    );
+
+
+    const positionLocation =
+        gl.getAttribLocation(
+            program,
+            "a_position"
+        );
+
+
+    gl.enableVertexAttribArray(
+        positionLocation
+    );
+
+
+    gl.vertexAttribPointer(
+        positionLocation,
+        2,
+        gl.FLOAT,
+        false,
+        0,
+        0
+    );
+
+
+    /* =====================================================
+       INITIAL UNIFORMS
+       ===================================================== */
+
+    gl.uniform1f(
+        uniforms.u_col_width,
+        params.colWidth
+    );
+
+    gl.uniform1f(
+        uniforms.u_speed,
+        params.speed
+    );
+
+    gl.uniform1f(
+        uniforms.u_scale,
+        params.scale
+    );
+
+    gl.uniform1f(
+        uniforms.u_seed,
+        params.seed
+    );
+
+    gl.uniform1f(
+        uniforms.u_opacity,
+        params.opacity
+    );
+
+    gl.uniform3f(
+        uniforms.u_color,
+        params.color[0],
+        params.color[1],
+        params.color[2]
+    );
+
+
+    /* =====================================================
+       RESIZE
+       ===================================================== */
+
+    function resize() {
+
+        const rect =
+            transition.getBoundingClientRect();
+
+
+        const dpr =
+            Math.min(
+                window.devicePixelRatio || 1,
+                2
+            );
+
+
+        canvas.width =
+            Math.max(
+                1,
+                Math.floor(
+                    rect.width * dpr
+                )
+            );
+
+
+        canvas.height =
+            Math.max(
+                1,
+                Math.floor(
+                    rect.height * dpr
+                )
+            );
+
+
+        canvas.style.width =
+            rect.width + "px";
+
+
+        canvas.style.height =
+            rect.height + "px";
+
+
+        gl.viewport(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+
+        gl.uniform2f(
+            uniforms.u_resolution,
+            canvas.width,
+            canvas.height
+        );
+
+    }
+
+
+    resize();
+
+
+    window.addEventListener(
+        "resize",
+        resize
+    );
+
+
+    /* =====================================================
+       SCROLL PROGRESS
+       ===================================================== */
+
+    gsap.to(
+        params,
+        {
+
+            scrollProgress: 1,
+
+            ease: "none",
+
+            scrollTrigger: {
+
+                trigger:
+                    transition,
+
+                start:
+                    "top bottom",
+
+                end:
+                    "bottom top",
+
+                scrub:
+                    1
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       ENTRANCE TEXT
+       ===================================================== */
+
+    gsap.fromTo(
+
+        ".gooey-transition-content",
+
+        {
+            opacity: 0,
+            y: 25
+        },
+
+        {
+            opacity: 1,
+            y: 0,
+
+            ease: "power2.out",
+
+            scrollTrigger: {
+
+                trigger:
+                    transition,
+
+                start:
+                    "top 80%",
+
+                end:
+                    "top 45%",
+
+                scrub:
+                    true
+
+            }
+
+        }
+
+    );
+
+
+    /* =====================================================
+       RENDER LOOP
+       ===================================================== */
+
+    let animationFrame;
+
+
+    function render(
+        time
+    ) {
+
+        /*
+         * Stop rendering if the element has been removed.
+         */
+
+        if (
+            !document.body.contains(
+                transition
+            )
+        ) {
+            cancelAnimationFrame(
+                animationFrame
+            );
+
+            return;
+        }
+
+
+        gl.clearColor(
+            0,
+            0,
+            0,
+            0
+        );
+
+
+        gl.clear(
+            gl.COLOR_BUFFER_BIT
+        );
+
+
+        gl.useProgram(
+            program
+        );
+
+
+        gl.uniform1f(
+            uniforms.u_time,
+            time
+        );
+
+
+        gl.uniform1f(
+            uniforms.u_scroll_progr,
+            params.scrollProgress
+        );
+
+
+        gl.drawArrays(
+            gl.TRIANGLE_STRIP,
+            0,
+            4
+        );
+
+
+        animationFrame =
+            requestAnimationFrame(
+                render
+            );
+
+    }
+
+
+    animationFrame =
+        requestAnimationFrame(
+            render
+        );
+
+
+    /*
+     * Refresh ScrollTrigger once the page is loaded.
+     */
+
+    window.addEventListener(
+        "load",
+        () => {
+
+            resize();
+
+            ScrollTrigger.refresh();
+
+        }
+    );
+
+
+})();
+
+
