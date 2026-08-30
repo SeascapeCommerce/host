@@ -670,3 +670,222 @@ display:flex;align-items:center;justify-content:center;
 .braces {
   display: block;
 }
+
+
+
+@font-face {
+  font-display: block;
+  font-family: Mori;
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://assets.codepen.io/16327/PPMori-Regular.woff) format("woff");
+}
+
+@font-face {
+  font-display: block;
+  font-family: Mori;
+  font-style: normal;
+  font-weight: 600;
+  src: url(https://assets.codepen.io/16327/PPMori-SemiBold.woff) format("woff");
+}
+
+@font-face {
+  font-display: block;
+  font-family: Fraktion Mono;
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://assets.codepen.io/16327/PPFraktionMono-Bold.woff)
+    format("woff");
+}
+
+:root {
+  --color-shockingly-green: #0ae448;
+  --color-just-black: #0e100f;
+  --color-surface-white: #fffce1;
+  --color-pink: #fec5fb;
+  --color-shockingly-pink: #f100cb;
+  --color-orangey: #ff8709;
+  --color-lilac: #9d95ff;
+  --color-lt-green: #abff84;
+  --color-blue: #00bae2;
+  --color-grey: gray;
+  --color-surface75: #bbbaa6;
+  --color-surface50: #7c7c6f;
+  --color-surface25: #42433d;
+}
+
+:root {
+  --dark: var(--color-just-black);
+  --grey-dark: #42433d;
+  --light: var(--color-surface-white);
+  --mid: #7c7c6f;
+  --grey: #gray;
+  --gray: #gray;
+  --green: var(--color-shockingly-green);
+  --green-dark: #0ae448;
+  --green-light: var(--color-lt-green);
+  --blue: var(--color-blue);
+  --purple: var(--color-lilac);
+  --red: #cd237f;
+  --orange: var(--color-orangey);
+  accent-color: var(--color-shockingly-green);
+}
+
+body {
+  color: var(--color-surface-white);
+  background-color: #191919;
+  font-family: Mori, sans-serif;
+  font-weight: 400;
+  margin: 0;
+  font-size: var(--step-0);
+  line-height: 1.45;
+}
+
+html, body {
+  width: 0;         /* for fixing iOS iframe issues */
+  min-width: 100%;  /* for fixing iOS iframe issues */
+  overflow-x: hidden;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  accent-color: var(--color-shockingly-green);
+}
+body {
+  text-align: center;
+  font-weight: 300;
+  font-size: 18px;
+  padding: 10px 0;
+}
+h1 {
+  margin: 0;
+  font-size: 50px;
+  text-align: left;
+}
+h2 {
+  font-size: 38px;
+  margin-bottom: 0;
+}
+h1, h2, h3 {
+  color: white;
+  font-weight: 400;
+}
+h3 {
+  margin-bottom: -12px;
+}
+#header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+a {
+  color: #88ce02;
+  text-decoration: none;
+  font-weight: 400;
+}
+a:hover {
+  text-decoration: underline;
+}
+#container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+.box {
+  background-color: #0ae448!important;
+  position: relative;
+  border-radius: 5px;
+}
+.box:before {
+  padding-top:100%;
+  content:"";
+  display:block;
+}
+#instructions {
+  margin-top: 35px;
+  padding:0 16px 16px 16px;
+  text-align: left;
+  max-width: 1000px;
+  display: inline-block;
+}
+
+.code {
+  background-color: #292a2b;
+  padding: 12px;
+  border-radius: 10px;
+}
+
+strong {
+  font-weight: 400;
+  font-size: 20px;
+}
+.question {
+
+  font-size: 21px;
+  font-weight: 400;
+  display: block;
+}
+#controls {
+  text-align: center;
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: start;
+}
+.control {
+  display: flex;
+  align-items: flex-start;
+  color: white;
+  margin-bottom: 10px;
+}
+.control-label {
+  margin-top: 10px;
+}
+.control-vertical {
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+  text-align: left;
+  justify-content: flex-start;
+  padding: 6px 8px;
+  border-radius: 9px;
+  background-color: #111;
+  margin-right: 18px;
+  color: #bbb;
+}
+
+.fr-video {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 0;
+  float: left;
+  padding-bottom: 56.25%;
+  margin: 12px 0 35px 0;
+}
+
+.fr-video iframe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  border: 2px solid #444;
+}
+
+#instructions li {
+  margin-bottom: 10px;
+}
+
+@media only screen and (max-width: 640px) {
+  h1 {
+    font-size: 30px;
+    line-height: 30px;
+  }
+  #controls {
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+}
