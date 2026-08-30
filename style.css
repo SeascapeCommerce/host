@@ -580,4 +580,201 @@ body {
   .transition-caption {
     display: none;
   }
+
+
+
+  ```css
+/* ═══════════════════════════════════════════════════════
+   SEASCAPE GOOEY TRANSITION
+   Hero → Pixel Reveal
+   ═══════════════════════════════════════════════════════ */
+
+#gooey-transition {
+    position: relative;
+    width: 100%;
+    height: 42vh;
+    min-height: 360px;
+    overflow: hidden;
+
+    background: #000;
+
+    isolation: isolate;
 }
+
+
+/* WebGL canvas */
+
+#gooey-transition #gooey-overlay {
+    position: absolute;
+    inset: 0;
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 1;
+
+    pointer-events: none;
+}
+
+
+/* Subtle dark fade at top and bottom */
+
+#gooey-transition::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    z-index: 2;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,0.95) 0%,
+            transparent 24%,
+            transparent 76%,
+            rgba(0,0,0,0.98) 100%
+        );
+}
+
+
+/* Content sitting above WebGL */
+
+.gooey-transition-content {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 3;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    pointer-events: none;
+
+    text-align: center;
+}
+
+
+/* Small brand identifier */
+
+.gooey-transition-label {
+    margin-top: -4vh;
+
+    font-family:
+        'Inter',
+        sans-serif;
+
+    font-size: 0.65rem;
+
+    font-weight: 600;
+
+    letter-spacing: 0.28em;
+
+    text-transform: uppercase;
+
+    color: rgba(255,255,255,0.62);
+}
+
+
+/* ENTER */
+
+.gooey-transition-enter {
+    margin-top: 1rem;
+
+    font-family:
+        'Inter',
+        sans-serif;
+
+    font-size: clamp(
+        1.5rem,
+        3vw,
+        3rem
+    );
+
+    font-weight: 500;
+
+    letter-spacing: 0.08em;
+
+    text-transform: uppercase;
+
+    color: #fff;
+
+    opacity: 0.92;
+}
+
+
+/* Arrow */
+
+.gooey-transition-arrow {
+    margin-top: 1.2rem;
+
+    font-size: 1.8rem;
+
+    line-height: 1;
+
+    color: #00F0FF;
+
+    animation:
+        gooey-arrow-float
+        1.4s
+        ease-in-out
+        infinite;
+}
+
+
+@keyframes gooey-arrow-float {
+
+    0%,
+    100% {
+        transform:
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            translateY(8px);
+    }
+}
+
+
+/* Mobile */
+
+@media (max-width: 768px) {
+
+    #gooey-transition {
+        height: 34vh;
+        min-height: 260px;
+    }
+
+    .gooey-transition-label {
+        font-size: 0.55rem;
+    }
+
+    .gooey-transition-enter {
+        font-size: 1.4rem;
+    }
+
+}
+
+
+/* Accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .gooey-transition-arrow {
+        animation: none;
+    }
+
+}
+```
+
