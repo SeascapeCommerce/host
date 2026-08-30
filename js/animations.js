@@ -375,6 +375,74 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
+gsap.registerPlugin(ScrollTrigger);
+
+// Background video fade-in
+gsap.to(".bg-video", {
+  opacity: 0.45,
+  duration: 2,
+  ease: "power2.out"
+});
+
+// Scene entrance
+gsap.to(".scene-inner", {
+  scrollTrigger: {
+    trigger: "#services",
+    start: "top 80%",
+  },
+  y: 0,
+  opacity: 1,
+  duration: 1.6,
+  ease: "power3.out"
+});
+
+// Parallax mid-layer
+gsap.to(".scene-parallax", {
+  scrollTrigger: {
+    trigger: "#services",
+    start: "top bottom",
+    scrub: true
+  },
+  y: -120
+});
+
+// Text split reveal
+gsap.utils.toArray(".split").forEach((el) => {
+  gsap.to(el, {
+    scrollTrigger: {
+      trigger: el,
+      start: "top 85%",
+    },
+    opacity: 1,
+    y: 0,
+    duration: 0.9,
+    ease: "power2.out"
+  });
+});
+
+// Directional reel motion (left → right)
+gsap.to(".directional-reel .frame", {
+  scrollTrigger: {
+    trigger: ".services-grid",
+    start: "top 80%",
+  },
+  opacity: 1,
+  x: 0,
+  duration: 1.4,
+  ease: "power3.out",
+  stagger: 0.18
+});
+
+// Frame-cut subtle motion
+gsap.to(".frame-cut", {
+  scrollTrigger: {
+    trigger: ".frame-cut",
+    start: "top 90%",
+  },
+  borderColor: "rgba(255,255,255,0.35)",
+  duration: 1.2,
+  ease: "power2.out"
+});
 
 
 
