@@ -1334,57 +1334,122 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
   </div>
 
   <div class="industries-video reveal reveal-delay-2">
-    <video id="industries-video"
+
+    <video
+      id="industries-video"
       autoplay
       muted
       loop
       playsinline
+      webkit-playsinline
       preload="auto"
-      controls
+      aria-hidden="true"
     >
-      <source src="Industriesvideo.mp4" type="video/mp4">
-      
+      <source src="./Industriesvideo.mp4" type="video/mp4">
     </video>
+
   </div>
 </section>
 
-
 <div class="divider"></div>
 
+
 <style>
+  /* ═══════════════════════════════════════
+     INDUSTRIES VIDEO
+     ═══════════════════════════════════════ */
+
   .industries-video {
+    position: relative;
     width: 100%;
-    height: auto;
-    min-height: 350px;
+    height: clamp(400px, 55vw, 750px);
+
     overflow: hidden;
     border-radius: 0.6rem;
-    position: relative;
+
     background: #000;
   }
 
+  /* Full-section background video */
   .industries-video video {
-    display: block;
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
     width: 100%;
     height: 100%;
-    min-height: 350px;
-    object-fit: contain;
-    object-position: center;
-    background: #000;
+
+    transform: translate(-50%, -50%);
+
+    object-fit: cover;
+    object-position: center center;
+
+    display: block;
+
+    pointer-events: none;
   }
 
+
+  /* Mobile */
   @media (max-width: 768px) {
+
     .industries-video {
-      min-height: 250px;
+      height: 65vw;
+      min-height: 300px;
     }
 
     .industries-video video {
-      min-height: 250px;
+      object-fit: cover;
     }
+
   }
 </style>
 
 
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
 
+    const video = document.getElementById("industries-video");
+
+    if (!video) return;
+
+    video.muted = true;
+    video.setAttribute("muted", "");
+    video.setAttribute("playsinline", "");
+    video.setAttribute("autoplay", "");
+    video.setAttribute("loop", "");
+
+    /*
+     * Force the video to load.
+     */
+    video.load();
+
+    /*
+     * Attempt autoplay once the browser
+     * has enough data.
+     */
+    video.addEventListener("canplay", function () {
+
+      video.play().catch(function (error) {
+        console.log("Industries video autoplay blocked:", error);
+      });
+
+    });
+
+    /*
+     * Additional autoplay attempt.
+     */
+    setTimeout(function () {
+
+      video.play().catch(function (error) {
+        console.log("Industries video could not autoplay:", error);
+      });
+
+    }, 1000);
+
+  });
+</script>
 
 
 <!-- ════════ WHY US ════════ -->
