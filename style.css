@@ -4,6 +4,271 @@
   --white: #F8FAFC;
 }
 
+
+```css
+/* ═══════════════════════════════════════════════════════
+   SEASCAPE GSAP PARALLAX / TRAILING TRANSITION
+   ═══════════════════════════════════════════════════════ */
+
+.seascape-transition {
+  position: relative;
+  width: 100%;
+  height: 42vh;
+  min-height: 320px;
+  background: var(--abyss);
+  overflow: hidden;
+  isolation: isolate;
+  border-top: 1px solid rgba(255,255,255,.04);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+/* Main effect viewport */
+.transition-field {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Fade the transition into the surrounding sections */
+.transition-field::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      to bottom,
+      var(--abyss) 0%,
+      transparent 22%,
+      transparent 78%,
+      var(--abyss) 100%
+    );
+}
+
+/* Horizontal atmospheric lines */
+.transition-field::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  pointer-events: none;
+
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 44px,
+      rgba(255,255,255,.025) 45px
+    );
+
+  opacity: .55;
+}
+
+/* All GSAP parallax layers */
+.parallax-layer {
+  position: absolute;
+  left: -10%;
+  top: -25%;
+  width: 120%;
+  height: 150%;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Slowest atmospheric layer */
+.transition-glow {
+  background:
+    radial-gradient(
+      ellipse at 25% 50%,
+      rgba(240,112,32,.14) 0%,
+      rgba(240,112,32,.035) 28%,
+      transparent 62%
+    ),
+    radial-gradient(
+      ellipse at 75% 40%,
+      rgba(255,255,255,.08) 0%,
+      transparent 50%
+    );
+
+  filter: blur(35px);
+  opacity: .8;
+}
+
+/* Middle layer */
+.transition-grid {
+  opacity: .32;
+
+  background-image:
+    linear-gradient(
+      rgba(255,255,255,.08) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,.08) 1px,
+      transparent 1px
+    );
+
+  background-size: 90px 90px;
+
+  transform: perspective(700px) rotateX(58deg) scale(1.35);
+  transform-origin: center center;
+
+  mask-image:
+    linear-gradient(
+      to bottom,
+      transparent,
+      black 25%,
+      black 75%,
+      transparent
+    );
+}
+
+/* Fast foreground layer */
+.transition-orbit {
+  opacity: .65;
+
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      transparent 0 23%,
+      rgba(255,255,255,.08) 23.2%,
+      transparent 23.5%,
+      transparent 35%,
+      rgba(240,112,32,.15) 35.2%,
+      transparent 35.6%,
+      transparent 48%,
+      rgba(255,255,255,.06) 48.2%,
+      transparent 48.6%
+    );
+
+  transform: scale(1.15);
+}
+
+/* ═══════════════════════════════════════════════════════
+   TRAILING CURSOR
+   ═══════════════════════════════════════════════════════ */
+
+.cursor-trail {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.cursor-trail span {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+
+  background: var(--orange);
+
+  box-shadow:
+    0 0 10px rgba(240,112,32,.65),
+    0 0 24px rgba(240,112,32,.18);
+
+  opacity: 0;
+
+  transform:
+    translate3d(-50%, -50%, 0)
+    scale(.35);
+
+  will-change: transform, opacity;
+}
+
+/* Larger lead particle */
+.cursor-trail span:first-child {
+  width: 8px;
+  height: 8px;
+}
+
+/* Transition information */
+.transition-content {
+  position: absolute;
+  z-index: 30;
+
+  left: 6%;
+  bottom: 18%;
+
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  pointer-events: none;
+}
+
+.transition-index {
+  font-family: var(--mono);
+  font-size: .58rem;
+  letter-spacing: .2em;
+  color: var(--orange);
+}
+
+.transition-line {
+  width: 70px;
+  height: 1px;
+
+  background:
+    linear-gradient(
+      to right,
+      var(--orange),
+      transparent
+    );
+}
+
+.transition-caption {
+  font-family: var(--mono);
+  font-size: .55rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.38);
+}
+
+/* Respect reduced-motion accessibility preferences */
+@media (prefers-reduced-motion: reduce) {
+
+  .parallax-layer,
+  .cursor-trail span {
+    transform: none !important;
+  }
+
+  .cursor-trail {
+    display: none;
+  }
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+
+  .seascape-transition {
+    height: 32vh;
+    min-height: 240px;
+  }
+
+  .transition-grid {
+    background-size: 55px 55px;
+  }
+
+  .transition-content {
+    left: 5%;
+    bottom: 15%;
+  }
+
+  .transition-caption {
+    display: none;
+  }
+}
+```
+
+
+
+
+
+
 /* Add this to your CSS file (root {.txt) */
 .ad-video {
   position: absolute;
