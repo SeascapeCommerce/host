@@ -582,60 +582,63 @@ body {
   }
 
 
+/* Depth layering */
+.depth-0 { z-index: -5; }
+.depth-1 { z-index: -4; }
+.depth-2 { z-index: -3; }
+.depth-3 { z-index: 1; }
+.depth-4 { z-index: 2; }
 
-/* Background video reel */
+/* D0: Background video */
 .scene-bg {
   position: absolute;
   inset: 0;
   overflow: hidden;
-  z-index: -3;
 }
-
 .bg-video {
   width: 100%;
   height: 100%;
   object-fit: cover;
   opacity: 0.25;
-  filter: blur(2px);
+  filter: blur(3px);
 }
 
-/* Mid-layer parallax texture */
-.scene-parallax {
+/* D1: Grain drift */
+.scene-grain {
   position: absolute;
   inset: 0;
   background: url('images/placeholder-grain.png');
   background-size: cover;
   opacity: 0.15;
-  z-index: -2;
+  mix-blend-mode: overlay;
   transform: translateY(0);
 }
 
-/* Foreground content */
+/* D2: Reactive bloom light */
+.scene-light {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.25), transparent 60%);
+  opacity: 0;
+  pointer-events: none;
+  filter: blur(40px);
+}
+
+/* D3: Foreground content */
 .scene-inner {
   position: relative;
-  z-index: 2;
-  transform: translateY(80px);
+  transform: translateY(100px);
   opacity: 0;
 }
 
-/* Frame-cut effect */
-.frame-cut {
-  border-bottom: 1px solid rgba(255,255,255,0.15);
-  padding-bottom: 3rem;
-  margin-bottom: 4rem;
-}
-
-/* Directional reel motion */
+/* D4: Cards directional motion */
 .directional-reel .frame {
   opacity: 0;
-  transform: translateX(-60px);
+  transform: translateX(-80px) translateY(40px);
 }
 
-/* Hover micro-interactions */
+/* Magnetic hover */
 .service-card {
   transition: transform 0.4s cubic-bezier(.25,.46,.45,.94);
-}
-
-.service-card:hover {
-  transform: translateY(-10px) scale(1.02);
+  will-change: transform;
 }
