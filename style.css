@@ -580,7 +580,7 @@ body {
   .transition-caption {
     display: none;
   }
-
+}
 
 /* Depth layering */
 .depth-0 { z-index: -5; }
@@ -645,7 +645,6 @@ body {
 
 
 
-
 /* ==========================================
    PLATFORM SHOWCASE
 ========================================== */
@@ -661,9 +660,11 @@ body {
   position:absolute;
   inset:0;
   background:
-    radial-gradient(circle at top left,
+    radial-gradient(
+      circle at top left,
       rgba(0,170,255,.12),
-      transparent 50%);
+      transparent 50%
+    );
   pointer-events:none;
 }
 
@@ -678,15 +679,7 @@ body {
   margin-bottom:.8rem;
   letter-spacing:.15em;
   text-transform:uppercase;
-  color:var(--accent);
-}
-
-.section-header h2{
-  margin-bottom:1rem;
-}
-
-.section-header p{
-  opacity:.8;
+  color:#00F0FF;
 }
 
 .showcase-grid{
@@ -699,18 +692,12 @@ body {
   position:relative;
   overflow:hidden;
   border-radius:28px;
-
   background:rgba(255,255,255,.04);
-
   border:1px solid rgba(255,255,255,.08);
-
   backdrop-filter:blur(20px);
-
-  box-shadow:
-    0 20px 60px rgba(0,0,0,.35);
+  box-shadow:0 20px 60px rgba(0,0,0,.35);
 
   opacity:0;
-  transform:translateY(80px) scale(.92);
 }
 
 .showcase-card img{
@@ -722,14 +709,21 @@ body {
   position:absolute;
   inset:0;
   background:#08111d;
-  transform-origin:left center;
   z-index:2;
+
+  transform-origin:left center;
+  transform:scaleX(1);
 }
 
 .showcase-cta{
   text-align:center;
   margin-top:3rem;
   opacity:0;
+}
+
+.showcase-card:hover{
+  transform:translateY(-10px);
+  transition:.35s ease;
 }
 
 @media(max-width:900px){
