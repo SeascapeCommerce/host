@@ -194,15 +194,19 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ─── 4. AUTO-PLAY PAUSE ON HOVER ───
-  const section = document.getElementById('film-reel');
+ const section = document.getElementById('film-reel');
+
+if(section){
+
   section.addEventListener('mouseenter', () => {
-    // Pause scroll-triggered animation if needed
     ScrollTrigger.getById('reel-scroll')?.pause();
   });
+
   section.addEventListener('mouseleave', () => {
     ScrollTrigger.getById('reel-scroll')?.resume();
   });
-});
+
+}
 
 
 /* D0: Background video subtle motion */
@@ -289,75 +293,94 @@ document.querySelectorAll(".service-card").forEach(card => {
 });
 
 
-  // ─── Image Animation Scroll PAUSE ON HOVER ───
-const showcaseTL = gsap.timeline({
+/* ==========================================
+   PLATFORM SHOWCASE
+========================================== */
 
-  scrollTrigger:{
-    trigger:"#platform-showcase",
-    start:"top 70%",
-    once:true
-  }
+document.addEventListener("DOMContentLoaded", () => {
+
+  const showcase = document.querySelector("#platform-showcase");
+
+  if (!showcase) return;
+
+  gsap.set(".card1", { y:80, scale:0.92 });
+  gsap.set(".card2", { y:80, scale:0.92 });
+  gsap.set(".card3", { y:80, scale:0.92 });
+  gsap.set(".card4", { y:80, scale:0.92 });
+
+  gsap.set(".showcase-cta", {
+    opacity:0,
+    y:30
+  });
+
+  const showcaseTL = gsap.timeline({
+    scrollTrigger:{
+      trigger:"#platform-showcase",
+      start:"top 75%",
+      toggleActions:"play none none none"
+    }
+  });
+
+  showcaseTL
+
+    .to(".card1",{
+      opacity:1,
+      y:0,
+      scale:1,
+      duration:.8
+    })
+
+    .to(".card1 .image-mask",{
+      scaleX:0,
+      duration:.8
+    },"<")
+
+    .to(".card2",{
+      opacity:1,
+      y:0,
+      scale:1,
+      duration:.8
+    },"-=0.3")
+
+    .to(".card2 .image-mask",{
+      scaleX:0,
+      duration:.8
+    },"<")
+
+    .to(".card3",{
+      opacity:1,
+      y:0,
+      scale:1,
+      duration:.8
+    },"-=0.3")
+
+    .to(".card3 .image-mask",{
+      scaleX:0,
+      duration:.8
+    },"<")
+
+    .to(".card4",{
+      opacity:1,
+      y:0,
+      scale:1,
+      duration:.8
+    },"-=0.3")
+
+    .to(".card4 .image-mask",{
+      scaleX:0,
+      duration:.8
+    },"<")
+
+    .to(".showcase-cta",{
+      opacity:1,
+      y:0,
+      duration:.7
+    },"-=0.2");
 
 });
 
-showcaseTL
-
-.to(".card1 .image-mask",{
-  scaleX:0,
-  duration:1
-})
-
-.to(".card1",{
-  opacity:1,
-  y:0,
-  scale:1,
-  duration:.8
-},"<")
-
-.to(".card2 .image-mask",{
-  scaleX:0,
-  duration:1
-},"-=0.5")
-
-.to(".card2",{
-  opacity:1,
-  y:0,
-  scale:1,
-  duration:.8
-},"<")
-
-.to(".card3 .image-mask",{
-  scaleX:0,
-  duration:1
-},"-=0.5")
-
-.to(".card3",{
-  opacity:1,
-  y:0,
-  scale:1,
-  duration:.8
-},"<")
-
-.to(".card4 .image-mask",{
-  scaleX:0,
-  duration:1
-},"-=0.5")
-
-.to(".card4",{
-  opacity:1,
-  y:0,
-  scale:1,
-  duration:.8
-},"<")
-
-.from(".showcase-cta",{
-  opacity:0,
-  y:30,
-  duration:.7
-},"-=0.2");
 
 
-
-
+console.log("Platform Showcase Loaded");
 
 
