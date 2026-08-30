@@ -66,8 +66,30 @@ nav.scrolled{background:rgba(6,12,24,.92);backdrop-filter:blur(20px);border-bott
 
 /* HERO */
 #hero{position:relative;width:100%;height:100vh;min-height:700px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
-#ocean-canvas{position:absolute;inset:0;width:100%;height:100%}
-.hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(6,12,24,.5) 0%,rgba(6,12,24,.15) 35%,rgba(6,12,24,.65) 75%,var(--abyss) 100%);}
+#hero-video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center center;
+  display:block;
+  z-index:0;
+  pointer-events:none;
+}
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    to bottom,
+    rgba(6,12,24,.5) 0%,
+    rgba(6,12,24,.15) 35%,
+    rgba(6,12,24,.65) 75%,
+    var(--abyss) 100%
+  );
+  z-index:1;
+  pointer-events:none;
+}
 .hero-content{position:relative;z-index:2;text-align:center;padding:0 1rem;max-width:1100px;}
 .hero-badge{display:inline-flex;align-items:center;gap:.6rem;border:1px solid rgba(46,220,240,.3);padding:.4rem 1.2rem;margin-bottom:2rem;font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;color:var(--cyan);text-transform:uppercase;opacity:0;animation:fadeUp .8s ease .15s forwards;}
 .hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--orange);animation:pulseDot 2s ease infinite;}
@@ -349,7 +371,9 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
 
 <!-- ════════ HERO ════════ -->
 <section id="hero">
-  <canvas id="ocean-canvas"></canvas>
+  <video id="hero-video" autoplay muted loop playsinline preload="auto">
+    <source src="ValenMovie.mov" type="video/quicktime">
+</video>
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <div class="hero-badge">
