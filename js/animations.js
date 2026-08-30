@@ -205,6 +205,89 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+/* D0: Background video subtle motion */
+gsap.to(".bg-video", {
+  scrollTrigger: {
+    trigger: "#services",
+    start: "top bottom",
+    scrub: true
+  },
+  scale: 1.08,
+  filter: "blur(1px)"
+});
+
+/* D1: Grain drift */
+gsap.to(".scene-grain", {
+  scrollTrigger: {
+    trigger: "#services",
+    start: "top bottom",
+    scrub: true
+  },
+  y: -200
+});
+
+/* D2: Reactive bloom light */
+gsap.to(".scene-light", {
+  scrollTrigger: {
+    trigger: "#services",
+    start: "top 80%",
+    end: "bottom 20%",
+    scrub: true
+  },
+  opacity: 0.35,
+  backgroundPosition: "50% 40%"
+});
+
+/* D3: Foreground entrance */
+gsap.to(".scene-inner", {
+  scrollTrigger: {
+    trigger: "#services",
+    start: "top 85%",
+  },
+  y: 0,
+  opacity: 1,
+  duration: 1.6,
+  ease: "power3.out"
+});
+
+/* D4: Directional reel motion */
+gsap.to(".directional-reel .frame", {
+  scrollTrigger: {
+    trigger: ".services-grid",
+    start: "top 80%",
+  },
+  opacity: 1,
+  x: 0,
+  y: 0,
+  duration: 1.4,
+  ease: "power3.out",
+  stagger: 0.18
+});
+
+/* Frame-cut slicing */
+gsap.to(".frame-cut", {
+  scrollTrigger: {
+    trigger: ".frame-cut",
+    start: "top 90%",
+  },
+  borderColor: "rgba(255,255,255,0.45)",
+  duration: 1.2,
+  ease: "power2.out"
+});
+
+/* Magnetic hover physics */
+document.querySelectorAll(".service-card").forEach(card => {
+  card.addEventListener("mousemove", e => {
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left - rect.width/2) / 20;
+    const y = (e.clientY - rect.top - rect.height/2) / 20;
+    gsap.to(card, { x, y, duration: 0.3 });
+  });
+  card.addEventListener("mouseleave", () => {
+    gsap.to(card, { x: 0, y: 0, duration: 0.4 });
+  });
+});
+
 
 
 
