@@ -1320,51 +1320,191 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
 
 
   
+
 <!-- ════════ PHILOSOPHY ════════ -->
-<section id="philosophy">
+<section id="philosophy"
+  style="
+    background:#ffffff;
+    color:#000000;
+  ">
 
   <div>
-    <span class="section-label reveal">Who We Are</span>
-    <h2 class="section-title reveal reveal-delay-1">
-      Vision<br>& <em>Mission</em>
+
+    <span
+      class="section-label reveal"
+      style="color:#000000;"
+    >
+      Who We Are
+    </span>
+
+    <h2
+      class="section-title reveal reveal-delay-1"
+      style="color:#000000;"
+    >
+      Vision<br>&amp; <em style="color:#000000;">Mission</em>
     </h2>
 
-    <p class="section-body reveal reveal-delay-2">
-      Seascape Commerce is a comprehensive solution for businesses succeeding in the online marketplace. 
-      We empower entrepreneurs with AI-driven tools, integrated social commerce, inventory management, 
+
+    <p
+      class="section-body reveal reveal-delay-2"
+      style="color:#000000;"
+    >
+      Seascape Commerce is a comprehensive solution for businesses succeeding in the online marketplace.
+      We empower entrepreneurs with AI-driven tools, integrated social commerce, inventory management,
       tailored web development, and marketing management. Our goal is to make any business thrive.
     </p>
 
-    <p class="section-body reveal reveal-delay-3" style="margin-top:1rem">
-      Founded in 2025, we are recognized for innovating the e-commerce space with the purpose to be a 
+
+    <p
+      class="section-body reveal reveal-delay-3"
+      style="
+        margin-top:1rem;
+        color:#000000;
+      "
+    >
+      Founded in 2025, we are recognized for innovating the e-commerce space with the purpose to be a
       leading choice for online business management.
     </p>
 
+
     <div class="tag-list reveal reveal-delay-4">
+
       <span class="tag">AI-Powered</span>
       <span class="tag">Social Commerce</span>
       <span class="tag">Fulfillment</span>
       <span class="tag">Web Development</span>
       <span class="tag">Analytics</span>
+
     </div>
+
   </div>
 
+
   <!-- YouTube video directly below Who We Are -->
-  <div class="reveal reveal-delay-5"
-       style="margin-top:3rem; margin-left:-5vw; margin-right:-5vw; width:calc(100% + 10vw); border-radius:24px; overflow:hidden; position:relative; padding-bottom:56.25%; height:0;">
+  <div
+    class="reveal reveal-delay-5"
+    style="
+      margin-top:3rem;
+      margin-left:-5vw;
+      margin-right:-5vw;
+      width:calc(100% + 10vw);
+      border-radius:24px;
+      overflow:hidden;
+      position:relative;
+      padding-bottom:56.25%;
+      height:0;
+    "
+  >
+
     <iframe
       src="https://www.youtube.com/embed/EjbgnXp2w04"
-
       title="Seascape Commerce"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowfullscreen
-      style="position:absolute; top:0; left:0; width:100%; height:100%; border:0; border-radius:24px;">
+      style="
+        position:absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        border:0;
+        border-radius:24px;
+      "
+    >
     </iframe>
+
   </div>
 
 </section>
 
+
 <div class="divider"></div>
+
+
+<style>
+
+  /* ═══════════════════════════════════════════════════════
+     PHILOSOPHY — WHITE / BLACK THEME
+     ═══════════════════════════════════════════════════════ */
+
+  #philosophy {
+    background:#ffffff !important;
+    color:#000000 !important;
+  }
+
+
+  /* =======================================================
+     HEADINGS & BODY TEXT
+     ======================================================= */
+
+  #philosophy .section-label,
+  #philosophy .section-title,
+  #philosophy .section-body {
+    color:#000000 !important;
+  }
+
+
+  #philosophy .section-title em {
+    color:#000000 !important;
+  }
+
+
+  /* =======================================================
+     TAGS
+     ======================================================= */
+
+  #philosophy .tag-list {
+    display:flex;
+    flex-wrap:wrap;
+    gap:.6rem;
+  }
+
+
+  #philosophy .tag {
+    color:#000000 !important;
+
+    background:#ffffff;
+
+    border:1px solid #000000;
+
+    border-radius:999px;
+
+    padding:.45rem .8rem;
+
+    font-family:var(--mono);
+    font-size:.65rem;
+
+    line-height:1;
+
+  }
+
+
+  #philosophy .tag:hover {
+    background:#000000;
+    color:#ffffff !important;
+  }
+
+
+  /* =======================================================
+     VIDEO
+     ======================================================= */
+
+  #philosophy iframe {
+    background:#000000;
+  }
+
+
+  /* =======================================================
+     DIVIDER
+     ======================================================= */
+
+  #philosophy + .divider {
+    background:#dddddd;
+  }
+
+</style>
+
+
 
 <!-- ⭐ Base44 Concierge AI Widget -->
     <script src="https://karlovasi-drive-elite.base44.app"></script>
