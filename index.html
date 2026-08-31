@@ -1106,6 +1106,37 @@ body.cinematic-loop-active {
 </head>
 
  <section class="phone-section phones-arena" id="motion-trigger">
+<style>
+  /* ==================================================
+   MAGNIFY IMAGE OVERLAY
+================================================== */
+
+.content-overlay{
+  position:absolute;
+  top:5%;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  z-index:20;
+  display:flex;
+  justify-content:center;
+  pointer-events:none;
+}
+
+.magnify-image-wrapper{
+  width:min(650px,55vw);
+  display:flex;
+  justify-content:center;
+}
+
+.magnify-image{
+  width:100%;
+  max-width:650px;
+  height:auto;
+  display:block;
+  object-fit:contain;
+}
+
 
     <!-- FOREGROUND: text sits ABOVE the phones (z-index 20) -->
    <div class="content-overlay">
@@ -1115,7 +1146,7 @@ body.cinematic-loop-active {
          class="magnify-image">
   </div>
 </div>
-
+</style>
     <!-- BACKGROUND: the 4 draggable phones (z-index 1–15, always below text) -->
      <!-- The phone with the YouTube video -->
     <div class="phone draggable-phone" data-rot="-6">
