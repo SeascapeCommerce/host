@@ -1205,6 +1205,41 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
 </div>
 
 <style>
+ gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+ScrollSmoother.create({
+	smooth: 2, // how long (in seconds) it takes to "catch up" to the native scroll position
+	effects: true, // looks for data-speed and data-lag attributes on elements
+	smoothTouch: 0.5 // much shorter smoothing time on touch devices (default is NO smoothing on touch devices)
+});
+// create the smooth scroller FIRST!
+let smoother = ScrollSmoother.create({
+  smooth: 2,
+  effects: true,
+  normalizeScroll: true
+});
+
+// pin shape when it reaches the center of the viewport, for 300px
+ScrollTrigger.create({
+  trigger: ".shape",
+  pin: true,
+  start: "center center",
+  end: "+=300"
+});
+
+document.querySelector("button").addEventListener("click", (e) => {
+  // scroll to the spot where the shape is in the center.
+  // parameters: element, smooth, position
+  smoother.scrollTo(".shape", true, "center center");
+
+  // or you could animate the scrollTop:
+  // gsap.to(smoother, {
+  //  scrollTop: smoother.offset(".shape", "center center"),
+  //  duration: 1
+  // });
+});
+
+
+	
 body {
   background-color: var(--color-just-black);
   overscroll-behavior: none;
@@ -1225,7 +1260,7 @@ body {
   overflow: visible;
   width: 100%;
   /* set a height because the contents are position: absolute, thus natively there's no height */
-  height: 4000px;
+  height: 1000px;
   background-image: linear-gradient(
       rgba(255, 255, 255, 0.07) 2px,
       transparent 2px
@@ -1278,7 +1313,7 @@ heading-l {
 .line {
   visibility: hidden;
   width: 2px;
-  height: 4000px;
+  height: 1000px;
   position: absolute;
   left: 400px;
   top: 0px;
@@ -1303,39 +1338,8 @@ footer {
   font-size: 30px;
   color: white;
 }
-ScrollSmoother.create({
-	smooth: 1, // how long (in seconds) it takes to "catch up" to the native scroll position
-	effects: true, // looks for data-speed and data-lag attributes on elements
-	smoothTouch: 0.1 // much shorter smoothing time on touch devices (default is NO smoothing on touch devices)
-});
-  gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
-// create the smooth scroller FIRST!
-let smoother = ScrollSmoother.create({
-  smooth: 2,
-  effects: true,
-  normalizeScroll: true
-});
-
-// pin shape when it reaches the center of the viewport, for 300px
-ScrollTrigger.create({
-  trigger: ".shape",
-  pin: true,
-  start: "center center",
-  end: "+=300"
-});
-
-document.querySelector("button").addEventListener("click", (e) => {
-  // scroll to the spot where the shape is in the center.
-  // parameters: element, smooth, position
-  smoother.scrollTo(".shape", true, "center center");
-
-  // or you could animate the scrollTop:
-  // gsap.to(smoother, {
-  //  scrollTop: smoother.offset(".shape", "center center"),
-  //  duration: 1
-  // });
-});
+ 
 </style>
   </section>
 
