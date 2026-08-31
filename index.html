@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -384,6 +385,183 @@ footer{background:var(--black-true);border-top:1px solid rgba(46,220,240,.07);pa
 
 
 </style>
+
+<style id="seascape-cinematic-loop">
+/* ============================================================
+   SEASCAPE CINEMATIC INFINITE LOOP
+   Motion-only enhancement. Existing section content/styles remain intact.
+   ============================================================ */
+
+html.cinematic-ready,
+html.cinematic-ready body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden !important;
+}
+
+body.cinematic-loop-active {
+  perspective: 1800px;
+  perspective-origin: 50% 50%;
+}
+
+/* Fixed viewport that contains the stacked pages. */
+.cinematic-stage {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  z-index: 1;
+  background: var(--abyss, #0A0A0A);
+  transform-style: preserve-3d;
+}
+
+/*
+  Each requested site section becomes one full-screen cinematic panel.
+  If the original section is taller than the viewport, this panel scrolls
+  internally and the cinematic transition happens only after its edge.
+*/
+.cinematic-panel {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(240,112,32,.5) transparent;
+  background: var(--abyss, #0A0A0A);
+  transform: translate3d(0, 105%, 0) scale(.90) rotateX(7deg);
+  transform-origin: 50% 100%;
+  opacity: 1;
+  visibility: hidden;
+  pointer-events: none;
+  will-change: transform, opacity, filter;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+/* Keep fixed navigation above the cinematic stack. */
+#main-nav {
+  z-index: 10000 !important;
+}
+
+/* First requested page combines the existing hero + pixel reveal.
+   Their markup and functionality are unchanged. */
+.cinematic-panel[data-panel="hero"] {
+  background: var(--abyss, #0A0A0A);
+}
+
+/* Preserve section widths and layouts after they are moved into panels. */
+.cinematic-panel > section,
+.cinematic-panel > footer,
+.cinematic-panel > .marquee-section {
+  width: 100%;
+}
+
+/* Last panel includes Contact Us + footer as requested. */
+.cinematic-panel[data-panel="contact"] {
+  background: var(--black-true, #000);
+}
+
+/* Subtle dark depth veil during page travel. */
+.cinematic-panel::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    linear-gradient(to bottom,
+      rgba(0,0,0,.52) 0%,
+      rgba(0,0,0,.08) 34%,
+      rgba(0,0,0,.03) 60%,
+      rgba(0,0,0,.30) 100%);
+  transition: opacity 900ms cubic-bezier(.16,1,.3,1);
+}
+
+.cinematic-panel.is-traveling::after {
+  opacity: .30;
+}
+
+/* A small depth shadow makes the rising page feel physically layered. */
+.cinematic-panel.is-incoming {
+  box-shadow:
+    0 -28px 80px rgba(0,0,0,.50),
+    0 -1px 0 rgba(255,255,255,.035);
+}
+
+/* Preserve existing reveal effects inside the now-fixed panels. */
+.cinematic-panel .reveal {
+  will-change: opacity, transform;
+}
+
+/* Optional progress rail — visual only, no content changes. */
+.cinematic-progress {
+  position: fixed;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10001;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  pointer-events: none;
+}
+
+.cinematic-progress-dot {
+  width: 3px;
+  height: 12px;
+  border: 0;
+  border-radius: 2px;
+  background: rgba(255,255,255,.18);
+  transition:
+    height 500ms cubic-bezier(.16,1,.3,1),
+    background 500ms cubic-bezier(.16,1,.3,1),
+    opacity 500ms ease;
+}
+
+.cinematic-progress-dot.active {
+  height: 28px;
+  background: var(--orange, #F07020);
+}
+
+/* Mobile uses a slightly lighter 3D angle while keeping the same timing. */
+@media (max-width: 768px) {
+  body.cinematic-loop-active {
+    perspective: 1300px;
+  }
+
+  .cinematic-progress {
+    right: 7px;
+    gap: 5px;
+  }
+
+  .cinematic-progress-dot {
+    width: 2px;
+    height: 8px;
+  }
+
+  .cinematic-progress-dot.active {
+    height: 20px;
+  }
+}
+
+/* Respect reduced-motion settings without changing the panel model. */
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-panel,
+  .cinematic-panel::after {
+    transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+  }
+}
+</style>
+
 </head>
 <body>
 
@@ -1780,6 +1958,507 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
 /* FAQ */
 document.querySelectorAll('.faq-q').forEach(q=>{q.addEventListener('click',()=>{const item=q.parentElement,wasOpen=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));if(!wasOpen)item.classList.add('open');});});
+</script>
+
+
+<script id="seascape-cinematic-loop-script">
+(() => {
+  "use strict";
+
+  /*
+    Requested order:
+      01 Hero + pixelated Robotoman image
+      02 Magnify Your Webspace
+      03 Who We Are
+      04 Our Solutions
+      05 Custom Web Design
+      06 How We Work
+      07 Agentic AI Power
+      08 Social Commerce
+      09 Fulfillment Solutions
+      10 Industries We Serve
+      11 Why Choose Us
+      12 Grab Some Goodies
+      13 Questions
+      14 Contact Us + footer
+  */
+
+  const PANEL_DEFS = [
+    { key: "hero",       selectors: ["#hero", ".cloneable"] },
+    { key: "magnify",    selectors: ["#motion-trigger"] },
+    { key: "who-we-are", selectors: ["#philosophy"] },
+    { key: "solutions",  selectors: ["#services"] },
+    { key: "web-design", selectors: ["#custom-web-design"] },
+    { key: "process",    selectors: ["#process"] },
+    { key: "ai",         selectors: ["#ai-highlight"] },
+    { key: "social",     selectors: ["#social"] },
+    { key: "fulfillment",selectors: ["#fulfillment"] },
+    { key: "industries", selectors: [".marquee-section", "#industries"] },
+    { key: "why",        selectors: ["#why"] },
+    { key: "store",      selectors: ["#store"] },
+    { key: "faq",        selectors: ["#faq"] },
+    { key: "contact",    selectors: ["#cta-banner", "footer"] }
+  ];
+
+  const EASE = "cubic-bezier(.16,1,.3,1)";
+  const DURATION = 1450;
+  const FADE_DURATION = 1080;
+  const WHEEL_THRESHOLD = 92;
+  const EDGE_EPSILON = 3;
+
+  let panels = [];
+  let activeIndex = 0;
+  let transitioning = false;
+  let wheelAccumulator = 0;
+  let wheelResetTimer = null;
+  let touchStartY = null;
+  let touchStartX = null;
+
+  function normalizeIndex(index) {
+    return (index + panels.length) % panels.length;
+  }
+
+  function makeStage() {
+    const stage = document.createElement("div");
+    stage.className = "cinematic-stage";
+    stage.setAttribute("aria-label", "Seascape Commerce cinematic sections");
+
+    const firstOwnedNode = PANEL_DEFS
+      .flatMap(def => def.selectors)
+      .map(selector => document.querySelector(selector))
+      .find(Boolean);
+
+    if (firstOwnedNode) {
+      firstOwnedNode.parentNode.insertBefore(stage, firstOwnedNode);
+    } else {
+      document.body.appendChild(stage);
+    }
+
+    return stage;
+  }
+
+  function buildPanels() {
+    const stage = makeStage();
+
+    PANEL_DEFS.forEach((def, index) => {
+      const panel = document.createElement("div");
+      panel.className = "cinematic-panel";
+      panel.dataset.panel = def.key;
+      panel.dataset.panelIndex = String(index);
+      panel.setAttribute("role", "region");
+
+      def.selectors.forEach(selector => {
+        const node = document.querySelector(selector);
+        if (node) panel.appendChild(node);
+      });
+
+      stage.appendChild(panel);
+    });
+
+    panels = [...stage.querySelectorAll(".cinematic-panel")];
+
+    /* Add a minimal visual position indicator without altering site content. */
+    const progress = document.createElement("div");
+    progress.className = "cinematic-progress";
+    progress.setAttribute("aria-hidden", "true");
+
+    panels.forEach((_, index) => {
+      const dot = document.createElement("span");
+      dot.className = "cinematic-progress-dot";
+      dot.dataset.index = String(index);
+      progress.appendChild(dot);
+    });
+
+    document.body.appendChild(progress);
+
+    document.documentElement.classList.add("cinematic-ready");
+    document.body.classList.add("cinematic-loop-active");
+  }
+
+  function progressDots() {
+    return [...document.querySelectorAll(".cinematic-progress-dot")];
+  }
+
+  function setInstant(panel, transform, opacity, z, visibility = "visible") {
+    panel.style.transition = "none";
+    panel.style.transform = transform;
+    panel.style.opacity = opacity;
+    panel.style.zIndex = z;
+    panel.style.visibility = visibility;
+  }
+
+  function layoutPanels() {
+    panels.forEach((panel, index) => {
+      panel.classList.remove("is-traveling", "is-incoming");
+
+      if (index === activeIndex) {
+        setInstant(
+          panel,
+          "translate3d(0,0,0) scale(1) rotateX(0deg)",
+          "1",
+          "30"
+        );
+        panel.style.pointerEvents = "auto";
+      } else {
+        const forward = (index - activeIndex + panels.length) % panels.length;
+        const backward = (activeIndex - index + panels.length) % panels.length;
+        const below = forward <= backward;
+
+        setInstant(
+          panel,
+          below
+            ? "translate3d(0,105%,0) scale(.90) rotateX(7deg)"
+            : "translate3d(0,-105%,0) scale(.90) rotateX(-7deg)",
+          "1",
+          "5",
+          "hidden"
+        );
+        panel.style.pointerEvents = "none";
+      }
+    });
+
+    progressDots().forEach((dot, index) => {
+      dot.classList.toggle("active", index === activeIndex);
+    });
+  }
+
+  function panelAtTop(panel) {
+    return panel.scrollTop <= EDGE_EPSILON;
+  }
+
+  function panelAtBottom(panel) {
+    return (
+      panel.scrollTop + panel.clientHeight >=
+      panel.scrollHeight - EDGE_EPSILON
+    );
+  }
+
+  function canScrollInside(panel, direction) {
+    if (panel.scrollHeight <= panel.clientHeight + EDGE_EPSILON) return false;
+    return direction > 0 ? !panelAtBottom(panel) : !panelAtTop(panel);
+  }
+
+  function restartReveals(panel) {
+    /*
+      Existing reveal classes are preserved.
+      If the site's observer has already revealed them, leave them alone.
+      Otherwise the existing observer can reveal them normally inside the panel.
+    */
+    panel.querySelectorAll("video").forEach(video => {
+      if (video.muted || video.hasAttribute("muted")) {
+        video.play().catch(() => {});
+      }
+    });
+  }
+
+  function transitionTo(nextIndex, direction) {
+    if (transitioning || !panels.length) return;
+
+    nextIndex = normalizeIndex(nextIndex);
+    if (nextIndex === activeIndex) return;
+
+    transitioning = true;
+    wheelAccumulator = 0;
+
+    const outgoing = panels[activeIndex];
+    const incoming = panels[nextIndex];
+
+    outgoing.classList.add("is-traveling");
+    incoming.classList.add("is-traveling", "is-incoming");
+
+    outgoing.style.pointerEvents = "none";
+    incoming.style.pointerEvents = "none";
+
+    incoming.style.visibility = "visible";
+    incoming.style.opacity = "1";
+    incoming.style.zIndex = "40";
+    outgoing.style.zIndex = "35";
+
+    if (direction > 0) {
+      incoming.style.transformOrigin = "50% 100%";
+      outgoing.style.transformOrigin = "50% 0%";
+
+      incoming.style.transition = "none";
+      incoming.style.transform =
+        "translate3d(0,108%,0) scale(.875) rotateX(9deg)";
+    } else {
+      incoming.style.transformOrigin = "50% 0%";
+      outgoing.style.transformOrigin = "50% 100%";
+
+      incoming.style.transition = "none";
+      incoming.style.transform =
+        "translate3d(0,-108%,0) scale(.875) rotateX(-9deg)";
+    }
+
+    /* Start every newly entered section at the logical edge. */
+    if (direction > 0) {
+      incoming.scrollTop = 0;
+    } else {
+      incoming.scrollTop = Math.max(0, incoming.scrollHeight - incoming.clientHeight);
+    }
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        incoming.style.transition =
+          `transform ${DURATION}ms ${EASE}, opacity ${FADE_DURATION}ms ${EASE}, filter ${DURATION}ms ${EASE}`;
+        outgoing.style.transition =
+          `transform ${DURATION}ms ${EASE}, opacity ${FADE_DURATION}ms ${EASE}, filter ${DURATION}ms ${EASE}`;
+
+        incoming.style.transform =
+          "translate3d(0,0,0) scale(1) rotateX(0deg)";
+        incoming.style.filter = "brightness(1)";
+
+        if (direction > 0) {
+          outgoing.style.transform =
+            "translate3d(0,-18%,0) scale(.945) rotateX(-3.2deg)";
+        } else {
+          outgoing.style.transform =
+            "translate3d(0,18%,0) scale(.945) rotateX(3.2deg)";
+        }
+
+        outgoing.style.opacity = ".16";
+        outgoing.style.filter = "brightness(.60)";
+      });
+    });
+
+    window.setTimeout(() => {
+      activeIndex = nextIndex;
+      layoutPanels();
+      restartReveals(panels[activeIndex]);
+      transitioning = false;
+    }, DURATION + 60);
+  }
+
+  function go(direction) {
+    transitionTo(activeIndex + direction, direction);
+  }
+
+  function shortestDirection(targetIndex) {
+    const forward = (targetIndex - activeIndex + panels.length) % panels.length;
+    const backward = (activeIndex - targetIndex + panels.length) % panels.length;
+    return forward <= backward ? 1 : -1;
+  }
+
+  function goToPanel(targetIndex) {
+    if (transitioning || targetIndex === activeIndex) return;
+    transitionTo(targetIndex, shortestDirection(targetIndex));
+  }
+
+  function panelIndexForElement(element) {
+    const panel = element.closest(".cinematic-panel");
+    return panel ? Number(panel.dataset.panelIndex) : -1;
+  }
+
+  function bindAnchorNavigation() {
+    document.addEventListener("click", event => {
+      const link = event.target.closest('a[href^="#"]');
+      if (!link) return;
+
+      const href = link.getAttribute("href");
+      if (!href || href === "#") return;
+
+      let target;
+      try {
+        target = document.querySelector(href);
+      } catch (_) {
+        return;
+      }
+
+      if (!target) return;
+
+      const targetIndex = panelIndexForElement(target);
+      if (targetIndex < 0) return;
+
+      event.preventDefault();
+
+      if (targetIndex === activeIndex) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+
+      goToPanel(targetIndex);
+
+      /*
+        After the panel arrives, preserve the original anchor intent
+        for targets nested lower inside that panel (e.g. #contact).
+      */
+      window.setTimeout(() => {
+        if (panels[targetIndex] && panels[targetIndex].contains(target)) {
+          const panelTop = panels[targetIndex].getBoundingClientRect().top;
+          const targetTop = target.getBoundingClientRect().top;
+          panels[targetIndex].scrollTo({
+            top: Math.max(0, panels[targetIndex].scrollTop + targetTop - panelTop - 80),
+            behavior: "smooth"
+          });
+        }
+      }, DURATION + 100);
+    });
+  }
+
+  function bindWheel() {
+    window.addEventListener("wheel", event => {
+      if (transitioning || !panels.length) {
+        event.preventDefault();
+        return;
+      }
+
+      const direction = Math.sign(event.deltaY);
+      if (!direction) return;
+
+      const activePanel = panels[activeIndex];
+
+      /* Let tall panels retain normal native scrolling until their edge. */
+      if (canScrollInside(activePanel, direction)) {
+        wheelAccumulator = 0;
+        return;
+      }
+
+      event.preventDefault();
+      wheelAccumulator += event.deltaY;
+
+      clearTimeout(wheelResetTimer);
+      wheelResetTimer = window.setTimeout(() => {
+        wheelAccumulator = 0;
+      }, 180);
+
+      if (Math.abs(wheelAccumulator) >= WHEEL_THRESHOLD) {
+        go(wheelAccumulator > 0 ? 1 : -1);
+        wheelAccumulator = 0;
+      }
+    }, { passive: false });
+  }
+
+  function bindTouch() {
+    window.addEventListener("touchstart", event => {
+      if (!event.touches.length) return;
+      touchStartY = event.touches[0].clientY;
+      touchStartX = event.touches[0].clientX;
+    }, { passive: true });
+
+    window.addEventListener("touchend", event => {
+      if (
+        touchStartY === null ||
+        touchStartX === null ||
+        transitioning ||
+        !event.changedTouches.length
+      ) return;
+
+      const endY = event.changedTouches[0].clientY;
+      const endX = event.changedTouches[0].clientX;
+      const dy = touchStartY - endY;
+      const dx = touchStartX - endX;
+
+      touchStartY = null;
+      touchStartX = null;
+
+      if (Math.abs(dy) < 48 || Math.abs(dy) < Math.abs(dx)) return;
+
+      const direction = dy > 0 ? 1 : -1;
+      const activePanel = panels[activeIndex];
+
+      if (!canScrollInside(activePanel, direction)) {
+        go(direction);
+      }
+    }, { passive: true });
+  }
+
+  function bindKeyboard() {
+    window.addEventListener("keydown", event => {
+      const tag = document.activeElement?.tagName?.toLowerCase();
+      const typing =
+        tag === "input" ||
+        tag === "textarea" ||
+        tag === "select" ||
+        document.activeElement?.isContentEditable;
+
+      if (typing) return;
+
+      if (
+        event.key === "ArrowDown" ||
+        event.key === "PageDown" ||
+        event.key === " "
+      ) {
+        const panel = panels[activeIndex];
+        if (!canScrollInside(panel, 1)) {
+          event.preventDefault();
+          go(1);
+        }
+      }
+
+      if (
+        event.key === "ArrowUp" ||
+        event.key === "PageUp"
+      ) {
+        const panel = panels[activeIndex];
+        if (!canScrollInside(panel, -1)) {
+          event.preventDefault();
+          go(-1);
+        }
+      }
+
+      if (event.key === "Home") {
+        event.preventDefault();
+        goToPanel(0);
+      }
+
+      if (event.key === "End") {
+        event.preventDefault();
+        goToPanel(panels.length - 1);
+      }
+    });
+  }
+
+  function initializeFromHash() {
+    if (!location.hash) return;
+
+    let target;
+    try {
+      target = document.querySelector(location.hash);
+    } catch (_) {
+      return;
+    }
+
+    if (!target) return;
+
+    const index = panelIndexForElement(target);
+    if (index < 0) return;
+
+    activeIndex = index;
+    layoutPanels();
+
+    requestAnimationFrame(() => {
+      const panel = panels[index];
+      const panelTop = panel.getBoundingClientRect().top;
+      const targetTop = target.getBoundingClientRect().top;
+
+      panel.scrollTop = Math.max(
+        0,
+        panel.scrollTop + targetTop - panelTop - 80
+      );
+    });
+  }
+
+  function init() {
+    buildPanels();
+    layoutPanels();
+    bindAnchorNavigation();
+    bindWheel();
+    bindTouch();
+    bindKeyboard();
+    initializeFromHash();
+    restartReveals(panels[activeIndex]);
+
+    window.addEventListener("resize", () => {
+      if (!transitioning) layoutPanels();
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init, { once: true });
+  } else {
+    init();
+  }
+})();
 </script>
 
 </body>
