@@ -1108,14 +1108,290 @@ body.cinematic-loop-active {
  <section class="phone-section phones-arena" id="motion-trigger">
  
 
-  <!-- FOREGROUND: text sits ABOVE the phones (z-index 20) --> <div class="content-overlay"> <div class="magnify-image-wrapper"> 
-    <img src="MagnifyPic.png" alt="Magnify Your Webspace" class="magnify-image" > </div> </div> 
-   <style> /* Keep the image completely inside its designated container */ .magnify-image-wrapper 
-     { width: 100%; height: 100%; max-width: 100%; max-height: 100%; display: flex; justify-content: center; 
-      align-items: center; overflow: hidden; } 
-     /* Scale the image to fit the entire available area */ 
-     .magnify-image { display: block; width: 100%; height: 100%; max-width: 100%; max-height: 100%; object-fit: contain; object-position: center center; 
-                     /* Prevents the image from becoming larger than its container */ box-sizing: border-box; } </style>
+<!-- BACKGROUND: Magnify image sits BEHIND the draggable phones -->
+<div class="content-overlay magnify-background">
+
+  <div class="magnify-image-wrapper">
+
+    <img
+      src="MagnifyPic.png"
+      alt="Magnify Your Webspace"
+      class="magnify-image"
+    >
+
+  </div>
+
+</div>
+
+
+<!-- Fluid distortion filter for the hover effect -->
+<svg
+  width="0"
+  height="0"
+  style="position:absolute; pointer-events:none;"
+  aria-hidden="true"
+>
+  <filter id="magnify-fluid">
+
+    <feTurbulence
+      type="fractalNoise"
+      baseFrequency="0.012 0.018"
+      numOctaves="2"
+      seed="8"
+      result="noise"
+    />
+
+    <feDisplacementMap
+      in="SourceGraphic"
+      in2="noise"
+      scale="0"
+      xChannelSelector="R"
+      yChannelSelector="G"
+      result="displaced"
+    />
+
+  </filter>
+</svg>
+
+
+<style>
+
+  /* =========================================================
+     MAGNIFY IMAGE BACKGROUND
+     ========================================================= */
+
+  .magnify-background {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    /*
+      IMPORTANT:
+      Phones are above this layer.
+    */
+    z-index: 0;
+
+    /*
+      Prevents the image from blocking
+      dragging/clicking the phones.
+    */
+    pointer-events: none;
+  }
+
+
+  /* =========================================================
+     IMAGE CONTAINER
+     ========================================================= */
+
+  .magnify-image-wrapper {
+
+    width: 100%;
+    height: 100%;
+
+    max-width: 100%;
+    max-height: 100%;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+
+    pointer-events: none;
+  }
+
+
+  /* =========================================================
+     MAGNIFY IMAGE
+     ========================================================= */
+
+  .magnify-image {
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    max-width: 100%;
+    max-height: 100%;
+
+    /*
+      Keeps the complete image inside
+      the existing container.
+    */
+    object-fit: contain;
+
+    object-position: center center;
+
+    box-sizing: border-box;
+
+    /*
+      SEMI-TRANSPARENT
+    */
+    opacity: 0.45;
+
+    /*
+      Smooth fluid movement.
+    */
+    transition:
+      filter 0.15s ease-out,
+      transform 0.25s ease-out;
+
+    /*
+      Keeps image from interfering
+      with phone dragging.
+    */
+    pointer-events: none;
+
+    /*
+      Initial state.
+    */
+    filter: url("#magnify-fluid");
+
+    /*
+      Allows the image to blend naturally
+      into the background.
+    */
+    will-change: filter, transform;
+  }
+
+</style>
+
+
+<script>
+
+  /* =========================================================
+     MAGNIFY IMAGE — FLUID CURSOR EFFECT
+     ========================================================= */
+
+  (() => {
+
+    const section = document.querySelector('#motion-trigger');
+    const image = document.querySelector('.magnify-image');
+
+    if (!section || !image) return;
+
+
+    let targetX = 0;
+    let targetY = 0;
+
+    let currentX = 0;
+    let currentY = 0;
+
+    let targetDistortion = 0;
+    let currentDistortion = 0;
+
+
+    /* ---------------------------------------------------------
+       Cursor movement
+       --------------------------------------------------------- */
+
+    section.addEventListener('pointermove', (event) => {
+
+      const rect = section.getBoundingClientRect();
+
+      /*
+        Cursor position within the section,
+        normalized from -1 to +1.
+      */
+
+      targetX =
+        ((event.clientX - rect.left) / rect.width) * 2 - 1;
+
+      targetY =
+        ((event.clientY - rect.top) / rect.height) * 2 - 1;
+
+
+      /*
+        Stronger distortion when the cursor
+        is moving.
+      */
+
+      targetDistortion = 32;
+
+    });
+
+
+    /* ---------------------------------------------------------
+       Cursor leaves section
+       --------------------------------------------------------- */
+
+    section.addEventListener('pointerleave', () => {
+
+      targetDistortion = 0;
+
+      targetX = 0;
+      targetY = 0;
+
+    });
+
+
+    /* ---------------------------------------------------------
+       Animation
+       --------------------------------------------------------- */
+
+    function animateMagnify() {
+
+      /*
+        Smoothly follow the cursor.
+      */
+
+      currentX += (targetX - currentX) * 0.08;
+      currentY += (targetY - currentY) * 0.08;
+
+      currentDistortion +=
+        (targetDistortion - currentDistortion) * 0.08;
+
+
+      /*
+        Locate the SVG displacement filter.
+      */
+
+      const displacement =
+        document.querySelector(
+          '#magnify-fluid feDisplacementMap'
+        );
+
+      if (displacement) {
+
+        displacement.setAttribute(
+          'scale',
+          currentDistortion.toFixed(2)
+        );
+
+      }
+
+
+      /*
+        Slight parallax movement.
+
+        This makes the image feel like a
+        physical/liquid surface underneath
+        the phones.
+      */
+
+      const moveX = currentX * 8;
+      const moveY = currentY * 8;
+
+      image.style.transform =
+        `translate(${moveX}px, ${moveY}px)`;
+
+
+      requestAnimationFrame(animateMagnify);
+
+    }
+
+
+    animateMagnify();
+
+  })();
+
+</script>
+
 
    
     <!-- BACKGROUND: the 4 draggable phones (z-index 1–15, always below text) -->
