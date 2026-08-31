@@ -359,26 +359,29 @@ showcaseTL
 
 
 
-//GSAP 3 introduces advanced stagger values
-var grid = [5,13], //[rows, columns]
-    tl = gsap.timeline({repeat: -1, repeatDelay: 0.5});
+/* ==========================================
+   PLATFORM SHOWCASE STAGGER
+========================================== */
 
-function animateBoxes(from, axis, ease) {
-  //one stagger call does all the animation:
-  tl.to(".box", {
-      duration: 1,
-      scale: 0.1, 
-      y: 60,
-      yoyo: true, 
-      repeat: 1, 
-      ease: "power1.inOut",
-      stagger: {
-        amount: 1.5, 
-        grid: grid, 
-        axis: axis, 
-        ease: ease,
-        from: from
-      }
-    }
-  );
-}
+gsap.from(".showcase-card",{
+
+  scrollTrigger:{
+    trigger:"#platform-showcase",
+    start:"top 75%"
+  },
+
+  opacity:0,
+  scale:0.6,
+  rotationY:25,
+  z:-100,
+
+  duration:1.2,
+  ease:"back.out(1.7)",
+
+  stagger:{
+    amount:1.5,
+    from:"center",
+    grid:[2,2]
+  }
+
+});
