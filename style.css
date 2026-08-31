@@ -672,5 +672,33 @@ display:flex;align-items:center;justify-content:center;
 }
 
 
+/* ==================================================
+   MAGNIFY IMAGE OVERLAY
+================================================== */
 
+.content-overlay{
+  position:absolute;
+  top:5%;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  z-index:20;
+  display:flex;
+  justify-content:center;
+  pointer-events:none;
+}
+
+.magnify-image-wrapper{
+  width:min(1100px,90vw);
+  display:flex;
+  justify-content:center;
+}
+
+.magnify-image{
+  width:100%;
+  max-width:1100px;
+  height:auto;
+  display:block;
+  object-fit:contain;
+}
 
