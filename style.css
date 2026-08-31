@@ -689,14 +689,14 @@ display:flex;align-items:center;justify-content:center;
 }
 
 .magnify-image-wrapper{
-  width:min(1100px,90vw);
+  width:min(650px,55vw);
   display:flex;
   justify-content:center;
 }
 
 .magnify-image{
   width:100%;
-  max-width:1100px;
+  max-width:650px;
   height:auto;
   display:block;
   object-fit:contain;
