@@ -2409,32 +2409,32 @@ body.cinematic-loop-active {
 
 
   
-
-<!-- ═══════════════════════════════════════════════════════════════
-     PIXELATED VIDEO SECTION
-     ═══════════════════════════════════════════════════════════════ -->
+<!-- ============================================================
+     PIXELATED ROBOTOMAN VIDEO SECTION
+     ============================================================ -->
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 
 <style>
 
   /* ============================================================
-     PIXELATED SECTION
+     SECTION
      ============================================================ */
 
-  .cloneable.pixel-video-section {
+  .sc-pixel-video-section {
     position: relative;
-
     width: 100%;
-    min-height: 100vh;
+    height: 100vh;
+    min-height: 600px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    padding: 0;
+    padding: 5vh 4vw;
 
     background: #000;
+
     overflow: hidden;
 
     box-sizing: border-box;
@@ -2442,49 +2442,26 @@ body.cinematic-loop-active {
 
 
   /* ============================================================
-     VIDEO CARD
+     VIDEO FRAME
      ============================================================ */
 
-  .pixelated-image-card {
-
+  .sc-pixel-video-card {
     position: relative;
 
-    width: min(100%, 1400px);
+    width: 100%;
+    height: 90vh;
 
-    /*
-      IMPORTANT:
-      This controls the height.
-      Width is allowed to expand independently.
-    */
-
-    height: 100vh;
-    min-height: 500px;
-
-    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     background: #000;
 
     overflow: hidden;
 
-    border: none;
-    border-radius: 0;
-
-    box-shadow: none;
+    isolation: isolate;
 
     cursor: pointer;
-
-    isolation: isolate;
-  }
-
-
-  /* ============================================================
-     REMOVE OLD SQUARE ASPECT-RATIO CONSTRAINT
-     ============================================================ */
-
-  .before__100 {
-
-    display: none !important;
-
   }
 
 
@@ -2492,48 +2469,45 @@ body.cinematic-loop-active {
      VIDEO
      ============================================================ */
 
-  .pixelated-image-card__video {
-
+  .sc-pixel-video {
     position: absolute;
 
-    inset: 0;
+    top: 50%;
+    left: 50%;
 
     width: 100%;
     height: 100%;
 
+    transform: translate(-50%, -50%);
+
     /*
-      COVER makes the video fill the entire
-      widened section instead of remaining
-      constrained to a square.
+      CONTAIN prevents Robotoman from being cropped.
+      The video can use the full width while maintaining
+      its original aspect ratio.
     */
 
-    object-fit: cover;
-
+    object-fit: contain;
     object-position: center center;
 
     display: block;
 
     background: #000;
 
-    user-select: none;
+    z-index: 1;
 
     pointer-events: none;
 
-    z-index: 1;
-
-    transform: translateZ(0);
+    user-select: none;
 
     will-change: transform;
-
   }
 
 
   /* ============================================================
-     DARK OVERLAY
+     SUBTLE VIGNETTE
      ============================================================ */
 
-  .pixelated-image-card::after {
-
+  .sc-pixel-video-card::after {
     content: "";
 
     position: absolute;
@@ -2541,16 +2515,15 @@ body.cinematic-loop-active {
     inset: 0;
 
     background:
-      linear-gradient(
-        180deg,
-        rgba(0,0,0,.08),
-        rgba(0,0,0,.18)
+      radial-gradient(
+        ellipse at center,
+        transparent 55%,
+        rgba(0,0,0,.28) 100%
       );
 
     pointer-events: none;
 
     z-index: 3;
-
   }
 
 
@@ -2558,8 +2531,7 @@ body.cinematic-loop-active {
      PIXEL GRID
      ============================================================ */
 
-  .pixelated-image-card__pixels {
-
+  .sc-pixel-grid {
     position: absolute;
 
     inset: 0;
@@ -2567,33 +2539,26 @@ body.cinematic-loop-active {
     width: 100%;
     height: 100%;
 
+    overflow: hidden;
+
     pointer-events: none;
 
     z-index: 10;
-
-    overflow: hidden;
-
   }
 
 
   /* ============================================================
-     INDIVIDUAL PIXELS
+     PIXELS
      ============================================================ */
 
-  .pixelated-image-card__pixel {
-
+  .sc-pixel {
     position: absolute;
 
     display: block;
 
-    /*
-      White/black pixel transition.
-      GSAP controls opacity and scale.
-    */
+    background: #ffffff;
 
-    background: #fff;
-
-    border: 1px solid rgba(0,0,0,.12);
+    border: 1px solid rgba(0,0,0,.10);
 
     box-sizing: border-box;
 
@@ -2606,39 +2571,23 @@ body.cinematic-loop-active {
     will-change: transform, opacity;
 
     backface-visibility: hidden;
-
   }
 
 
   /* ============================================================
-     SUBTLE PIXEL GLOW
+     PIXEL VARIATION
      ============================================================ */
 
-  .pixelated-image-card__pixel:nth-child(3n) {
-    background: #f5f5f5;
+  .sc-pixel:nth-child(3n) {
+    background: #f2f2f2;
   }
 
-  .pixelated-image-card__pixel:nth-child(5n) {
+  .sc-pixel:nth-child(5n) {
     background: #ffffff;
   }
 
-
-  /* ============================================================
-     DESKTOP
-     ============================================================ */
-
-  @media (min-width: 769px) {
-
-    .pixelated-image-card {
-
-      width: 100%;
-
-      height: 100vh;
-
-      max-width: none;
-
-    }
-
+  .sc-pixel:nth-child(7n) {
+    background: #e8e8e8;
   }
 
 
@@ -2646,22 +2595,16 @@ body.cinematic-loop-active {
      TABLET
      ============================================================ */
 
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
 
-    .cloneable.pixel-video-section {
-
-      min-height: 70vh;
-
+    .sc-pixel-video-section {
+      height: 80vh;
+      min-height: 500px;
+      padding: 4vh 2vw;
     }
 
-    .pixelated-image-card {
-
-      width: 100%;
-
-      height: 70vh;
-
-      min-height: 420px;
-
+    .sc-pixel-video-card {
+      height: 90%;
     }
 
   }
@@ -2671,22 +2614,15 @@ body.cinematic-loop-active {
      MOBILE
      ============================================================ */
 
-  @media (max-width: 480px) {
+  @media (max-width: 600px) {
 
-    .cloneable.pixel-video-section {
-
-      min-height: 60vh;
-
+    .sc-pixel-video-section {
+      height: 70vh;
+      min-height: 400px;
     }
 
-    .pixelated-image-card {
-
-      width: 100%;
-
-      height: 60vh;
-
-      min-height: 360px;
-
+    .sc-pixel-video-card {
+      height: 90%;
     }
 
   }
@@ -2695,44 +2631,38 @@ body.cinematic-loop-active {
 
 
 <!-- ============================================================
-     SECTION
+     PIXEL VIDEO SECTION
      ============================================================ -->
 
 <section
-  class="cloneable pixel-video-section"
-  aria-label="Interactive Seascape Commerce visual"
+  class="sc-pixel-video-section"
+  aria-label="Seascape Commerce Robotoman visual"
 >
 
   <div
-    class="pixelated-image-card"
-    data-pixelated-image-reveal
-    data-hover
+    class="sc-pixel-video-card"
+    data-sc-pixel-card
   >
 
-    <!-- ========================================================
-         VIDEO
-         ======================================================== -->
+    <!-- ROBOTOMAN VIDEO -->
 
     <video
-      id="robotomanVideo"
-      class="pixelated-image-card__video"
+      class="sc-pixel-video"
       src="Robotoman.mp4"
       autoplay
       muted
       loop
       playsinline
       preload="auto"
-      aria-label="Seascape Commerce animated visual"
+      aria-label="Seascape Commerce Robotoman"
     ></video>
 
 
-    <!-- ========================================================
-         PIXEL GRID
-         ======================================================== -->
+    <!-- PIXEL TRANSITION GRID -->
 
     <div
-      class="pixelated-image-card__pixels"
-      data-pixelated-image-reveal-grid
+      class="sc-pixel-grid"
+      data-sc-pixel-grid
       aria-hidden="true"
     ></div>
 
@@ -2752,126 +2682,113 @@ body.cinematic-loop-active {
   "use strict";
 
 
-  /* ==========================================================
-     WAIT UNTIL THE COMPONENT EXISTS
-     ========================================================== */
+  function initializeRobotomanPixelEffect() {
 
-  function initializePixelVideo() {
+    if (typeof gsap === "undefined") {
+      console.warn("GSAP is required for the Robotoman pixel effect.");
+      return;
+    }
 
-    const cards = document.querySelectorAll(
-      "[data-pixelated-image-reveal]"
-    );
 
-    if (!cards.length) return;
+    const cards =
+      document.querySelectorAll("[data-sc-pixel-card]");
 
 
     cards.forEach(function (card) {
 
-      /* ------------------------------------------------------
-         ELEMENTS
-         ------------------------------------------------------ */
-
-      const pixelGrid = card.querySelector(
-        "[data-pixelated-image-reveal-grid]"
-      );
-
-      const video = card.querySelector(
-        ".pixelated-image-card__video"
-      );
+      const video =
+        card.querySelector(".sc-pixel-video");
 
 
-      if (!pixelGrid || !video) return;
+      const grid =
+        card.querySelector("[data-sc-pixel-grid]");
 
 
-      /* ------------------------------------------------------
+      if (!video || !grid) return;
+
+
+      /* ========================================================
          CONFIGURATION
-         ------------------------------------------------------ */
+         ======================================================== */
 
-      const GRID_COLUMNS = 14;
-      const GRID_ROWS = 8;
+      const COLUMNS = 18;
+      const ROWS = 11;
 
-      const ANIMATION_DURATION = 0.65;
+      const ENTER_DURATION = 0.65;
+      const EXIT_DURATION = 0.45;
 
-      let isActive = false;
+      let active = false;
+      let timeline = null;
 
-      let animationTimeline = null;
 
-
-      /* ------------------------------------------------------
-         VIDEO SETTINGS
-         ------------------------------------------------------ */
+      /* ========================================================
+         VIDEO
+         ======================================================== */
 
       video.muted = true;
       video.loop = true;
       video.playsInline = true;
 
 
-      function startVideo() {
+      function playVideo() {
+
+        video.muted = true;
 
         const promise = video.play();
 
-        if (promise && typeof promise.catch === "function") {
+        if (
+          promise &&
+          typeof promise.catch === "function"
+        ) {
 
-          promise.catch(function () {
-            /*
-              Some browsers require a user gesture
-              before allowing playback.
-            */
-          });
+          promise.catch(function () {});
 
         }
 
       }
 
 
-      /* ------------------------------------------------------
-         START VIDEO IMMEDIATELY
-         ------------------------------------------------------ */
+      if (video.readyState >= 2) {
 
-      if (
-        video.readyState >= 2
-      ) {
-
-        startVideo();
+        playVideo();
 
       } else {
 
         video.addEventListener(
           "loadeddata",
-          startVideo,
+          playVideo,
           { once: true }
         );
 
       }
 
 
-      /* ======================================================
-         BUILD PIXEL GRID
-         ====================================================== */
-
-      pixelGrid.innerHTML = "";
-
-
-      const pixelWidth =
-        100 / GRID_COLUMNS;
-
-      const pixelHeight =
-        100 / GRID_ROWS;
-
+      /* ========================================================
+         CREATE PIXELS
+         ======================================================== */
 
       const pixels = [];
+
+      const pixelWidth =
+        100 / COLUMNS;
+
+      const pixelHeight =
+        100 / ROWS;
+
+
+      grid.innerHTML = "";
 
 
       for (
         let row = 0;
-        row < GRID_ROWS;
+        row < ROWS;
         row++
       ) {
 
         for (
-          let col = 0;
-          col < GRID_COLUMNS;
-          col++
+          let column = 0;
+          column < COLUMNS;
+          column++
         ) {
 
           const pixel =
@@ -2879,7 +2796,7 @@ body.cinematic-loop-active {
 
 
           pixel.className =
-            "pixelated-image-card__pixel";
+            "sc-pixel";
 
 
           pixel.style.width =
@@ -2891,15 +2808,14 @@ body.cinematic-loop-active {
 
 
           pixel.style.left =
-            (col * pixelWidth) + "%";
+            (column * pixelWidth) + "%";
 
 
           pixel.style.top =
             (row * pixelHeight) + "%";
 
 
-          pixelGrid.appendChild(pixel);
-
+          grid.appendChild(pixel);
 
           pixels.push(pixel);
 
@@ -2908,38 +2824,9 @@ body.cinematic-loop-active {
       }
 
 
-      /* ======================================================
-         RANDOMIZE PIXELS
-         ====================================================== */
-
-      function shuffledPixels() {
-
-        return pixels
-          .map(function (pixel) {
-
-            return {
-              pixel: pixel,
-              order: Math.random()
-            };
-
-          })
-          .sort(function (a, b) {
-
-            return a.order - b.order;
-
-          })
-          .map(function (item) {
-
-            return item.pixel;
-
-          });
-
-      }
-
-
-      /* ======================================================
+      /* ========================================================
          INITIAL STATE
-         ====================================================== */
+         ======================================================== */
 
       gsap.set(
         pixels,
@@ -2950,51 +2837,79 @@ body.cinematic-loop-active {
       );
 
 
-      /* ======================================================
-         PIXEL TRANSITION
-         ====================================================== */
+      /* ========================================================
+         RANDOMIZE
+         ======================================================== */
 
-      function animatePixels(active) {
+      function randomPixels() {
 
-        if (animationTimeline) {
+        return pixels
+          .map(function (pixel) {
 
-          animationTimeline.kill();
+            return {
+              element: pixel,
+              sort: Math.random()
+            };
+
+          })
+          .sort(function (a, b) {
+
+            return a.sort - b.sort;
+
+          })
+          .map(function (item) {
+
+            return item.element;
+
+          });
+
+      }
+
+
+      /* ========================================================
+         PIXEL ANIMATION
+         ======================================================== */
+
+      function animatePixels(enable) {
+
+        if (timeline) {
+
+          timeline.kill();
 
         }
 
 
-        isActive = active;
+        active = enable;
 
 
-        const orderedPixels =
-          shuffledPixels();
+        const ordered =
+          randomPixels();
 
 
-        /* ----------------------------------------------------
-           ACTIVATE
-           ---------------------------------------------------- */
-
-        if (active) {
-
-          animationTimeline =
-            gsap.timeline();
+        timeline =
+          gsap.timeline();
 
 
-          animationTimeline.to(
-            orderedPixels,
+        if (enable) {
+
+          /*
+            Fast randomized pixel explosion.
+          */
+
+          timeline.to(
+            ordered,
             {
               opacity: 1,
-
               scale: 1,
 
-              duration: 0.16,
+              duration: 0.12,
 
               ease: "power3.out",
 
               stagger: {
                 each:
-                  ANIMATION_DURATION /
-                  orderedPixels.length,
+                  ENTER_DURATION /
+                  ordered.length,
 
                 from: "random"
               }
@@ -3003,55 +2918,51 @@ body.cinematic-loop-active {
           );
 
 
-          animationTimeline.to(
-            orderedPixels,
+          /*
+            Pixels expand slightly before disappearing.
+          */
+
+          timeline.to(
+            ordered,
             {
               opacity: 0,
+              scale: 1.18,
 
-              scale: 1.15,
-
-              duration: 0.22,
+              duration: 0.18,
 
               ease: "power2.in",
 
               stagger: {
                 each:
-                  ANIMATION_DURATION /
-                  orderedPixels.length,
+                  0.015,
 
                 from: "random"
               }
 
             },
-            "-=0.05"
+            "-=0.10"
           );
 
         }
 
-
-        /* ----------------------------------------------------
-           DEACTIVATE
-           ---------------------------------------------------- */
-
         else {
 
-          animationTimeline =
-            gsap.timeline();
+          /*
+            Reverse transition.
+          */
 
-
-          animationTimeline.to(
-            orderedPixels,
+          timeline.to(
+            ordered,
             {
               opacity: 1,
-
               scale: 1,
 
-              duration: 0.12,
+              duration: 0.10,
 
               ease: "power2.out",
 
               stagger: {
-                each: 0.012,
+                each: 0.008,
 
                 from: "random"
               }
@@ -3060,19 +2971,20 @@ body.cinematic-loop-active {
           );
 
 
-          animationTimeline.to(
-            orderedPixels,
+          timeline.to(
+            ordered,
             {
               opacity: 0,
-
               scale: 0,
 
-              duration: 0.16,
+              duration: 0.14,
 
               ease: "power3.in",
 
               stagger: {
-                each: 0.012,
+                each:
+                  EXIT_DURATION /
+                  ordered.length,
 
                 from: "random"
               }
@@ -3085,27 +2997,27 @@ body.cinematic-loop-active {
       }
 
 
-      /* ======================================================
-         DETECT TOUCH DEVICES
-         ====================================================== */
+      /* ========================================================
+         TOUCH DETECTION
+         ======================================================== */
 
-      const isTouchDevice =
+      const touchDevice =
         window.matchMedia(
           "(pointer: coarse)"
         ).matches;
 
 
-      /* ======================================================
-         DESKTOP HOVER
-         ====================================================== */
+      /* ========================================================
+         DESKTOP
+         ======================================================== */
 
-      if (!isTouchDevice) {
+      if (!touchDevice) {
 
         card.addEventListener(
           "mouseenter",
           function () {
 
-            if (!isActive) {
+            if (!active) {
 
               animatePixels(true);
 
@@ -3119,7 +3031,7 @@ body.cinematic-loop-active {
           "mouseleave",
           function () {
 
-            if (isActive) {
+            if (active) {
 
               animatePixels(false);
 
@@ -3131,9 +3043,9 @@ body.cinematic-loop-active {
       }
 
 
-      /* ======================================================
-         MOBILE / TOUCH
-         ====================================================== */
+      /* ========================================================
+         MOBILE
+         ======================================================== */
 
       else {
 
@@ -3143,7 +3055,7 @@ body.cinematic-loop-active {
 
             event.stopPropagation();
 
-            animatePixels(!isActive);
+            animatePixels(!active);
 
           }
         );
@@ -3151,20 +3063,20 @@ body.cinematic-loop-active {
       }
 
 
-      /* ======================================================
-         KEEP VIDEO RUNNING
-         ====================================================== */
+      /* ========================================================
+         VIDEO RECOVERY
+         ======================================================== */
 
       video.addEventListener(
         "pause",
         function () {
 
           /*
-            Attempt to recover if the browser
-            unexpectedly pauses the video.
+            Only attempt recovery if the video should
+            be continuously playing.
           */
 
-          startVideo();
+          playVideo();
 
         }
       );
@@ -3174,22 +3086,18 @@ body.cinematic-loop-active {
   }
 
 
-  /* ==========================================================
-     INITIALIZE
-     ========================================================== */
-
   if (
     document.readyState === "loading"
   ) {
 
     document.addEventListener(
       "DOMContentLoaded",
-      initializePixelVideo
+      initializeRobotomanPixelEffect
     );
 
   } else {
 
-    initializePixelVideo();
+    initializeRobotomanPixelEffect();
 
   }
 
@@ -3199,62 +3107,41 @@ body.cinematic-loop-active {
 
 
 
-<section class="phone-section phones-arena" id="motion-trigger">
- 
-
-<!-- BACKGROUND: Magnify image sits BEHIND the draggable phones -->
-<div class="content-overlay magnify-background">
-
-  <div class="magnify-image-wrapper">
-
-    <img
-      src="MagnifyPic.png"
-      alt="Magnify Your Webspace"
-      class="magnify-image"
-    >
-
-  </div>
-
-</div>
 
 
-<!-- Fluid distortion filter for the hover effect -->
-<svg
-  width="0"
-  height="0"
-  style="position:absolute; pointer-events:none;"
-  aria-hidden="true"
->
-  <filter id="magnify-fluid">
-
-    <feTurbulence
-      type="fractalNoise"
-      baseFrequency="0.012 0.018"
-      numOctaves="2"
-      seed="8"
-      result="noise"
-    />
-
-    <feDisplacementMap
-      in="SourceGraphic"
-      in2="noise"
-      scale="0"
-      xChannelSelector="R"
-      yChannelSelector="G"
-      result="displaced"
-    />
-
-  </filter>
-</svg>
-
+<!-- ============================================================
+     MAGNIFY YOUR WEBSPACE / DRAGGABLE PHONES SECTION
+     ============================================================ -->
 
 <style>
 
-  /* =========================================================
-     MAGNIFY IMAGE BACKGROUND
-     ========================================================= */
+  /* ============================================================
+     SECTION
+     ============================================================ */
 
-  .magnify-background {
+  #motion-trigger.sc-magnify-section {
+
+    position: relative;
+
+    width: 100%;
+
+    min-height: 100vh;
+
+    overflow: hidden;
+
+    background: #ffffff;
+
+    isolation: isolate;
+
+  }
+
+
+  /* ============================================================
+     MAGNIFY BACKGROUND
+     ============================================================ */
+
+  #motion-trigger .sc-magnify-background {
+
     position: absolute;
 
     inset: 0;
@@ -3262,155 +3149,713 @@ body.cinematic-loop-active {
     width: 100%;
     height: 100%;
 
-    /*
-      IMPORTANT:
-      Phones are above this layer.
-    */
-    z-index: 0;
+    display: flex;
 
-    /*
-      Prevents the image from blocking
-      dragging/clicking the phones.
-    */
-    pointer-events: auto;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 1;
+
+    pointer-events: none;
+
+    overflow: hidden;
+
   }
 
 
-  /* =========================================================
-     IMAGE CONTAINER
-     ========================================================= */
+  /* ============================================================
+     IMAGE WRAPPER
+     ============================================================ */
 
-  .magnify-image-wrapper {
+  #motion-trigger .sc-magnify-image-wrapper {
+
+    position: relative;
+
+    width: min(75vw, 1100px);
+
+    height: min(75vh, 800px);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    overflow: visible;
+
+  }
+
+
+  /* ============================================================
+     MAGNIFY IMAGE
+     ============================================================ */
+
+  #motion-trigger .sc-magnify-image {
+
+    display: block;
 
     width: 100%;
     height: 100%;
 
-    max-width: 100%;
-    max-height: 100%;
+    object-fit: contain;
 
-    display: flex;
+    object-position: center;
 
-    justify-content: center;
-    align-items: center;
+    opacity: .45;
 
-    overflow: hidden;
+    pointer-events: none;
 
-    pointer-events: auto;
+    transform: translate3d(0,0,0);
+
+    will-change: transform, filter;
+
   }
 
 
-  /* =========================================================
-     MAGNIFY IMAGE
-     ========================================================= */
+  /* ============================================================
+     PHONES
+     ============================================================ */
 
- .magnify-image {
-  display: block;
+  #motion-trigger .draggable-phone {
 
-  width: 100%;
-  height: 100%;
+    position: absolute;
 
-  max-width: 100%;
-  max-height: 100%;
+    z-index: 10;
 
-  object-fit: contain;
-  object-position: center center;
+    touch-action: none;
 
-  box-sizing: border-box;
+    user-select: none;
 
-  opacity: 0.45;
+    will-change: transform;
 
-  pointer-events: auto;
-
-  will-change: filter, transform;
-}
+  }
 
 
+  /*
+    The phone styling itself remains available to your
+    existing stylesheet. These rules simply ensure that
+    the phones remain above the background artwork.
+  */
+
+  #motion-trigger .phone-screen {
+
+    position: relative;
+
+    overflow: hidden;
+
+  }
+
+
+  #motion-trigger .ad-image {
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+  }
+
+
+  #motion-trigger .ad-video {
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    border: 0;
+
+  }
+
+
+  /* ============================================================
+     MAGNIFY DISTORTION SVG
+     ============================================================ */
+
+  #motion-trigger .sc-magnify-filter {
+
+    position: absolute;
+
+    width: 0;
+    height: 0;
+
+    pointer-events: none;
+
+  }
+
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+
+  @media (max-width: 768px) {
+
+    #motion-trigger {
+
+      min-height: 85vh;
+
+    }
+
+
+    #motion-trigger .sc-magnify-image-wrapper {
+
+      width: 88vw;
+
+      height: 65vh;
+
+    }
+
+  }
+
+
+  @media (max-width: 480px) {
+
+    #motion-trigger {
+
+      min-height: 80vh;
+
+    }
+
+
+    #motion-trigger .sc-magnify-image-wrapper {
+
+      width: 92vw;
+
+      height: 55vh;
+
+    }
+
+  }
 
 </style>
-<script>
-/*========================================================= MAGNIFY IMAGE — LOCALIZED FLUID CURSOR EFFECT Only activates when the cursor is directly over the image ========================================================= */ 
-  (() => { const image = document.querySelector('.magnify-image'); if (!image) return; let targetX = 0; let targetY = 0; let currentX = 0; let currentY = 0; let targetDistortion = 0; let currentDistortion = 0; 
-          /* --------------------------------------------------------- Cursor enters the IMAGE --------------------------------------------------------- */ 
-   image.addEventListener('pointerenter', () => { /* Reduced distortion strength. Previous value was 32. */ targetDistortion = 10; }); 
-   /* --------------------------------------------------------- Cursor moves over the IMAGE --------------------------------------------------------- */ 
-image.addEventListener('pointermove', (event) => { const rect = image.getBoundingClientRect(); /* Calculate cursor position relative to the image itself.
-Range: -1 = left/top 0 = center 1 = right/bottom */ targetX = 
-((event.clientX - rect.left) / rect.width) * 2 - 1; targetY = ((event.clientY - rect.top) / rect.height) * 2 - 1; }); 
-/* --------------------------------------------------------- Cursor leaves the IMAGE --------------------------------------------------------- */ 
-image.addEventListener('pointerleave', () => { /* Gradually return the image to its normal state. */ targetDistortion = 0; targetX = 0; targetY = 0; }); 
-/* --------------------------------------------------------- Animation --------------------------------------------------------- */ 
-function animateMagnify() { /* Smooth cursor tracking */ currentX += (targetX - currentX) * 0.08; currentY += (targetY - currentY) * 0.08; 
-/* Smooth distortion transition */ currentDistortion += (targetDistortion - currentDistortion) * 0.08; 
-/* Update the SVG displacement filter */ const displacement = document.querySelector( '#magnify-fluid feDisplacementMap' ); 
-if (displacement) { displacement.setAttribute( 'scale', currentDistortion.toFixed(2) ); } 
-/* Very subtle movement of the image. Reduced from 8px to 3px so the image doesn't appear to slide around. */ const moveX = currentX * 3; const moveY = currentY * 3;
-image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFrame(animateMagnify); } animateMagnify(); })(); </script>
 
 
-   
-    <!-- BACKGROUND: the 4 draggable phones (z-index 1–15, always below text) -->
-     <!-- The phone with the YouTube video -->
-    <div class="phone draggable-phone" data-rot="-6">
-        <div class="phone-screen">
-          <img src="Screenshot4.png" class="ad-image" alt="Seascape Ad">
-          <ul class="menu">
-            <li>Seascape AI Dashboard</li><li>Smart Ads</li><li>Predictive Commerce</li>
-            <li>AI Shopper Insights</li><li>Logout</li>
-          </ul>
-        </div>
-      </div>
+<section
+  id="motion-trigger"
+  class="phone-section phones-arena sc-magnify-section"
+>
+
+
+  <!-- ==========================================================
+       MAGNIFY BACKGROUND
+       ========================================================== -->
+
+  <div
+    class="content-overlay sc-magnify-background"
+    aria-hidden="true"
+  >
+
+    <div class="sc-magnify-image-wrapper">
+
+      <img
+        src="MagnifyPic.png"
+        alt=""
+        class="sc-magnify-image"
+      >
+
     </div>
-  <div class="phone draggable-phone" data-rot="4">
+
+  </div>
+
+
+  <!-- ==========================================================
+       FLUID DISTORTION FILTER
+       ========================================================== -->
+
+  <svg
+    class="sc-magnify-filter"
+    aria-hidden="true"
+  >
+
+    <filter id="sc-magnify-fluid">
+
+      <feTurbulence
+        type="fractalNoise"
+        baseFrequency="0.012 0.018"
+        numOctaves="2"
+        seed="8"
+        result="noise"
+      />
+
+      <feDisplacementMap
+        in="SourceGraphic"
+        in2="noise"
+        scale="0"
+        xChannelSelector="R"
+        yChannelSelector="G"
+      />
+
+    </filter>
+
+  </svg>
+
+
+  <!-- ==========================================================
+       PHONE 1 — IMAGE
+       ========================================================== -->
+
+  <div
+    class="phone draggable-phone"
+    data-rot="-6"
+  >
+
     <div class="phone-screen">
+
+      <img
+        src="Screenshot4.png"
+        class="ad-image"
+        alt="Seascape AI Dashboard"
+      >
+
+      <ul class="menu">
+
+        <li>Seascape AI Dashboard</li>
+
+        <li>Smart Ads</li>
+
+        <li>Predictive Commerce</li>
+
+        <li>AI Shopper Insights</li>
+
+        <li>Logout</li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+
+  <!-- ==========================================================
+       PHONE 2 — YOUTUBE
+       ========================================================== -->
+
+  <div
+    class="phone draggable-phone"
+    data-rot="4"
+  >
+
+    <div class="phone-screen">
+
       <iframe
         class="ad-video"
-        src="https://www.youtube.com/embed/HK-edzJRelg?autoplay=1&loop=1&playlist=HK-edzJRelg&mute=1&controls=0&modestbranding=1&rel=0""
-        title="YouTube video player"
+        src="https://www.youtube.com/embed/HK-edzJRelg?autoplay=1&loop=1&playlist=HK-edzJRelg&mute=1&controls=0&modestbranding=1&rel=0"
+        title="Seascape Commerce video"
         frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         referrerpolicy="strict-origin-when-cross-origin"
-        allowfullscreen>
-      </iframe>
-     </div>
+        allowfullscreen
+      ></iframe>
+
+    </div>
+
   </div>
 
-      <div class="phone draggable-phone" data-rot="5">
-        <div class="phone-screen">
-          <img src="Screenshot4.png" class="ad-image" alt="Seascape Ad">
-          <ul class="menu">
-            <li>Seascape AI Dashboard</li><li>Smart Ads</li><li>Predictive Commerce</li>
-            <li>AI Shopper Insights</li><li>Logout</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-   
-   <div class="phone draggable-phone" data-rot="-3">
+
+  <!-- ==========================================================
+       PHONE 3 — IMAGE
+       ========================================================== -->
+
+  <div
+    class="phone draggable-phone"
+    data-rot="5"
+  >
+
     <div class="phone-screen">
+
+      <img
+        src="Screenshot4.png"
+        class="ad-image"
+        alt="Seascape AI Dashboard"
+      >
+
+      <ul class="menu">
+
+        <li>Seascape AI Dashboard</li>
+
+        <li>Smart Ads</li>
+
+        <li>Predictive Commerce</li>
+
+        <li>AI Shopper Insights</li>
+
+        <li>Logout</li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+
+  <!-- ==========================================================
+       PHONE 4 — YOUTUBE
+       ========================================================== -->
+
+  <div
+    class="phone draggable-phone"
+    data-rot="-3"
+  >
+
+    <div class="phone-screen">
+
       <iframe
         class="ad-video"
         src="https://www.youtube.com/embed/c9pZVXvmohI?autoplay=1&loop=1&playlist=c9pZVXvmohI&mute=1&controls=0&modestbranding=1&rel=0"
-        title="YouTube video player"
+        title="Seascape Commerce video"
         frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         referrerpolicy="strict-origin-when-cross-origin"
-        allowfullscreen>
-      </iframe>
-     </div>
+        allowfullscreen
+      ></iframe>
+
+    </div>
+
   </div>
 
 
-  </section>
+</section>
 
-  <!-- GSAP core + the two plugins you actually use -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
-  <script>gsap.registerPlugin(Draggable);</script>
-  <script src="js/animations.js"></script>
 
+<!-- ============================================================
+     MAGNIFY CURSOR EFFECT
+     ============================================================ -->
+
+<script>
+
+(function () {
+
+  "use strict";
+
+
+  function initializeMagnify() {
+
+    const section =
+      document.querySelector("#motion-trigger");
+
+
+    if (!section) return;
+
+
+    const image =
+      section.querySelector(".sc-magnify-image");
+
+
+    const filter =
+      section.querySelector("#sc-magnify-fluid");
+
+
+    if (!image) return;
+
+
+    let targetX = 0;
+    let targetY = 0;
+
+    let currentX = 0;
+    let currentY = 0;
+
+    let targetDistortion = 0;
+    let currentDistortion = 0;
+
+
+    /* ==========================================================
+       POINTER ENTER
+       ========================================================== */
+
+    image.addEventListener(
+      "pointerenter",
+      function () {
+
+        targetDistortion = 8;
+
+      }
+    );
+
+
+    /* ==========================================================
+       POINTER MOVE
+       ========================================================== */
+
+    image.addEventListener(
+      "pointermove",
+      function (event) {
+
+        const rect =
+          image.getBoundingClientRect();
+
+
+        if (!rect.width || !rect.height) return;
+
+
+        targetX =
+          ((event.clientX - rect.left) /
+            rect.width) * 2 - 1;
+
+
+        targetY =
+          ((event.clientY - rect.top) /
+            rect.height) * 2 - 1;
+
+      }
+    );
+
+
+    /* ==========================================================
+       POINTER LEAVE
+       ========================================================== */
+
+    image.addEventListener(
+      "pointerleave",
+      function () {
+
+        targetX = 0;
+        targetY = 0;
+
+        targetDistortion = 0;
+
+      }
+    );
+
+
+    /* ==========================================================
+       ANIMATION LOOP
+       ========================================================== */
+
+    function animate() {
+
+      currentX +=
+        (targetX - currentX) * 0.08;
+
+
+      currentY +=
+        (targetY - currentY) * 0.08;
+
+
+      currentDistortion +=
+        (targetDistortion - currentDistortion) * 0.08;
+
+
+      /*
+        Very subtle image movement.
+      */
+
+      const moveX =
+        currentX * 3;
+
+
+      const moveY =
+        currentY * 3;
+
+
+      image.style.transform =
+        "translate3d(" +
+        moveX +
+        "px," +
+        moveY +
+        "px,0)";
+
+
+      /*
+        Apply distortion only when the filter exists.
+      */
+
+      if (filter) {
+
+        const displacement =
+          filter.querySelector(
+            "feDisplacementMap"
+          );
+
+
+        if (displacement) {
+
+          displacement.setAttribute(
+            "scale",
+            currentDistortion.toFixed(2)
+          );
+
+        }
+
+      }
+
+
+      requestAnimationFrame(animate);
+
+    }
+
+
+    animate();
+
+  }
+
+
+  if (
+    document.readyState === "loading"
+  ) {
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      initializeMagnify
+    );
+
+  } else {
+
+    initializeMagnify();
+
+  }
+
+})();
+
+</script>
+
+
+<!-- ============================================================
+     GSAP / DRAGGABLE
+     ============================================================ -->
+
+<script>
+
+(function () {
+
+  "use strict";
+
+
+  function initializePhoneDragging() {
+
+    if (
+      typeof gsap === "undefined" ||
+      typeof Draggable === "undefined"
+    ) {
+
+      return;
+
+    }
+
+
+    gsap.registerPlugin(Draggable);
+
+
+    const section =
+      document.querySelector("#motion-trigger");
+
+
+    if (!section) return;
+
+
+    const phones =
+      section.querySelectorAll(
+        ".draggable-phone"
+      );
+
+
+    if (!phones.length) return;
+
+
+    phones.forEach(function (phone) {
+
+      const rotation =
+        parseFloat(
+          phone.dataset.rot || 0
+        );
+
+
+      /*
+        Preserve existing positioning and rotation.
+      */
+
+      gsap.set(
+        phone,
+        {
+          rotation: rotation
+        }
+      );
+
+
+      Draggable.create(
+        phone,
+        {
+          type: "x,y",
+
+          bounds: section,
+
+          inertia: false,
+
+          edgeResistance: 0.85,
+
+          onPress: function () {
+
+            gsap.to(
+              phone,
+              {
+                scale: 1.035,
+
+                duration: 0.18,
+
+                ease: "power2.out"
+              }
+            );
+
+          },
+
+
+          onRelease: function () {
+
+            gsap.to(
+              phone,
+              {
+                scale: 1,
+
+                duration: 0.22,
+
+                ease: "power2.out"
+              }
+            );
+
+          }
+
+        }
+      );
+
+    });
+
+  }
+
+
+  if (
+    document.readyState === "loading"
+  ) {
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      initializePhoneDragging
+    );
+
+  } else {
+
+    initializePhoneDragging();
+
+  }
+
+})();
+
+</script>
+
+
+<!-- ============================================================
+     EXISTING SITE ANIMATIONS
+     ============================================================ -->
+
+<script src="js/animations.js"></script>
+
+
+<!-- ============================================================
+     DIVIDER
+     ============================================================ -->
 
 <div class="divider"></div>
+
+
 
 
   
