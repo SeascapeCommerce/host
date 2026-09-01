@@ -1092,77 +1092,33 @@ body.cinematic-loop-active {
 </nav>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     SEASCAPE COMMERCE — MOTION GRADIENT HERO
-     Green / Orange / Charcoal / Ivory
+     SEASCAPE COMMERCE — ANIMATED HERO
+     Organic green / orange motion gradient
      ═══════════════════════════════════════════════════════════════ -->
 
-<section id="hero" class="sc-motion-hero">
+<section id="hero" class="sc-hero">
 
-  <!-- ═══════════════════════════════════════════════════════════
-       ANIMATED BACKGROUND
-       ═══════════════════════════════════════════════════════════ -->
+  <!-- ============================================================
+       ANIMATED BACKGROUND CANVAS
+       ============================================================ -->
+  <canvas
+    id="sc-gradient-canvas"
+    aria-hidden="true"
+  ></canvas>
 
-  <div class="sc-gradient-background" aria-hidden="true">
-
-    <!-- Primary moving color fields -->
-    <div class="sc-gradient-orb sc-gradient-green"></div>
-    <div class="sc-gradient-orb sc-gradient-orange"></div>
-    <div class="sc-gradient-orb sc-gradient-dark"></div>
-
-    <!-- Fine atmospheric wash -->
-    <div class="sc-gradient-wash"></div>
-
-    <!-- Animated grain -->
-    <svg
-      class="sc-gradient-noise"
-      viewBox="0 0 100 100"
-      preserveAspectRatio="none"
-      aria-hidden="true"
-    >
-      <filter id="scNoise">
-        <feTurbulence
-          type="fractalNoise"
-          baseFrequency="0.72"
-          numOctaves="4"
-          seed="17"
-          stitchTiles="stitch"
-        />
-
-        <feColorMatrix
-          type="saturate"
-          values="0"
-        />
-
-        <feComponentTransfer>
-          <feFuncA
-            type="table"
-            tableValues="0 0.16"
-          />
-        </feComponentTransfer>
-      </filter>
-
-      <rect
-        width="100%"
-        height="100%"
-        filter="url(#scNoise)"
-      />
-    </svg>
-
-    <!-- Soft vignette -->
-    <div class="sc-gradient-vignette"></div>
-
-  </div>
+  <!-- Soft atmospheric layers -->
+  <div class="sc-hero-atmosphere" aria-hidden="true"></div>
+  <div class="sc-hero-vignette" aria-hidden="true"></div>
+  <div class="sc-hero-noise" aria-hidden="true"></div>
 
 
-  <!-- ═══════════════════════════════════════════════════════════
+  <!-- ============================================================
        HERO CONTENT
-       ═══════════════════════════════════════════════════════════ -->
-
+       ============================================================ -->
   <div class="hero-content">
 
     <div class="hero-badge">
       <span class="hero-badge-dot"></span>
-
       E-Commerce Business Management and Web Development.
     </div>
 
@@ -1185,12 +1141,12 @@ body.cinematic-loop-active {
 
 
     <p class="hero-sub">
-      Real humans at Seascape Commerce design your webspace
-      architecture, manage your data and inventory, and scale
-      business growth with AI-driven tools, operational efficiency,
-      and robust webspaces. Your complete digital marketplace
-      partner. Contact SC today and we'll deploy an administrator
-      to begin strategizing your online presence.
+      Real humans at Seascape Commerce design your webspace architecture,
+      manage your data and inventory, and scale business growth with
+      AI-driven tools, operational efficiency, and robust webspaces.
+      Your complete digital marketplace partner. Contact SC today and
+      we'll deploy an administrator to begin strategizing your online
+      presence.
     </p>
 
 
@@ -1215,15 +1171,16 @@ body.cinematic-loop-active {
   </div>
 
 
-  <!-- ═══════════════════════════════════════════════════════════
+  <!-- ============================================================
        SCROLL INDICATOR
-       ═══════════════════════════════════════════════════════════ -->
-
+       ============================================================ -->
   <div class="hero-scroll">
 
     <div class="scroll-line"></div>
 
-    <span>Scroll</span>
+    <span>
+      Scroll
+    </span>
 
   </div>
 
@@ -1232,7 +1189,7 @@ body.cinematic-loop-active {
 
 
 <!-- ═══════════════════════════════════════════════════════════════
-     MOTION GRADIENT STYLES
+     ANIMATED GRADIENT STYLES
      ═══════════════════════════════════════════════════════════════ -->
 
 <style>
@@ -1241,247 +1198,131 @@ body.cinematic-loop-active {
      HERO FOUNDATION
      ============================================================== */
 
-  #hero.sc-motion-hero {
+  #hero.sc-hero {
 
     position: relative;
 
     width: 100%;
-    min-height: 100vh;
-
-    height: 100svh;
+    min-height: 100svh;
 
     overflow: hidden;
 
     isolation: isolate;
 
     background:
-      #f4f0e8;
+      #f5f0e8;
 
-    color: #111111;
+    color: #101512;
 
   }
 
 
   /* ==============================================================
-     BACKGROUND SYSTEM
+     CANVAS
      ============================================================== */
 
-  .sc-gradient-background {
+  #sc-gradient-canvas {
 
     position: absolute;
 
     inset: 0;
 
-    z-index: -2;
+    width: 100%;
+    height: 100%;
 
-    overflow: hidden;
+    display: block;
 
-    background:
-      #f4f0e8;
-
-  }
-
-
-  /* ==============================================================
-     ORGANIC COLOR FIELDS
-     ============================================================== */
-
-  .sc-gradient-orb {
-
-    position: absolute;
-
-    width: 75vw;
-    height: 75vw;
-
-    min-width: 650px;
-    min-height: 650px;
-
-    border-radius: 50%;
+    z-index: -5;
 
     pointer-events: none;
 
-    will-change: transform;
-
-    mix-blend-mode: multiply;
-
-  }
-
-
-  /* GREEN FIELD
-     Replaces the purple tone from the reference */
-
-  .sc-gradient-green {
-
-    left: -22vw;
-    top: -18vw;
-
-    background:
-
-      radial-gradient(
-        circle at 50% 50%,
-        rgba(91, 130, 71, 0.78) 0%,
-        rgba(91, 130, 71, 0.55) 20%,
-        rgba(76, 111, 59, 0.32) 42%,
-        rgba(76, 111, 59, 0.10) 63%,
-        transparent 74%
-      );
-
-    filter:
-      blur(24px);
-
-    animation:
-      scGreenMotion 18s
-      ease-in-out
-      infinite
-      alternate;
-
-  }
-
-
-  /* ORANGE FIELD
-     Replaces the yellow/gold tone from the reference */
-
-  .sc-gradient-orange {
-
-    right: -20vw;
-    top: -20vw;
-
-    background:
-
-      radial-gradient(
-        circle at 50% 50%,
-        rgba(246, 133, 45, 0.78) 0%,
-        rgba(245, 119, 31, 0.58) 20%,
-        rgba(238, 105, 28, 0.34) 42%,
-        rgba(238, 105, 28, 0.10) 62%,
-        transparent 75%
-      );
-
-    filter:
-      blur(30px);
-
-    animation:
-      scOrangeMotion 21s
-      ease-in-out
-      infinite
-      alternate;
-
-  }
-
-
-  /* DARK FIELD
-     Creates the deep charcoal area visible
-     in the lower portion of the reference */
-
-  .sc-gradient-dark {
-
-    left: -18vw;
-    bottom: -45vw;
-
-    width: 82vw;
-    height: 82vw;
-
-    background:
-
-      radial-gradient(
-        circle at 50% 50%,
-        rgba(12, 20, 17, 0.82) 0%,
-        rgba(15, 24, 20, 0.64) 25%,
-        rgba(20, 29, 25, 0.35) 47%,
-        rgba(20, 29, 25, 0.10) 66%,
-        transparent 77%
-      );
-
-    filter:
-      blur(34px);
-
-    animation:
-      scDarkMotion 25s
-      ease-in-out
-      infinite
-      alternate;
-
   }
 
 
   /* ==============================================================
-     ATMOSPHERIC BLENDING LAYER
+     ATMOSPHERIC BLUR LAYER
      ============================================================== */
 
-  .sc-gradient-wash {
+  .sc-hero-atmosphere {
 
     position: absolute;
 
-    inset: -20%;
+    inset: -12%;
+
+    z-index: -4;
+
+    pointer-events: none;
 
     background:
 
       radial-gradient(
-        ellipse at 48% 40%,
-        rgba(255,255,255,0.16),
-        transparent 42%
+        ellipse 42% 55%
+        at 18% 25%,
+        rgba(39, 102, 69, .13),
+        transparent 72%
       ),
 
       radial-gradient(
-        ellipse at 75% 20%,
-        rgba(255,166,74,0.12),
-        transparent 36%
-      ),
-
-      radial-gradient(
-        ellipse at 20% 30%,
-        rgba(116,156,91,0.12),
-        transparent 38%
+        ellipse 42% 52%
+        at 82% 70%,
+        rgba(242, 126, 35, .14),
+        transparent 72%
       );
 
-    filter:
-      blur(35px);
+    filter: blur(45px);
+
+    transform:
+      translate3d(0,0,0)
+      scale(1.05);
 
     animation:
-      scAtmosphere 28s
+      sc-atmosphere-drift 18s
       ease-in-out
-      infinite
-      alternate;
+      infinite alternate;
 
-    pointer-events: none;
+  }
+
+
+  @keyframes sc-atmosphere-drift {
+
+    0% {
+
+      transform:
+        translate3d(-1.5%, -1%, 0)
+        scale(1.05);
+
+    }
+
+    50% {
+
+      transform:
+        translate3d(1%, 1.5%, 0)
+        scale(1.08);
+
+    }
+
+    100% {
+
+      transform:
+        translate3d(-.5%, 2%, 0)
+        scale(1.04);
+
+    }
 
   }
 
 
   /* ==============================================================
-     GRAIN / FILM TEXTURE
+     VIGNETTE
      ============================================================== */
 
-  .sc-gradient-noise {
-
-    position: absolute;
-
-    inset: -20%;
-
-    width: 140%;
-    height: 140%;
-
-    opacity: .34;
-
-    mix-blend-mode: multiply;
-
-    pointer-events: none;
-
-    animation:
-      scNoiseMotion .55s steps(2) infinite;
-
-  }
-
-
-  /* ==============================================================
-     EDGE VIGNETTE
-     ============================================================== */
-
-  .sc-gradient-vignette {
+  .sc-hero-vignette {
 
     position: absolute;
 
     inset: 0;
+
+    z-index: -3;
 
     pointer-events: none;
 
@@ -1489,10 +1330,36 @@ body.cinematic-loop-active {
 
       radial-gradient(
         ellipse at center,
-        transparent 45%,
-        rgba(0,0,0,.055) 78%,
-        rgba(0,0,0,.16) 100%
+        transparent 30%,
+        rgba(12, 18, 15, .035) 72%,
+        rgba(12, 18, 15, .12) 120%
       );
+
+  }
+
+
+  /* ==============================================================
+     SUBTLE EDITORIAL GRAIN
+     ============================================================== */
+
+  .sc-hero-noise {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: -2;
+
+    pointer-events: none;
+
+    opacity: .055;
+
+    mix-blend-mode: multiply;
+
+    background-image:
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+
+    background-size: 180px 180px;
 
   }
 
@@ -1501,24 +1368,33 @@ body.cinematic-loop-active {
      HERO CONTENT
      ============================================================== */
 
-  #hero.sc-motion-hero .hero-content {
+  #hero.sc-hero .hero-content {
 
     position: relative;
 
-    z-index: 5;
+    z-index: 3;
 
     width: min(
-      1200px,
-      calc(100% - 10vw)
+      1180px,
+      calc(100% - 3rem)
     );
 
     margin: 0 auto;
 
-    padding-top: clamp(
-      8rem,
-      18vh,
-      12rem
-    );
+    min-height: 100svh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: flex-start;
+
+    padding:
+      8rem
+      0
+      7rem;
 
   }
 
@@ -1527,40 +1403,29 @@ body.cinematic-loop-active {
      BADGE
      ============================================================== */
 
-  #hero.sc-motion-hero .hero-badge {
+  #hero.sc-hero .hero-badge {
 
     display: inline-flex;
 
     align-items: center;
 
-    gap: .65rem;
+    gap: .7rem;
 
     margin-bottom: 2rem;
 
-    padding: .55rem .9rem;
+    font-family: var(--mono, monospace);
 
-    border: 1px solid rgba(0,0,0,.22);
+    font-size: .68rem;
 
-    background:
-      rgba(255,255,255,.28);
+    line-height: 1.4;
 
-    backdrop-filter:
-      blur(12px);
-
-    -webkit-backdrop-filter:
-      blur(12px);
-
-    color: #111111;
-
-    font-size: .72rem;
-
-    font-family:
-      var(--mono,
-      monospace);
-
-    letter-spacing: .12em;
+    letter-spacing: .16em;
 
     text-transform: uppercase;
+
+    color: #18382a;
+
+    opacity: .82;
 
   }
 
@@ -1570,18 +1435,40 @@ body.cinematic-loop-active {
     width: 7px;
     height: 7px;
 
+    flex: 0 0 7px;
+
     border-radius: 50%;
 
-    background: #ef6f20;
+    background: #e87520;
 
     box-shadow:
-      0 0 0 4px rgba(239,111,32,.12),
-      0 0 18px rgba(239,111,32,.55);
+      0 0 0 4px rgba(232,117,32,.12),
+      0 0 18px rgba(232,117,32,.35);
 
     animation:
-      scPulse 2s
-      ease-in-out
-      infinite;
+      sc-pulse 2.8s ease-in-out infinite;
+
+  }
+
+
+  @keyframes sc-pulse {
+
+    0%,
+    100% {
+
+      transform: scale(1);
+
+      opacity: .75;
+
+    }
+
+    50% {
+
+      transform: scale(1.35);
+
+      opacity: 1;
+
+    }
 
   }
 
@@ -1590,89 +1477,81 @@ body.cinematic-loop-active {
      HERO TITLE
      ============================================================== */
 
-  #hero.sc-motion-hero .hero-title {
+  #hero.sc-hero .hero-title {
+
+    position: relative;
 
     margin: 0;
 
     max-width: 1050px;
 
-    color: #0b0d0c;
-
-    font-family:
-      "Playwright",
-      Georgia,
-      serif;
-
     font-size:
       clamp(
-        4rem,
-        9vw,
+        4.2rem,
+        9.5vw,
         9.5rem
       );
 
-    line-height: .86;
+    line-height: .88;
 
     letter-spacing: -.055em;
 
-    font-weight: 400;
+    font-weight: 500;
 
-    text-wrap: balance;
+    color: #101512;
 
   }
 
 
-  #hero.sc-motion-hero .hero-title .line {
+  #hero.sc-hero .hero-title .line {
 
     display: block;
 
   }
 
 
-  #hero.sc-motion-hero .hero-title .line:nth-child(2) {
+  /*
+     Gives the title a subtle material quality rather than
+     looking like flat black text sitting on a gradient.
+  */
 
-    color:
-      #ef6f20;
+  #hero.sc-hero .hero-title .line:nth-child(2) {
 
-    font-style:
-      italic;
+    color: #1d573a;
 
   }
 
 
-  #hero.sc-motion-hero .hero-title .line:nth-child(3) {
+  #hero.sc-hero .hero-title .line:nth-child(3) {
 
-    color:
-      #26362b;
+    color: #bd5f1c;
 
   }
 
 
   /* ==============================================================
-     SUBTITLE
+     HERO DESCRIPTION
      ============================================================== */
 
-  #hero.sc-motion-hero .hero-sub {
+  #hero.sc-hero .hero-sub {
 
-    max-width: 690px;
+    width: min(
+      650px,
+      100%
+    );
 
-    margin-top: 2.5rem;
-
-    color:
-      rgba(15,18,16,.78);
+    margin-top: 2.25rem;
 
     font-size:
       clamp(
-        .95rem,
+        .92rem,
         1.25vw,
-        1.15rem
+        1.08rem
       );
 
     line-height: 1.75;
 
-    font-family:
-      var(--body-font,
-      Arial,
-      sans-serif);
+    color: rgba(16,21,18,.76);
 
   }
 
@@ -1681,121 +1560,126 @@ body.cinematic-loop-active {
      BUTTONS
      ============================================================== */
 
-  #hero.sc-motion-hero .hero-btns {
+  #hero.sc-hero .hero-btns {
 
     display: flex;
 
+    align-items: center;
+
+    gap: .8rem;
+
+    margin-top: 2.4rem;
+
     flex-wrap: wrap;
-
-    gap: .9rem;
-
-    margin-top: 2.5rem;
 
   }
 
 
-  #hero.sc-motion-hero .btn-primary,
-  #hero.sc-motion-hero .btn-ghost {
+  #hero.sc-hero .btn-primary {
 
     display: inline-flex;
 
     align-items: center;
     justify-content: center;
 
-    min-height: 50px;
+    min-height: 52px;
 
     padding:
-      .85rem 1.35rem;
+      0 1.5rem;
+
+    background: #101512;
+
+    color: #ffffff;
+
+    border:
+      1px solid #101512;
 
     text-decoration: none;
 
     font-family:
-      var(--mono,
-      monospace);
+      var(--mono, monospace);
 
     font-size: .72rem;
 
-    letter-spacing: .12em;
+    letter-spacing: .11em;
 
     text-transform: uppercase;
 
     transition:
       transform .35s ease,
       background .35s ease,
-      color .35s ease,
-      border-color .35s ease,
-      box-shadow .35s ease;
+      color .35s ease;
 
   }
 
 
-  #hero.sc-motion-hero .btn-primary {
-
-    background:
-      #111111;
-
-    color:
-      #ffffff;
-
-    border:
-      1px solid #111111;
-
-    box-shadow:
-      8px 8px 0
-      rgba(239,111,32,.28);
-
-  }
-
-
-  #hero.sc-motion-hero .btn-primary:hover {
+  #hero.sc-hero .btn-primary:hover {
 
     transform:
-      translate(-3px,-3px);
+      translateY(-2px);
 
-    background:
-      #ef6f20;
+    background: #e87520;
 
-    border-color:
-      #ef6f20;
-
-    box-shadow:
-      12px 12px 0
-      rgba(0,0,0,.14);
+    border-color: #e87520;
 
   }
 
 
-  #hero.sc-motion-hero .btn-ghost {
+  #hero.sc-hero .btn-ghost {
 
-    background:
-      rgba(255,255,255,.20);
+    display: inline-flex;
 
-    color:
-      #111111;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 52px;
+
+    padding:
+      0 1.5rem;
+
+    color: #101512;
 
     border:
-      1px solid
-      rgba(0,0,0,.32);
+      1px solid rgba(16,21,18,.35);
+
+    background:
+      rgba(255,255,255,.22);
 
     backdrop-filter:
-      blur(10px);
+      blur(12px);
 
     -webkit-backdrop-filter:
-      blur(10px);
+      blur(12px);
+
+    text-decoration: none;
+
+    font-family:
+      var(--mono, monospace);
+
+    font-size: .72rem;
+
+    letter-spacing: .11em;
+
+    text-transform: uppercase;
+
+    transition:
+      transform .35s ease,
+      background .35s ease,
+      border-color .35s ease;
 
   }
 
 
-  #hero.sc-motion-hero .btn-ghost:hover {
+  #hero.sc-hero .btn-ghost:hover {
 
     transform:
-      translateY(-3px);
+      translateY(-2px);
 
     background:
-      rgba(255,255,255,.55);
+      rgba(255,255,255,.65);
 
     border-color:
-      #111111;
+      rgba(16,21,18,.65);
 
   }
 
@@ -1804,33 +1688,33 @@ body.cinematic-loop-active {
      SCROLL INDICATOR
      ============================================================== */
 
-  #hero.sc-motion-hero .hero-scroll {
+  #hero.sc-hero .hero-scroll {
 
     position: absolute;
 
+    z-index: 4;
+
     left: 50%;
 
-    bottom: 2.5rem;
+    bottom: 2rem;
 
     transform:
       translateX(-50%);
 
-    z-index: 5;
-
     display: flex;
+
+    flex-direction: column;
 
     align-items: center;
 
-    gap: .75rem;
+    gap: .6rem;
 
-    color:
-      rgba(0,0,0,.62);
+    color: rgba(16,21,18,.62);
 
     font-family:
-      var(--mono,
-      monospace);
+      var(--mono, monospace);
 
-    font-size: .65rem;
+    font-size: .62rem;
 
     letter-spacing: .14em;
 
@@ -1839,356 +1723,58 @@ body.cinematic-loop-active {
   }
 
 
-  .hero-scroll .scroll-line {
+  #hero.sc-hero .scroll-line {
 
-    width: 42px;
-    height: 1px;
+    width: 1px;
 
-    background:
-      rgba(0,0,0,.55);
-
-    position: relative;
+    height: 48px;
 
     overflow: hidden;
+
+    background:
+      rgba(16,21,18,.18);
+
+    position: relative;
 
   }
 
 
-  .hero-scroll .scroll-line::after {
+  #hero.sc-hero .scroll-line::after {
 
     content: "";
 
     position: absolute;
 
-    left: -100%;
-
-    top: 0;
+    left: 0;
+    top: -100%;
 
     width: 100%;
-    height: 100%;
+    height: 55%;
 
     background:
-      #ef6f20;
+      #e87520;
 
     animation:
-      scScrollLine
-      2.2s
+      sc-scroll-line 2.2s
       ease-in-out
       infinite;
 
   }
 
 
-  /* ==============================================================
-     MOTION
-     ============================================================== */
-
-  @keyframes scGreenMotion {
+  @keyframes sc-scroll-line {
 
     0% {
 
       transform:
-        translate3d(
-          -3vw,
-          -1vh,
-          0
-        )
-        scale(1);
-
-    }
-
-    50% {
-
-      transform:
-        translate3d(
-          8vw,
-          6vh,
-          0
-        )
-        scale(1.08);
+        translateY(0);
 
     }
 
     100% {
 
       transform:
-        translate3d(
-          2vw,
-          13vh,
-          0
-        )
-        scale(1.02);
-
-    }
-
-  }
-
-
-  @keyframes scOrangeMotion {
-
-    0% {
-
-      transform:
-        translate3d(
-          4vw,
-          -4vh,
-          0
-        )
-        scale(1);
-
-    }
-
-    50% {
-
-      transform:
-        translate3d(
-          -8vw,
-          8vh,
-          0
-        )
-        scale(1.1);
-
-    }
-
-    100% {
-
-      transform:
-        translate3d(
-          -2vw,
-          14vh,
-          0
-        )
-        scale(1.04);
-
-    }
-
-  }
-
-
-  @keyframes scDarkMotion {
-
-    0% {
-
-      transform:
-        translate3d(
-          -4vw,
-          3vh,
-          0
-        )
-        scale(1);
-
-    }
-
-    50% {
-
-      transform:
-        translate3d(
-          9vw,
-          -5vh,
-          0
-        )
-        scale(1.12);
-
-    }
-
-    100% {
-
-      transform:
-        translate3d(
-          15vw,
-          5vh,
-          0
-        )
-        scale(1.04);
-
-    }
-
-  }
-
-
-  @keyframes scAtmosphere {
-
-    0% {
-
-      transform:
-        translate3d(
-          -2%,
-          1%,
-          0
-        )
-        scale(1);
-
-    }
-
-    50% {
-
-      transform:
-        translate3d(
-          4%,
-          -3%,
-          0
-        )
-        scale(1.04);
-
-    }
-
-    100% {
-
-      transform:
-        translate3d(
-          -3%,
-          4%,
-          0
-        )
-        scale(1.02);
-
-    }
-
-  }
-
-
-  @keyframes scNoiseMotion {
-
-    0% {
-      transform:
-        translate3d(0,0,0);
-    }
-
-    25% {
-      transform:
-        translate3d(-1.5%,1%,0);
-    }
-
-    50% {
-      transform:
-        translate3d(1%,-1.5%,0);
-    }
-
-    75% {
-      transform:
-        translate3d(1.5%,1%,0);
-    }
-
-    100% {
-      transform:
-        translate3d(-1%,-1%,0);
-    }
-
-  }
-
-
-  @keyframes scPulse {
-
-    0%,
-    100% {
-
-      transform:
-        scale(1);
-
-      opacity: 1;
-
-    }
-
-    50% {
-
-      transform:
-        scale(1.25);
-
-      opacity: .7;
-
-    }
-
-  }
-
-
-  @keyframes scScrollLine {
-
-    0% {
-
-      left: -100%;
-
-    }
-
-    50% {
-
-      left: 100%;
-
-    }
-
-    100% {
-
-      left: 100%;
-
-    }
-
-  }
-
-
-  /* ==============================================================
-     POINTER INTERACTION
-     ============================================================== */
-
-  @media (hover:hover) and (pointer:fine) {
-
-    .sc-gradient-green,
-    .sc-gradient-orange,
-    .sc-gradient-dark {
-
-      transition:
-        transform 1.8s
-        cubic-bezier(.16,1,.3,1);
-
-    }
-
-  }
-
-
-  /* ==============================================================
-     REDUCED MOTION
-     ============================================================== */
-
-  @media (prefers-reduced-motion: reduce) {
-
-    .sc-gradient-green,
-    .sc-gradient-orange,
-    .sc-gradient-dark,
-    .sc-gradient-wash,
-    .sc-gradient-noise,
-    .hero-badge-dot,
-    .hero-scroll .scroll-line::after {
-
-      animation:
-        none !important;
-
-    }
-
-  }
-
-
-  /* ==============================================================
-     TABLET
-     ============================================================== */
-
-  @media (max-width: 900px) {
-
-    #hero.sc-motion-hero .hero-content {
-
-      width:
-        calc(100% - 3rem);
-
-      padding-top:
-        9rem;
-
-    }
-
-    #hero.sc-motion-hero .hero-title {
-
-      font-size:
-        clamp(
-          4rem,
-          12vw,
-          7rem
-        );
+        translateY(365%);
 
     }
 
@@ -2199,122 +1785,73 @@ body.cinematic-loop-active {
      MOBILE
      ============================================================== */
 
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
 
-    #hero.sc-motion-hero {
-
-      min-height:
-        100svh;
-
-      height:
-        auto;
-
-    }
-
-
-    #hero.sc-motion-hero .hero-content {
+    #hero.sc-hero .hero-content {
 
       width:
         calc(100% - 2rem);
 
-      padding-top:
-        7.5rem;
-
-      padding-bottom:
-        7rem;
+      padding:
+        7rem 0 6rem;
 
     }
 
 
-    #hero.sc-motion-hero .hero-title {
+    #hero.sc-hero .hero-title {
 
       font-size:
         clamp(
-          3.35rem,
-          15vw,
-          5.5rem
+          3.4rem,
+          16vw,
+          6rem
         );
 
-      line-height:
-        .9;
+      line-height: .9;
 
     }
 
 
-    #hero.sc-motion-hero .hero-sub {
+    #hero.sc-hero .hero-sub {
 
-      font-size:
-        .9rem;
+      font-size: .9rem;
 
-      line-height:
-        1.65;
-
-      margin-top:
-        1.8rem;
+      line-height: 1.65;
 
     }
 
 
-    #hero.sc-motion-hero .hero-btns {
+    #hero.sc-hero .hero-btns {
 
-      flex-direction:
-        column;
-
-      align-items:
-        stretch;
+      width: 100%;
 
     }
 
 
-    #hero.sc-motion-hero .btn-primary,
-    #hero.sc-motion-hero .btn-ghost {
+    #hero.sc-hero .btn-primary,
+    #hero.sc-hero .btn-ghost {
 
-      width:
-        100%;
-
-    }
-
-
-    .sc-gradient-orb {
+      flex: 1;
 
       min-width:
-        520px;
-
-      min-height:
-        520px;
+        145px;
 
     }
 
-
-    .sc-gradient-green {
-
-      left:
-        -65vw;
-
-      top:
-        -20vw;
-
-    }
+  }
 
 
-    .sc-gradient-orange {
+  /* ==============================================================
+     REDUCE MOTION
+     ============================================================== */
 
-      right:
-        -65vw;
+  @media (prefers-reduced-motion: reduce) {
 
-      top:
-        -15vw;
+    .sc-hero-atmosphere,
+    .hero-badge-dot,
+    #hero.sc-hero .scroll-line::after {
 
-    }
-
-
-    .sc-gradient-dark {
-
-      left:
-        -55vw;
-
-      bottom:
-        -55vw;
+      animation: none !important;
 
     }
 
@@ -2325,133 +1862,493 @@ body.cinematic-loop-active {
 
 
 <!-- ═══════════════════════════════════════════════════════════════
-     OPTIONAL POINTER-REACTIVE MOTION
+     ORGANIC MOTION GRADIENT ENGINE
      ═══════════════════════════════════════════════════════════════ -->
 
 <script>
 
 (function () {
 
-  const hero =
-    document.querySelector(
-      '#hero.sc-motion-hero'
+  "use strict";
+
+
+  /* --------------------------------------------------------------
+     Canvas
+     -------------------------------------------------------------- */
+
+  const canvas =
+    document.getElementById(
+      "sc-gradient-canvas"
     );
 
-  if (!hero) return;
+  if (!canvas) return;
 
 
-  const green =
-    hero.querySelector(
-      '.sc-gradient-green'
-    );
-
-  const orange =
-    hero.querySelector(
-      '.sc-gradient-orange'
-    );
-
-  const dark =
-    hero.querySelector(
-      '.sc-gradient-dark'
-    );
+  const ctx =
+    canvas.getContext("2d", {
+      alpha: false
+    });
 
 
-  /*
-   * Very subtle cursor interaction.
-   * The gradient continues moving on its own;
-   * the cursor simply gives the background
-   * a slightly more dimensional response.
-   */
+  /* --------------------------------------------------------------
+     Device pixel ratio
+     -------------------------------------------------------------- */
 
-  if (
-    window.matchMedia(
-      '(hover:hover) and (pointer:fine)'
-    ).matches
-  ) {
-
-    let pointerX = 0;
-    let pointerY = 0;
-
-    let currentX = 0;
-    let currentY = 0;
-
-
-    hero.addEventListener(
-      'pointermove',
-      function (event) {
-
-        const rect =
-          hero.getBoundingClientRect();
-
-        pointerX =
-          ((event.clientX - rect.left)
-          / rect.width - .5);
-
-        pointerY =
-          ((event.clientY - rect.top)
-          / rect.height - .5);
-
-      }
+  let dpr =
+    Math.min(
+      window.devicePixelRatio || 1,
+      2
     );
 
 
-    function animatePointer() {
-
-      currentX +=
-        (pointerX - currentX) * .035;
-
-      currentY +=
-        (pointerY - currentY) * .035;
+  let width = 0;
+  let height = 0;
 
 
-      if (green) {
+  function resize() {
 
-        green.style.marginLeft =
-          `${currentX * 24}px`;
+    const rect =
+      canvas.getBoundingClientRect();
 
-        green.style.marginTop =
-          `${currentY * 18}px`;
+    width = rect.width;
+    height = rect.height;
 
-      }
-
-
-      if (orange) {
-
-        orange.style.marginLeft =
-          `${currentX * -18}px`;
-
-        orange.style.marginTop =
-          `${currentY * -14}px`;
-
-      }
-
-
-      if (dark) {
-
-        dark.style.marginLeft =
-          `${currentX * 12}px`;
-
-        dark.style.marginTop =
-          `${currentY * 10}px`;
-
-      }
-
-
-      requestAnimationFrame(
-        animatePointer
+    dpr =
+      Math.min(
+        window.devicePixelRatio || 1,
+        2
       );
 
-    }
+    canvas.width =
+      Math.round(width * dpr);
 
+    canvas.height =
+      Math.round(height * dpr);
 
-    animatePointer();
+    ctx.setTransform(
+      dpr,
+      0,
+      0,
+      dpr,
+      0,
+      0
+    );
 
   }
+
+
+  window.addEventListener(
+    "resize",
+    resize,
+    { passive: true }
+  );
+
+
+  resize();
+
+
+  /* --------------------------------------------------------------
+     Color palette
+     --------------------------------------------------------------
+
+     Warm cream
+     Deep forest green
+     Emerald green
+     Burnished orange
+     Soft amber
+     -------------------------------------------------------------- */
+
+  const COLORS = {
+
+    base:
+      [246, 242, 234],
+
+    green:
+      [35, 91, 61],
+
+    greenLight:
+      [89, 132, 69],
+
+    orange:
+      [231, 105, 28],
+
+    orangeLight:
+      [247, 164, 62]
+
+  };
+
+
+  /* --------------------------------------------------------------
+     Mouse / pointer
+     -------------------------------------------------------------- */
+
+  const pointer = {
+
+    x: .5,
+    y: .5,
+
+    targetX: .5,
+    targetY: .5
+
+  };
+
+
+  window.addEventListener(
+    "pointermove",
+    function (event) {
+
+      pointer.targetX =
+        event.clientX /
+        window.innerWidth;
+
+      pointer.targetY =
+        event.clientY /
+        window.innerHeight;
+
+    },
+    { passive: true }
+  );
+
+
+  /* --------------------------------------------------------------
+     Utility
+     -------------------------------------------------------------- */
+
+  function clamp(
+    value,
+    min,
+    max
+  ) {
+
+    return Math.max(
+      min,
+      Math.min(max, value)
+    );
+
+  }
+
+
+  function ease(
+    value
+  ) {
+
+    return value * value *
+      (3 - 2 * value);
+
+  }
+
+
+  function rgba(
+    color,
+    alpha
+  ) {
+
+    return (
+      "rgba(" +
+      color[0] + "," +
+      color[1] + "," +
+      color[2] + "," +
+      alpha +
+      ")"
+    );
+
+  }
+
+
+  /* --------------------------------------------------------------
+     Soft radial color field
+     -------------------------------------------------------------- */
+
+  function drawGlow(
+    x,
+    y,
+    radius,
+    color,
+    opacity
+  ) {
+
+    const gradient =
+      ctx.createRadialGradient(
+        x,
+        y,
+        0,
+        x,
+        y,
+        radius
+      );
+
+    gradient.addColorStop(
+      0,
+      rgba(color, opacity)
+    );
+
+    gradient.addColorStop(
+      .38,
+      rgba(color, opacity * .55)
+    );
+
+    gradient.addColorStop(
+      1,
+      rgba(color, 0)
+    );
+
+    ctx.fillStyle =
+      gradient;
+
+    ctx.fillRect(
+      x - radius,
+      y - radius,
+      radius * 2,
+      radius * 2
+    );
+
+  }
+
+
+  /* --------------------------------------------------------------
+     Animation
+     -------------------------------------------------------------- */
+
+  let startTime =
+    performance.now();
+
+
+  function render(
+    now
+  ) {
+
+    const elapsed =
+      (now - startTime) /
+      1000;
+
+
+    /* ------------------------------------------------------------
+       Smooth pointer
+       ------------------------------------------------------------ */
+
+    pointer.x +=
+      (pointer.targetX - pointer.x)
+      * .035;
+
+    pointer.y +=
+      (pointer.targetY - pointer.y)
+      * .035;
+
+
+    /* ------------------------------------------------------------
+       Clear base
+       ------------------------------------------------------------ */
+
+    ctx.fillStyle =
+      "rgb(" +
+      COLORS.base[0] + "," +
+      COLORS.base[1] + "," +
+      COLORS.base[2] +
+      ")";
+
+    ctx.fillRect(
+      0,
+      0,
+      width,
+      height
+    );
+
+
+    /* ------------------------------------------------------------
+       Organic motion
+
+       These deliberately use different frequencies so the
+       gradient never appears to repeat mechanically.
+       ------------------------------------------------------------ */
+
+    const greenX =
+      width *
+      (
+        .25 +
+        Math.sin(elapsed * .17) * .14 +
+        Math.cos(elapsed * .071) * .07 +
+        (pointer.x - .5) * .10
+      );
+
+
+    const greenY =
+      height *
+      (
+        .30 +
+        Math.cos(elapsed * .13) * .18 +
+        Math.sin(elapsed * .053) * .06 +
+        (pointer.y - .5) * .10
+      );
+
+
+    const green2X =
+      width *
+      (
+        .44 +
+        Math.cos(elapsed * .097) * .19 +
+        Math.sin(elapsed * .041) * .07
+      );
+
+
+    const green2Y =
+      height *
+      (
+        .66 +
+        Math.sin(elapsed * .11) * .16 +
+        Math.cos(elapsed * .063) * .08
+      );
+
+
+    const orangeX =
+      width *
+      (
+        .76 +
+        Math.sin(elapsed * .12) * .15 +
+        Math.cos(elapsed * .057) * .08 +
+        (pointer.x - .5) * .12
+      );
+
+
+    const orangeY =
+      height *
+      (
+        .28 +
+        Math.cos(elapsed * .15) * .18 +
+        Math.sin(elapsed * .049) * .07 +
+        (pointer.y - .5) * .08
+      );
+
+
+    const orange2X =
+      width *
+      (
+        .70 +
+        Math.cos(elapsed * .085) * .17
+      );
+
+
+    const orange2Y =
+      height *
+      (
+        .72 +
+        Math.sin(elapsed * .10) * .14
+      );
+
+
+    /* ------------------------------------------------------------
+       GREEN FIELD
+       ------------------------------------------------------------ */
+
+    drawGlow(
+      greenX,
+      greenY,
+      Math.max(width, height) * .72,
+      COLORS.green,
+      .72
+    );
+
+
+    drawGlow(
+      green2X,
+      green2Y,
+      Math.max(width, height) * .55,
+      COLORS.greenLight,
+      .42
+    );
+
+
+    /* ------------------------------------------------------------
+       ORANGE FIELD
+       ------------------------------------------------------------ */
+
+    drawGlow(
+      orangeX,
+      orangeY,
+      Math.max(width, height) * .68,
+      COLORS.orange,
+      .62
+    );
+
+
+    drawGlow(
+      orange2X,
+      orange2Y,
+      Math.max(width, height) * .50,
+      COLORS.orangeLight,
+      .34
+    );
+
+
+    /* ------------------------------------------------------------
+       Subtle central atmospheric light
+       ------------------------------------------------------------ */
+
+    const centerX =
+      width *
+      (
+        .50 +
+        Math.sin(elapsed * .09) * .06
+      );
+
+    const centerY =
+      height *
+      (
+        .50 +
+        Math.cos(elapsed * .08) * .05
+      );
+
+
+    drawGlow(
+      centerX,
+      centerY,
+      Math.max(width, height) * .58,
+      [255,255,255],
+      .22
+    );
+
+
+    /* ------------------------------------------------------------
+       Slight pointer illumination
+
+       This is intentionally subtle. The background continues
+       moving even when the user does nothing.
+       ------------------------------------------------------------ */
+
+    const pointerX =
+      pointer.x * width;
+
+    const pointerY =
+      pointer.y * height;
+
+
+    drawGlow(
+      pointerX,
+      pointerY,
+      Math.max(width, height) * .32,
+      COLORS.orangeLight,
+      .075
+    );
+
+
+    /* ------------------------------------------------------------
+       Continue animation
+       ------------------------------------------------------------ */
+
+    requestAnimationFrame(
+      render
+    );
+
+  }
+
+
+  requestAnimationFrame(
+    render
+  );
+
 
 })();
 
 </script>
-
 
 <!-- ===== ANIMATION JAVASCRIPT ===== -->
 <script>
