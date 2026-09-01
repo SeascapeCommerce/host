@@ -2402,7 +2402,149 @@ body.cinematic-loop-active {
   );
 
 </script>
+</body></div>
+</section>
 
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<style>
+    /* ===== RESET & BASE ===== */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* ===== BLACK BACKGROUND ===== */
+    /* Embedded robot demo is scoped; never override the site's global body layout. */
+    .cloneable {
+        background-color: #000000;
+        min-height: 100vh;
+    }
+
+    /* ===== MAIN CONTAINER ===== */
+    .cloneable {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        min-height: 100vh;
+        padding: 20px;
+    }
+
+    /* ===== CARD ===== */
+    .pixelated-image-card {
+        background-color: #000000;
+        color: #ffffff;
+        border-radius: 0;
+        width: 100vmin;
+        height: 100vmin;
+        max-width: 100vmin;
+        max-height: 100vmin;
+        position: relative;
+        overflow: hidden;
+        box-shadow: none;
+        cursor: pointer;
+        border: none;
+    }
+
+    /* ===== ASPECT RATIO ===== */
+    .before__100 {
+        padding-top: 100%;
+        width: 100%;
+        height: 0;
+        display: block;
+    }
+
+    /* ===== VIDEO LAYER ===== */
+    .pixelated-image-card__video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+        user-select: none;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    /* ===== PIXEL GRID ===== */
+    .pixelated-image-card__pixels {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 5;
+    }
+
+    /* ===== INDIVIDUAL PIXELS ===== */
+    .pixelated-image-card__pixel {
+        background-color: #ffffff;
+        display: none;
+        position: absolute;
+        will-change: transform, opacity;
+        backface-visibility: hidden;
+        border: 0.5px solid rgba(0, 0, 0, 0.15);
+        box-sizing: border-box;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+        .pixelated-image-card {
+            width: 75vmin;
+            height: 75vmin;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .pixelated-image-card {
+            width: 75vmin;
+            height: 75vmin;
+        }
+    }
+</style>
+
+
+
+<!-- ===== MAIN SECTION ===== -->
+<section class="cloneable">
+
+    <div
+        data-hover
+        data-pixelated-image-reveal
+        class="pixelated-image-card"
+    >
+
+        <!-- Aspect ratio placeholder -->
+        <div class="before__100"></div>
+
+        <!-- ===== ROBOTOMAN VIDEO ===== -->
+        <video
+            id="robotomanVideo"
+            class="pixelated-image-card__video"
+            src="Robotoman.mp4"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="auto"
+            aria-label="Robot Logo"
+        ></video>
+
+        <!-- ===== PIXEL GRID ===== -->
+        <div
+            data-pixelated-image-reveal-grid
+            class="pixelated-image-card__pixels"
+        >
+            <!-- Pixels injected by JavaScript -->
+        </div>
+
+    </div>
+
+</section>
 
 
 <!-- ===== ANIMATION JAVASCRIPT ===== -->
@@ -2939,12 +3081,6 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
 
 
 <div class="divider"></div>
-
-
-  
-
-<div class="divider"></div>
-
 
 
 
