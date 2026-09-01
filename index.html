@@ -286,12 +286,19 @@ nav.scrolled{background:rgba(6,12,24,.92);backdrop-filter:blur(20px);border-bott
   position: absolute;
   inset: 0;
 
-  background: rgba(255,255,255,.025);
+  /* Semi-transparent white background */
+  background: rgba(255, 255, 255, 0.88);
 
-  border: 1px solid rgba(240,112,32,.18);
+  /* Keep the orange border */
+  border: 1px solid rgba(240, 112, 32, 0.85);
 
+  /* Subtle orange illumination */
   box-shadow:
-    0 0 20px rgba(240,112,32,.05);
+    0 0 18px rgba(240, 112, 32, 0.10);
+
+  /* Slight glass effect */
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 
   pointer-events: none;
 }
