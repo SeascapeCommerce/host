@@ -3389,17 +3389,6 @@ document.addEventListener('DOMContentLoaded', () => {
    * Register only once.
    */
 
-  if (
-    typeof ScrollTrigger !== 'undefined'
-  ) {
-
-    gsap.registerPlugin(
-      ScrollTrigger,
-      Draggable
-    );
-
-  } else {
-
     gsap.registerPlugin(
       Draggable
     );
