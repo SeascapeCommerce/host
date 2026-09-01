@@ -1130,310 +1130,112 @@ body.cinematic-loop-active {
   
 
 
-<!-- ============================================================
-     SEASCAPE COMMERCE — LIGHTNING VIDEO SECTION
-     Full-width cinematic video + animated pixel transition
-     ============================================================ -->
-
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-
 <style>
-/* ============================================================
-   COMPONENT RESET
-   ============================================================ */
-
-.cloneable {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 100%;
-    max-width: 100%;
-
-    min-height: 100vh;
-
-    margin: 0;
-    padding: 0;
-
-    background: #000000;
-
-    overflow: hidden;
-}
-
-
-/* ============================================================
-   MAIN MEDIA CONTAINER
-   ------------------------------------------------------------
-   IMPORTANT:
-   The old version used 100vmin for BOTH width and height.
-   That forced the media into a square.
-
-   The new version:
-   - uses the full available width
-   - preserves the large cinematic height
-   - removes the artificial square constraint
-   ============================================================ */
-
-.pixelated-image-card {
-    position: relative;
-
-    width: 100%;
-    max-width: none;
-
-    height: 100vmin;
-    min-height: 560px;
-
-    margin: 0;
-    padding: 0;
-
-    background: #000000;
-
-    overflow: hidden;
-
-    border: 0;
-    border-radius: 0;
-
-    box-shadow: none;
-
-    cursor: pointer;
-
-    isolation: isolate;
-}
-
-
-/* ============================================================
-   VIDEO
-   ============================================================ */
-
-.pixelated-image-card__video {
-    position: absolute;
-
-    inset: 0;
-
-    width: 100%;
-    height: 100%;
-
-    /*
-     * COVER makes the video fill the newly widened section.
-     *
-     * This may crop a small amount from the left/right depending
-     * on the native aspect ratio of Lightning12.mov.
-     */
-    object-fit: cover;
-
-    object-position: center center;
-
-    display: block;
-
-    margin: 0;
-    padding: 0;
-
-    background: #000000;
-
-    user-select: none;
-    pointer-events: none;
-
-    /*
-     * Video is deliberately above the pixel layer.
-     * This prevents the pixel effect from permanently
-     * obscuring the Lightning animation.
-     */
-    z-index: 10;
-
-    /*
-     * Force smoother rendering in browsers that support it.
-     */
-    transform: translateZ(0);
-    backface-visibility: hidden;
-}
-
-
-/* ============================================================
-   PIXEL TRANSITION LAYER
-   ============================================================ */
-
-.pixelated-image-card__pixels {
-    position: absolute;
-
-    inset: 0;
-
-    width: 100%;
-    height: 100%;
-
-    margin: 0;
-    padding: 0;
-
-    pointer-events: none;
-
-    /*
-     * The pixel layer remains available for the transition,
-     * but stays beneath the video so it cannot permanently
-     * cover or interfere with the Lightning footage.
-     */
-    z-index: 5;
-
-    overflow: hidden;
-
-    /*
-     * If the browser has a rendering problem with the pixel
-     * effect, the actual video remains completely unaffected.
-     */
-}
-
-
-/* ============================================================
-   INDIVIDUAL PIXELS
-   ============================================================ */
-
-.pixelated-image-card__pixel {
-    position: absolute;
-
-    display: none;
-
-    margin: 0;
-    padding: 0;
-
-    /*
-     * Subtle translucent white transition.
-     *
-     * This replaces the previous solid white pixels, which
-     * could visually overpower the video.
-     */
-    background: rgba(255, 255, 255, 0.16);
-
-    border: 1px solid rgba(255, 255, 255, 0.08);
-
-    box-sizing: border-box;
-
-    will-change: opacity, transform;
-
-    backface-visibility: hidden;
-
-    pointer-events: none;
-}
-
-
-/* ============================================================
-   DESKTOP / LARGE SCREENS
-   ============================================================ */
-
-@media (min-width: 769px) {
-
-    .cloneable {
-        width: 100%;
-        min-height: 100vh;
-
+    /* ===== RESET & BASE ===== */
+    * {
+        margin: 0;
         padding: 0;
+        box-sizing: border-box;
     }
 
-    .pixelated-image-card {
+    /* ===== BLACK BACKGROUND ===== */
+    /* Embedded robot demo is scoped; never override the site's global body layout. */
+    .cloneable {
+        background-color: #000000;
+        min-height: 100vh;
+    }
+
+    /* ===== MAIN CONTAINER ===== */
+    .cloneable {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: 100%;
+        min-height: 100vh;
+        padding: 20px;
+    }
+
+    /* ===== CARD ===== */
+    .pixelated-image-card {
+        background-color: #000000;
+        color: #ffffff;
+        border-radius: 0;
+        width: 100vmin;
         height: 100vmin;
-
-        min-height: 560px;
-        max-height: 100vh;
+        max-width: 100vmin;
+        max-height: 100vmin;
+        position: relative;
+        overflow: hidden;
+        box-shadow: none;
+        cursor: pointer;
+        border: none;
     }
 
-}
-
-
-/* ============================================================
-   TABLET
-   ============================================================ */
-
-@media (max-width: 768px) {
-
-    .cloneable {
+    /* ===== ASPECT RATIO ===== */
+    .before__100 {
+        padding-top: 100%;
         width: 100%;
-        min-height: 100vh;
-
-        padding: 0;
+        height: 0;
+        display: block;
     }
 
-    .pixelated-image-card {
-        width: 100%;
-        height: 75vmin;
-
-        min-height: 420px;
-        max-height: 100vh;
-    }
-
+    /* ===== VIDEO LAYER ===== */
     .pixelated-image-card__video {
-        object-fit: cover;
-        object-position: center center;
-    }
-
-}
-
-
-/* ============================================================
-   MOBILE
-   ============================================================ */
-
-@media (max-width: 480px) {
-
-    .cloneable {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
-        min-height: 100svh;
-
-        padding: 0;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+        user-select: none;
+        pointer-events: none;
+        z-index: 1;
     }
 
-    .pixelated-image-card {
-        width: 100%;
-        height: 75vmin;
-
-        min-height: 320px;
-        max-height: 100svh;
-    }
-
-    .pixelated-image-card__video {
-        object-fit: cover;
-        object-position: center center;
-    }
-
-}
-
-
-/* ============================================================
-   SAFETY FALLBACK
-   ------------------------------------------------------------
-   If the browser cannot render the pixel layer, the video
-   remains fully visible.
-   ============================================================ */
-
-.pixelated-image-card__video {
-    opacity: 1 !important;
-}
-
-
-/* ============================================================
-   REDUCED MOTION
-   ------------------------------------------------------------
-   Respect users who have requested reduced animation.
-   The Lightning video continues playing, but the pixel
-   transition is disabled.
-   ============================================================ */
-
-@media (prefers-reduced-motion: reduce) {
-
+    /* ===== PIXEL GRID ===== */
     .pixelated-image-card__pixels {
-        display: none !important;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 5;
     }
 
-}
+    /* ===== INDIVIDUAL PIXELS ===== */
+    .pixelated-image-card__pixel {
+        background-color: #ffffff;
+        display: none;
+        position: absolute;
+        will-change: transform, opacity;
+        backface-visibility: hidden;
+        border: 0.5px solid rgba(0, 0, 0, 0.15);
+        box-sizing: border-box;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+        .pixelated-image-card {
+            width: 75vmin;
+            height: 75vmin;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .pixelated-image-card {
+            width: 75vmin;
+            height: 75vmin;
+        }
+    }
 </style>
 
 
-<!-- ============================================================
-     MAIN LIGHTNING VIDEO SECTION
-     ============================================================ -->
 
-<section
-    class="cloneable"
-    aria-label="Seascape Commerce technology experience"
->
+<!-- ===== MAIN SECTION ===== -->
+<section class="cloneable">
 
     <div
         data-hover
@@ -1441,39 +1243,28 @@ body.cinematic-loop-active {
         class="pixelated-image-card"
     >
 
-        <!-- ====================================================
-             LIGHTNING VIDEO
+        <!-- Aspect ratio placeholder -->
+        <div class="before__100"></div>
 
-             IMPORTANT:
-             Lightning12.mov must be located in the same
-             directory/path as this HTML file.
-
-             If it lives somewhere else, change the src path.
-             ==================================================== -->
-
+        <!-- ===== ROBOTOMAN VIDEO ===== -->
         <video
-            id="lightningVideo"
+            id="robotomanVideo"
             class="pixelated-image-card__video"
-            src="Lightning12.mp4"
+            src="Robotoman.mp4"
             autoplay
             muted
             loop
             playsinline
             preload="auto"
-            aria-label="Animated lightning visual"
+            aria-label="Robot Logo"
         ></video>
 
-
-        <!-- ====================================================
-             PIXEL TRANSITION GRID
-             ==================================================== -->
-
+        <!-- ===== PIXEL GRID ===== -->
         <div
             data-pixelated-image-reveal-grid
             class="pixelated-image-card__pixels"
-            aria-hidden="true"
         >
-            <!-- Pixels generated by JavaScript -->
+            <!-- Pixels injected by JavaScript -->
         </div>
 
     </div>
@@ -1481,436 +1272,316 @@ body.cinematic-loop-active {
 </section>
 
 
-<!-- ============================================================
-     PIXEL ANIMATION
-     ============================================================ -->
-
+<!-- ===== ANIMATION JAVASCRIPT ===== -->
 <script>
 
-document.addEventListener('DOMContentLoaded', function () {
+    // ============================================================
+    // Pixelated Video Reveal
+    // Robotoman.mp4
+    // 7x7 pixel transition
+    // ============================================================
 
-    'use strict';
+    document.addEventListener('DOMContentLoaded', function () {
 
+        'use strict';
 
-    /* ========================================================
-       CONFIGURATION
-       ======================================================== */
+        // --------------------------------------------------------
+        // Configuration
+        // --------------------------------------------------------
 
-    const ANIMATION_DURATION = 0.45;
+        const ANIMATION_DURATION = 0.3;
+        const GRID_SIZE = 7;
 
-    /*
-     * Wider grid than the original 7x7 effect.
-     * This allows the animation to visually scale across
-     * the entire widened video.
-     */
-    const GRID_COLUMNS = 14;
-    const GRID_ROWS = 7;
-
-
-    /* ========================================================
-       FIND COMPONENTS
-       ======================================================== */
-
-    const cards = document.querySelectorAll(
-        '[data-pixelated-image-reveal]'
-    );
-
-    if (!cards.length) {
-        return;
-    }
+        const PIXEL_SIZE = 100 / GRID_SIZE;
 
 
-    /* ========================================================
-       TOUCH DETECTION
-       ======================================================== */
+        // --------------------------------------------------------
+        // Find cards
+        // --------------------------------------------------------
 
-    const isTouchDevice =
-        'ontouchstart' in window ||
-        navigator.maxTouchPoints > 0 ||
-        window.matchMedia('(pointer: coarse)').matches;
+        const cards = document.querySelectorAll(
+            '[data-pixelated-image-reveal]'
+        );
 
-
-    /* ========================================================
-       PROCESS EACH CARD
-       ======================================================== */
-
-    cards.forEach(function (card) {
-
-        const pixelGrid =
-            card.querySelector(
-                '[data-pixelated-image-reveal-grid]'
-            );
-
-        const video =
-            card.querySelector(
-                '.pixelated-image-card__video'
-            );
+        if (!cards.length) return;
 
 
-        if (!pixelGrid || !video) {
-            return;
-        }
+        // --------------------------------------------------------
+        // Detect touch devices
+        // --------------------------------------------------------
+
+        const isTouchDevice =
+            'ontouchstart' in window ||
+            navigator.maxTouchPoints > 0 ||
+            window.matchMedia('(pointer: coarse)').matches;
 
 
-        /* ====================================================
-           VIDEO SETTINGS
-           ==================================================== */
+        // --------------------------------------------------------
+        // Process card
+        // --------------------------------------------------------
 
-        video.muted = true;
-        video.loop = true;
-        video.playsInline = true;
+        cards.forEach(function (card) {
 
-        /*
-         * Explicitly set the relevant properties for browsers
-         * that do not fully respect only the HTML attributes.
-         */
-        video.setAttribute('autoplay', '');
-        video.setAttribute('muted', '');
-        video.setAttribute('loop', '');
-        video.setAttribute('playsinline', '');
+            const pixelGrid =
+                card.querySelector(
+                    '[data-pixelated-image-reveal-grid]'
+                );
+
+            const video =
+                card.querySelector(
+                    '.pixelated-image-card__video'
+                );
 
 
-        /* ====================================================
-           VIDEO PLAY FUNCTION
-           ==================================================== */
+            if (!pixelGrid || !video) return;
 
-        function startVideo() {
+
+            // ----------------------------------------------------
+            // Ensure video plays
+            // ----------------------------------------------------
 
             video.muted = true;
+            video.loop = true;
+            video.playsInline = true;
 
-            const playPromise = video.play();
+            const startVideo = function () {
 
-            if (playPromise !== undefined) {
+                const playPromise = video.play();
 
-                playPromise.catch(function () {
-
-                    /*
-                     * Some browsers may initially reject
-                     * autoplay. We retry after visibility
-                     * or user interaction.
-                     */
-
-                });
-
-            }
-
-        }
-
-
-        /* ====================================================
-           INITIAL VIDEO PLAY
-           ==================================================== */
-
-        startVideo();
-
-
-        /* ====================================================
-           AUTOPLAY RECOVERY
-           ==================================================== */
-
-        document.addEventListener(
-            'visibilitychange',
-            function () {
-
-                if (!document.hidden) {
-                    startVideo();
+                if (playPromise !== undefined) {
+                    playPromise.catch(function () {
+                        // Browser may block autoplay until interaction.
+                    });
                 }
 
-            }
-        );
+            };
+
+            startVideo();
 
 
-        window.addEventListener(
-            'pageshow',
-            function () {
-                startVideo();
-            }
-        );
-
-
-        window.addEventListener(
-            'pointerdown',
-            function () {
-                startVideo();
-            },
-            {
-                once: true,
-                passive: true
-            }
-        );
-
-
-        /* ====================================================
-           GENERATE PIXEL GRID
-           ==================================================== */
-
-        const pixelWidth =
-            100 / GRID_COLUMNS;
-
-        const pixelHeight =
-            100 / GRID_ROWS;
-
-
-        for (
-            let row = 0;
-            row < GRID_ROWS;
-            row++
-        ) {
+            // ----------------------------------------------------
+            // Generate pixel grid
+            // ----------------------------------------------------
 
             for (
-                let col = 0;
-                col < GRID_COLUMNS;
-                col++
+                let row = 0;
+                row < GRID_SIZE;
+                row++
             ) {
 
-                const pixel =
-                    document.createElement('div');
+                for (
+                    let col = 0;
+                    col < GRID_SIZE;
+                    col++
+                ) {
 
-                pixel.classList.add(
-                    'pixelated-image-card__pixel'
+                    const pixel =
+                        document.createElement('div');
+
+                    pixel.classList.add(
+                        'pixelated-image-card__pixel'
+                    );
+
+
+                    // Position
+                    pixel.style.width =
+                        PIXEL_SIZE + '%';
+
+                    pixel.style.height =
+                        PIXEL_SIZE + '%';
+
+                    pixel.style.left =
+                        (col * PIXEL_SIZE) + '%';
+
+                    pixel.style.top =
+                        (row * PIXEL_SIZE) + '%';
+
+
+                    pixelGrid.appendChild(pixel);
+
+                }
+
+            }
+
+
+            // ----------------------------------------------------
+            // Get pixels
+            // ----------------------------------------------------
+
+            const pixels =
+                pixelGrid.querySelectorAll(
+                    '.pixelated-image-card__pixel'
+                );
+
+            const totalPixels = pixels.length;
+
+
+            // ----------------------------------------------------
+            // Stagger
+            // ----------------------------------------------------
+
+            const staggerDuration =
+                ANIMATION_DURATION / totalPixels;
+
+
+            // ----------------------------------------------------
+            // State
+            // ----------------------------------------------------
+
+            let isActive = false;
+            let delayedCall = null;
+
+
+            // ----------------------------------------------------
+            // Pixel animation
+            // ----------------------------------------------------
+
+            function animatePixels(activate) {
+
+                // Kill existing animation
+                gsap.killTweensOf(pixels);
+
+                if (delayedCall) {
+                    delayedCall.kill();
+                    delayedCall = null;
+                }
+
+
+                isActive = activate;
+
+
+                // -----------------------------------------------
+                // Hide pixels
+                // -----------------------------------------------
+
+                gsap.set(
+                    pixels,
+                    {
+                        display: 'none'
+                    }
                 );
 
 
-                /* Position */
+                // -----------------------------------------------
+                // Show pixels randomly
+                // -----------------------------------------------
 
-                pixel.style.width =
-                    pixelWidth + '%';
-
-                pixel.style.height =
-                    pixelHeight + '%';
-
-                pixel.style.left =
-                    (col * pixelWidth) + '%';
-
-                pixel.style.top =
-                    (row * pixelHeight) + '%';
-
-
-                pixelGrid.appendChild(pixel);
-
-            }
-
-        }
+                gsap.to(
+                    pixels,
+                    {
+                        display: 'block',
+                        duration: 0,
+                        stagger: {
+                            each: staggerDuration,
+                            from: 'random'
+                        },
+                        ease: 'power1.inOut'
+                    }
+                );
 
 
-        /* ====================================================
-           GET GENERATED PIXELS
-           ==================================================== */
+                // -----------------------------------------------
+                // Wait for pixel transition
+                // -----------------------------------------------
 
-        const pixels =
-            pixelGrid.querySelectorAll(
-                '.pixelated-image-card__pixel'
-            );
+                delayedCall =
+                    gsap.delayedCall(
+                        ANIMATION_DURATION,
+                        function () {
 
-        const totalPixels =
-            pixels.length;
+                            // Keep the video visible.
+                            // The pixels simply act as the
+                            // transition effect.
 
+                            if (activate) {
 
-        if (!totalPixels) {
-            return;
-        }
+                                startVideo();
 
+                            } else {
 
-        /* ====================================================
-           STAGGER
-           ==================================================== */
+                                startVideo();
 
-        const staggerDuration =
-            ANIMATION_DURATION / totalPixels;
+                            }
 
-
-        /* ====================================================
-           STATE
-           ==================================================== */
-
-        let isActive = false;
-
-        let delayedCall = null;
+                        }
+                    );
 
 
-        /* ====================================================
-           PIXEL ANIMATION
-           ==================================================== */
+                // -----------------------------------------------
+                // Remove pixels
+                // -----------------------------------------------
 
-        function animatePixels(activate) {
-
-            /*
-             * Stop any existing pixel animations.
-             */
-            gsap.killTweensOf(pixels);
-
-
-            if (delayedCall) {
-
-                delayedCall.kill();
-
-                delayedCall = null;
+                gsap.to(
+                    pixels,
+                    {
+                        display: 'none',
+                        duration: 0,
+                        delay: ANIMATION_DURATION,
+                        stagger: {
+                            each: staggerDuration,
+                            from: 'random'
+                        },
+                        ease: 'power1.inOut'
+                    }
+                );
 
             }
 
 
-            isActive = activate;
+            // ----------------------------------------------------
+            // Desktop hover
+            // ----------------------------------------------------
 
+            if (!isTouchDevice) {
 
-            /* -----------------------------------------------
-               Reset
-               ----------------------------------------------- */
-
-            gsap.set(
-                pixels,
-                {
-                    display: 'none',
-                    opacity: 0,
-                    scale: 1
-                }
-            );
-
-
-            /* -----------------------------------------------
-               Pixel appearance
-               ----------------------------------------------- */
-
-            gsap.to(
-                pixels,
-                {
-                    display: 'block',
-
-                    opacity: 1,
-
-                    duration: 0,
-
-                    stagger: {
-                        each: staggerDuration,
-                        from: 'random'
-                    }
-                }
-            );
-
-
-            /* -----------------------------------------------
-               Pixel disappearance
-               ----------------------------------------------- */
-
-            gsap.to(
-                pixels,
-                {
-                    display: 'none',
-
-                    opacity: 0,
-
-                    duration: 0,
-
-                    delay: ANIMATION_DURATION,
-
-                    stagger: {
-                        each: staggerDuration,
-                        from: 'random'
-                    }
-                }
-            );
-
-
-            /* -----------------------------------------------
-               Make certain video is continuously playing.
-               ----------------------------------------------- */
-
-            delayedCall =
-                gsap.delayedCall(
-                    ANIMATION_DURATION,
+                card.addEventListener(
+                    'mouseenter',
                     function () {
 
-                        startVideo();
+                        if (!isActive) {
+                            animatePixels(true);
+                        }
 
                     }
                 );
 
-        }
 
+                card.addEventListener(
+                    'mouseleave',
+                    function () {
 
-        /* ====================================================
-           DESKTOP HOVER
-           ==================================================== */
-
-        if (!isTouchDevice) {
-
-            card.addEventListener(
-                'mouseenter',
-                function () {
-
-                    if (!isActive) {
-
-                        animatePixels(true);
+                        if (isActive) {
+                            animatePixels(false);
+                        }
 
                     }
-
-                    startVideo();
-
-                }
-            );
-
-
-            card.addEventListener(
-                'mouseleave',
-                function () {
-
-                    if (isActive) {
-
-                        animatePixels(false);
-
-                    }
-
-                    startVideo();
-
-                }
-            );
-
-        }
-
-
-        /* ====================================================
-           MOBILE / TOUCH
-           ==================================================== */
-
-        else {
-
-            card.addEventListener(
-                'click',
-                function (event) {
-
-                    event.stopPropagation();
-
-                    animatePixels(!isActive);
-
-                    startVideo();
-
-                }
-            );
-
-        }
-
-
-        /* ====================================================
-           VIDEO ERROR HANDLING
-           ==================================================== */
-
-        video.addEventListener(
-            'error',
-            function () {
-
-                /*
-                 * If Lightning12.mov cannot be decoded by
-                 * the browser, remove the pixel layer rather
-                 * than leaving a broken visual overlay.
-                 */
-
-                pixelGrid.style.display = 'none';
+                );
 
             }
-        );
+
+
+            // ----------------------------------------------------
+            // Mobile / touch
+            // ----------------------------------------------------
+
+            else {
+
+                card.addEventListener(
+                    'click',
+                    function (e) {
+
+                        e.stopPropagation();
+
+                        animatePixels(!isActive);
+
+                    }
+                );
+
+            }
+
+        });
 
     });
-
-});
 
 </script>
   
