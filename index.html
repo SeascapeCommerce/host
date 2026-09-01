@@ -1092,34 +1092,69 @@ body.cinematic-loop-active {
 </nav>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     SEASCAPE COMMERCE — ANIMATED HERO
-     Organic green / orange motion gradient
+     SEASCAPE COMMERCE — IMMERSIVE MOTION HERO
+     
+     Inspired by the layered architecture observed on
+     richardsancho.com:
+     
+     • warm paper-colored base
+     • continuously moving blurred color field
+     • additive color interaction
+     • full-screen noise overlay
+     • editorial foreground content
      ═══════════════════════════════════════════════════════════════ -->
 
-<section id="hero" class="sc-hero">
+<section id="hero" class="sc-motion-hero">
 
   <!-- ============================================================
-       ANIMATED BACKGROUND CANVAS
+       BACKGROUND BASE
        ============================================================ -->
+
+  <div class="sc-motion-base"></div>
+
+
+  <!-- ============================================================
+       MOVING COLOR FIELD
+       ============================================================ -->
+
   <canvas
-    id="sc-gradient-canvas"
+    id="sc-motion-gradient"
     aria-hidden="true"
   ></canvas>
 
-  <!-- Soft atmospheric layers -->
-  <div class="sc-hero-atmosphere" aria-hidden="true"></div>
-  <div class="sc-hero-vignette" aria-hidden="true"></div>
-  <div class="sc-hero-noise" aria-hidden="true"></div>
+
+  <!-- ============================================================
+       ATMOSPHERIC BLUR
+       ============================================================ -->
+
+  <div
+    class="sc-motion-atmosphere"
+    aria-hidden="true"
+  ></div>
 
 
   <!-- ============================================================
-       HERO CONTENT
+       NOISE TEXTURE
        ============================================================ -->
+
+  <div
+    class="sc-motion-noise"
+    aria-hidden="true"
+  ></div>
+
+
+  <!-- ============================================================
+       CONTENT
+       ============================================================ -->
+
   <div class="hero-content">
 
     <div class="hero-badge">
+
       <span class="hero-badge-dot"></span>
+
       E-Commerce Business Management and Web Development.
+
     </div>
 
 
@@ -1141,12 +1176,14 @@ body.cinematic-loop-active {
 
 
     <p class="hero-sub">
-      Real humans at Seascape Commerce design your webspace architecture,
-      manage your data and inventory, and scale business growth with
-      AI-driven tools, operational efficiency, and robust webspaces.
-      Your complete digital marketplace partner. Contact SC today and
-      we'll deploy an administrator to begin strategizing your online
-      presence.
+
+      Real humans at Seascape Commerce design your webspace
+      architecture, manage your data and inventory, and scale
+      business growth with AI-driven tools, operational
+      efficiency, and robust webspaces. Your complete digital
+      marketplace partner. Contact SC today and we'll deploy
+      an administrator to begin strategizing your online presence.
+
     </p>
 
 
@@ -1172,15 +1209,27 @@ body.cinematic-loop-active {
 
 
   <!-- ============================================================
-       SCROLL INDICATOR
+       SCROLL
        ============================================================ -->
+
   <div class="hero-scroll">
 
     <div class="scroll-line"></div>
 
-    <span>
-      Scroll
-    </span>
+    <span>Scroll</span>
+
+  </div>
+
+
+  <!-- ============================================================
+       INTERACTION PROMPT
+       ============================================================ -->
+
+  <div class="sc-color-prompt">
+
+    <span class="sc-prompt-dot"></span>
+
+    Click anywhere to explore
 
   </div>
 
@@ -1188,730 +1237,808 @@ body.cinematic-loop-active {
 
 
 
-<!-- ═══════════════════════════════════════════════════════════════
-     ANIMATED GRADIENT STYLES
-     ═══════════════════════════════════════════════════════════════ -->
-
 <style>
 
-  /* ==============================================================
-     HERO FOUNDATION
-     ============================================================== */
+/* ═══════════════════════════════════════════════════════════════
+   HERO
+   ═══════════════════════════════════════════════════════════════ */
 
-  #hero.sc-hero {
+#hero.sc-motion-hero {
 
-    position: relative;
+  position: relative;
 
-    width: 100%;
-    min-height: 100svh;
+  width: 100%;
 
-    overflow: hidden;
+  height: 100vh;
 
-    isolation: isolate;
+  min-height: 680px;
 
-    background:
-      #f5f0e8;
+  overflow: hidden;
 
-    color: #101512;
+  isolation: isolate;
 
-  }
+  background: #f4eae1;
 
+  color: #111613;
 
-  /* ==============================================================
-     CANVAS
-     ============================================================== */
+  cursor: crosshair;
 
-  #sc-gradient-canvas {
+}
 
-    position: absolute;
 
-    inset: 0;
+/* ═══════════════════════════════════════════════════════════════
+   BASE
+   ═══════════════════════════════════════════════════════════════ */
 
-    width: 100%;
-    height: 100%;
+.sc-motion-base {
 
-    display: block;
+  position: absolute;
 
-    z-index: -5;
+  inset: 0;
 
-    pointer-events: none;
+  z-index: 0;
 
-  }
+  background:
 
-
-  /* ==============================================================
-     ATMOSPHERIC BLUR LAYER
-     ============================================================== */
-
-  .sc-hero-atmosphere {
-
-    position: absolute;
-
-    inset: -12%;
-
-    z-index: -4;
-
-    pointer-events: none;
-
-    background:
-
-      radial-gradient(
-        ellipse 42% 55%
-        at 18% 25%,
-        rgba(39, 102, 69, .13),
-        transparent 72%
-      ),
-
-      radial-gradient(
-        ellipse 42% 52%
-        at 82% 70%,
-        rgba(242, 126, 35, .14),
-        transparent 72%
-      );
-
-    filter: blur(45px);
-
-    transform:
-      translate3d(0,0,0)
-      scale(1.05);
-
-    animation:
-      sc-atmosphere-drift 18s
-      ease-in-out
-      infinite alternate;
-
-  }
-
-
-  @keyframes sc-atmosphere-drift {
-
-    0% {
-
-      transform:
-        translate3d(-1.5%, -1%, 0)
-        scale(1.05);
-
-    }
-
-    50% {
-
-      transform:
-        translate3d(1%, 1.5%, 0)
-        scale(1.08);
-
-    }
-
-    100% {
-
-      transform:
-        translate3d(-.5%, 2%, 0)
-        scale(1.04);
-
-    }
-
-  }
-
-
-  /* ==============================================================
-     VIGNETTE
-     ============================================================== */
-
-  .sc-hero-vignette {
-
-    position: absolute;
-
-    inset: 0;
-
-    z-index: -3;
-
-    pointer-events: none;
-
-    background:
-
-      radial-gradient(
-        ellipse at center,
-        transparent 30%,
-        rgba(12, 18, 15, .035) 72%,
-        rgba(12, 18, 15, .12) 120%
-      );
-
-  }
-
-
-  /* ==============================================================
-     SUBTLE EDITORIAL GRAIN
-     ============================================================== */
-
-  .sc-hero-noise {
-
-    position: absolute;
-
-    inset: 0;
-
-    z-index: -2;
-
-    pointer-events: none;
-
-    opacity: .055;
-
-    mix-blend-mode: multiply;
-
-    background-image:
-      url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
-
-    background-size: 180px 180px;
-
-  }
-
-
-  /* ==============================================================
-     HERO CONTENT
-     ============================================================== */
-
-  #hero.sc-hero .hero-content {
-
-    position: relative;
-
-    z-index: 3;
-
-    width: min(
-      1180px,
-      calc(100% - 3rem)
+    radial-gradient(
+      ellipse at center,
+      #fbf8f2 0%,
+      #f4eae1 62%,
+      #eee1d5 100%
     );
 
-    margin: 0 auto;
+}
 
-    min-height: 100svh;
 
-    display: flex;
+/* ═══════════════════════════════════════════════════════════════
+   MOVING CANVAS
+   ═══════════════════════════════════════════════════════════════ */
 
-    flex-direction: column;
+#sc-motion-gradient {
 
-    justify-content: center;
+  position: absolute;
 
-    align-items: flex-start;
+  inset: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+  display: block;
+
+  z-index: 1;
+
+  pointer-events: none;
+
+  opacity: 1;
+
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   ATMOSPHERIC BLUR
+   ═══════════════════════════════════════════════════════════════ */
+
+.sc-motion-atmosphere {
+
+  position: absolute;
+
+  inset: -15%;
+
+  z-index: 2;
+
+  pointer-events: none;
+
+  background:
+
+    radial-gradient(
+      ellipse 42% 65%
+      at 18% 28%,
+      rgba(44, 112, 72, .12),
+      transparent 75%
+    ),
+
+    radial-gradient(
+      ellipse 45% 58%
+      at 82% 67%,
+      rgba(235, 111, 27, .13),
+      transparent 75%
+    );
+
+  filter: blur(70px);
+
+  opacity: .75;
+
+  animation:
+    sc-atmosphere-motion
+    22s
+    ease-in-out
+    infinite alternate;
+
+}
+
+
+@keyframes sc-atmosphere-motion {
+
+  0% {
+
+    transform:
+      translate3d(-2%, -1%, 0)
+      scale(1.02);
+
+  }
+
+  35% {
+
+    transform:
+      translate3d(1%, 2%, 0)
+      scale(1.06);
+
+  }
+
+  70% {
+
+    transform:
+      translate3d(2%, -1%, 0)
+      scale(1.04);
+
+  }
+
+  100% {
+
+    transform:
+      translate3d(-1%, 2%, 0)
+      scale(1.08);
+
+  }
+
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   NOISE
+   ═══════════════════════════════════════════════════════════════
+
+   The reference site uses a repeated noise image with:
+
+   background-size: auto;
+   background-repeat: repeat;
+   mix-blend-mode: overlay;
+   opacity: .2;
+
+   We reproduce that behavior here without requiring an external
+   image file.
+   ═══════════════════════════════════════════════════════════════ */
+
+.sc-motion-noise {
+
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+  z-index: 4;
+
+  pointer-events: none;
+
+  background-image:
+
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='.65'/%3E%3C/svg%3E");
+
+  background-size: auto;
+
+  background-repeat: repeat;
+
+  mix-blend-mode: overlay;
+
+  opacity: .18;
+
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   HERO CONTENT
+   ═══════════════════════════════════════════════════════════════ */
+
+#hero.sc-motion-hero .hero-content {
+
+  position: relative;
+
+  z-index: 6;
+
+  width: min(
+    1200px,
+    calc(100% - 4rem)
+  );
+
+  height: 100%;
+
+  margin: 0 auto;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: flex-start;
+
+  padding:
+    5rem
+    0
+    6rem;
+
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   BADGE
+   ═══════════════════════════════════════════════════════════════ */
+
+#hero.sc-motion-hero .hero-badge {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: .7rem;
+
+  margin-bottom: 2rem;
+
+  font-family:
+    var(--mono, monospace);
+
+  font-size: .68rem;
+
+  letter-spacing: .16em;
+
+  line-height: 1.4;
+
+  text-transform: uppercase;
+
+  color: #173d2a;
+
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   BADGE DOT
+   ═══════════════════════════════════════════════════════════════ */
+
+#hero.sc-motion-hero .hero-badge-dot {
+
+  width: 7px;
+
+  height: 7px;
+
+  flex: 0 0 7px;
+
+  border-radius: 50%;
+
+  background: #ed711d;
+
+  box-shadow:
+
+    0 0 0 4px rgba(237,113,29,.11),
+
+    0 0 20px rgba(237,113,29,.32);
+
+  animation:
+    sc-dot-pulse
+    2.5s
+    ease-in-out
+    infinite;
+
+}
+
+
+@keyframes sc-dot-pulse {
+
+  0%,
+  100% {
+
+    transform: scale(1);
+
+  }
+
+  50% {
+
+    transform: scale(1.35);
+
+  }
+
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   TITLE
+   ═══════════════════════════════════════════════════════════════ */
+
+#hero.sc-motion-hero .hero-title {
+
+  margin: 0;
+
+  max-width: 1100px;
+
+  font-size:
+    clamp(
+      4rem,
+      9vw,
+      9.5rem
+    );
+
+  line-height: .86;
+
+  letter-spacing: -.065em;
+
+  font-weight: 500;
+
+  color: #101513;
+
+}
+
+
+#hero.sc-motion-hero .hero-title .line {
+
+  display: block;
+
+}
+
+
+#hero.sc-motion-hero .hero-title .line:nth-child(2) {
+
+  color: #285b40;
+
+}
+
+
+#hero.sc-motion-hero .hero-title .line:nth-child(3) {
+
+  color: #c7651e;
+
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   DESCRIPTION
+   ═══════════════════════════════════════════════════════════════ */
+
+#hero.sc-motion-hero .hero-sub {
+
+  width: min(
+    650px,
+    100%
+  );
+
+  margin-top: 2.4rem;
+
+  font-size:
+    clamp(
+      .9rem,
+      1.2vw,
+      1.05rem
+    );
+
+  line-height: 1.75;
+
+  color: rgba(16,21,19,.72);
+
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   BUTTONS
+   ═══════════════════════════════════════════════════════════════ */
+
+#hero.sc-motion-hero .hero-btns {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: .75rem;
+
+  margin-top: 2.2rem;
+
+  flex-wrap: wrap;
+
+}
+
+
+#hero.sc-motion-hero .btn-primary {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-height: 50px;
+
+  padding:
+    0 1.5rem;
+
+  background: #111613;
+
+  color: #ffffff;
+
+  border: 1px solid #111613;
+
+  text-decoration: none;
+
+  font-family:
+    var(--mono, monospace);
+
+  font-size: .7rem;
+
+  letter-spacing: .1em;
+
+  text-transform: uppercase;
+
+  transition:
+    transform .35s ease,
+    background .35s ease;
+
+}
+
+
+#hero.sc-motion-hero .btn-primary:hover {
+
+  transform:
+    translateY(-2px);
+
+  background: #e9701d;
+
+  border-color: #e9701d;
+
+}
+
+
+#hero.sc-motion-hero .btn-ghost {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-height: 50px;
+
+  padding:
+    0 1.5rem;
+
+  color: #111613;
+
+  background:
+    rgba(255,255,255,.18);
+
+  border:
+    1px solid rgba(17,22,19,.35);
+
+  backdrop-filter:
+    blur(12px);
+
+  -webkit-backdrop-filter:
+    blur(12px);
+
+  text-decoration: none;
+
+  font-family:
+    var(--mono, monospace);
+
+  font-size: .7rem;
+
+  letter-spacing: .1em;
+
+  text-transform: uppercase;
+
+  transition:
+    transform .35s ease,
+    background .35s ease;
+
+}
+
+
+#hero.sc-motion-hero .btn-ghost:hover {
+
+  transform:
+    translateY(-2px);
+
+  background:
+    rgba(255,255,255,.5);
+
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   COLOR INTERACTION PROMPT
+   ═══════════════════════════════════════════════════════════════ */
+
+.sc-color-prompt {
+
+  position: absolute;
+
+  right: 2.5rem;
+
+  bottom: 2.5rem;
+
+  z-index: 7;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: .55rem;
+
+  font-family:
+    var(--mono, monospace);
+
+  font-size: .58rem;
+
+  letter-spacing: .12em;
+
+  text-transform: uppercase;
+
+  color: rgba(17,22,19,.52);
+
+  pointer-events: none;
+
+}
+
+
+.sc-prompt-dot {
+
+  width: 5px;
+
+  height: 5px;
+
+  border-radius: 50%;
+
+  background: #df6a1d;
+
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   SCROLL
+   ═══════════════════════════════════════════════════════════════ */
+
+#hero.sc-motion-hero .hero-scroll {
+
+  position: absolute;
+
+  left: 50%;
+
+  bottom: 2rem;
+
+  z-index: 7;
+
+  transform:
+    translateX(-50%);
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: .55rem;
+
+  font-family:
+    var(--mono, monospace);
+
+  font-size: .58rem;
+
+  letter-spacing: .15em;
+
+  text-transform: uppercase;
+
+  color: rgba(17,22,19,.55);
+
+}
+
+
+#hero.sc-motion-hero .scroll-line {
+
+  position: relative;
+
+  width: 1px;
+
+  height: 42px;
+
+  overflow: hidden;
+
+  background:
+    rgba(17,22,19,.18);
+
+}
+
+
+#hero.sc-motion-hero .scroll-line::after {
+
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+
+  top: -100%;
+
+  width: 100%;
+
+  height: 55%;
+
+  background: #e9701d;
+
+  animation:
+    sc-scroll
+    2.2s
+    ease-in-out
+    infinite;
+
+}
+
+
+@keyframes sc-scroll {
+
+  from {
+
+    transform:
+      translateY(0);
+
+  }
+
+  to {
+
+    transform:
+      translateY(360%);
+
+  }
+
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+
+  #hero.sc-motion-hero {
+
+    min-height: 650px;
+
+  }
+
+
+  #hero.sc-motion-hero .hero-content {
+
+    width:
+      calc(100% - 2rem);
 
     padding:
-      8rem
-      0
-      7rem;
+      6rem 0 6rem;
 
   }
 
 
-  /* ==============================================================
-     BADGE
-     ============================================================== */
-
-  #hero.sc-hero .hero-badge {
-
-    display: inline-flex;
-
-    align-items: center;
-
-    gap: .7rem;
-
-    margin-bottom: 2rem;
-
-    font-family: var(--mono, monospace);
-
-    font-size: .68rem;
-
-    line-height: 1.4;
-
-    letter-spacing: .16em;
-
-    text-transform: uppercase;
-
-    color: #18382a;
-
-    opacity: .82;
-
-  }
-
-
-  .hero-badge-dot {
-
-    width: 7px;
-    height: 7px;
-
-    flex: 0 0 7px;
-
-    border-radius: 50%;
-
-    background: #e87520;
-
-    box-shadow:
-      0 0 0 4px rgba(232,117,32,.12),
-      0 0 18px rgba(232,117,32,.35);
-
-    animation:
-      sc-pulse 2.8s ease-in-out infinite;
-
-  }
-
-
-  @keyframes sc-pulse {
-
-    0%,
-    100% {
-
-      transform: scale(1);
-
-      opacity: .75;
-
-    }
-
-    50% {
-
-      transform: scale(1.35);
-
-      opacity: 1;
-
-    }
-
-  }
-
-
-  /* ==============================================================
-     HERO TITLE
-     ============================================================== */
-
-  #hero.sc-hero .hero-title {
-
-    position: relative;
-
-    margin: 0;
-
-    max-width: 1050px;
+  #hero.sc-motion-hero .hero-title {
 
     font-size:
       clamp(
-        4.2rem,
-        9.5vw,
-        9.5rem
+        3.25rem,
+        15vw,
+        6rem
       );
 
-    line-height: .88;
+  }
 
-    letter-spacing: -.055em;
 
-    font-weight: 500;
+  #hero.sc-motion-hero .hero-sub {
 
-    color: #101512;
+    font-size: .88rem;
 
   }
 
 
-  #hero.sc-hero .hero-title .line {
+  .sc-color-prompt {
 
-    display: block;
+    right: 1rem;
 
-  }
-
-
-  /*
-     Gives the title a subtle material quality rather than
-     looking like flat black text sitting on a gradient.
-  */
-
-  #hero.sc-hero .hero-title .line:nth-child(2) {
-
-    color: #1d573a;
+    bottom: 1rem;
 
   }
 
 
-  #hero.sc-hero .hero-title .line:nth-child(3) {
+  #hero.sc-motion-hero .hero-scroll {
 
-    color: #bd5f1c;
-
-  }
-
-
-  /* ==============================================================
-     HERO DESCRIPTION
-     ============================================================== */
-
-  #hero.sc-hero .hero-sub {
-
-    width: min(
-      650px,
-      100%
-    );
-
-    margin-top: 2.25rem;
-
-    font-size:
-      clamp(
-        .92rem,
-        1.25vw,
-        1.08rem
-      );
-
-    line-height: 1.75;
-
-    color: rgba(16,21,18,.76);
+    display: none;
 
   }
 
+}
 
-  /* ==============================================================
-     BUTTONS
-     ============================================================== */
 
-  #hero.sc-hero .hero-btns {
+/* ═══════════════════════════════════════════════════════════════
+   REDUCED MOTION
+   ═══════════════════════════════════════════════════════════════ */
 
-    display: flex;
+@media (prefers-reduced-motion: reduce) {
 
-    align-items: center;
+  .sc-motion-atmosphere,
+  #hero.sc-motion-hero .hero-badge-dot,
+  #hero.sc-motion-hero .scroll-line::after {
 
-    gap: .8rem;
-
-    margin-top: 2.4rem;
-
-    flex-wrap: wrap;
+    animation: none !important;
 
   }
 
-
-  #hero.sc-hero .btn-primary {
-
-    display: inline-flex;
-
-    align-items: center;
-    justify-content: center;
-
-    min-height: 52px;
-
-    padding:
-      0 1.5rem;
-
-    background: #101512;
-
-    color: #ffffff;
-
-    border:
-      1px solid #101512;
-
-    text-decoration: none;
-
-    font-family:
-      var(--mono, monospace);
-
-    font-size: .72rem;
-
-    letter-spacing: .11em;
-
-    text-transform: uppercase;
-
-    transition:
-      transform .35s ease,
-      background .35s ease,
-      color .35s ease;
-
-  }
-
-
-  #hero.sc-hero .btn-primary:hover {
-
-    transform:
-      translateY(-2px);
-
-    background: #e87520;
-
-    border-color: #e87520;
-
-  }
-
-
-  #hero.sc-hero .btn-ghost {
-
-    display: inline-flex;
-
-    align-items: center;
-    justify-content: center;
-
-    min-height: 52px;
-
-    padding:
-      0 1.5rem;
-
-    color: #101512;
-
-    border:
-      1px solid rgba(16,21,18,.35);
-
-    background:
-      rgba(255,255,255,.22);
-
-    backdrop-filter:
-      blur(12px);
-
-    -webkit-backdrop-filter:
-      blur(12px);
-
-    text-decoration: none;
-
-    font-family:
-      var(--mono, monospace);
-
-    font-size: .72rem;
-
-    letter-spacing: .11em;
-
-    text-transform: uppercase;
-
-    transition:
-      transform .35s ease,
-      background .35s ease,
-      border-color .35s ease;
-
-  }
-
-
-  #hero.sc-hero .btn-ghost:hover {
-
-    transform:
-      translateY(-2px);
-
-    background:
-      rgba(255,255,255,.65);
-
-    border-color:
-      rgba(16,21,18,.65);
-
-  }
-
-
-  /* ==============================================================
-     SCROLL INDICATOR
-     ============================================================== */
-
-  #hero.sc-hero .hero-scroll {
-
-    position: absolute;
-
-    z-index: 4;
-
-    left: 50%;
-
-    bottom: 2rem;
-
-    transform:
-      translateX(-50%);
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    gap: .6rem;
-
-    color: rgba(16,21,18,.62);
-
-    font-family:
-      var(--mono, monospace);
-
-    font-size: .62rem;
-
-    letter-spacing: .14em;
-
-    text-transform: uppercase;
-
-  }
-
-
-  #hero.sc-hero .scroll-line {
-
-    width: 1px;
-
-    height: 48px;
-
-    overflow: hidden;
-
-    background:
-      rgba(16,21,18,.18);
-
-    position: relative;
-
-  }
-
-
-  #hero.sc-hero .scroll-line::after {
-
-    content: "";
-
-    position: absolute;
-
-    left: 0;
-    top: -100%;
-
-    width: 100%;
-    height: 55%;
-
-    background:
-      #e87520;
-
-    animation:
-      sc-scroll-line 2.2s
-      ease-in-out
-      infinite;
-
-  }
-
-
-  @keyframes sc-scroll-line {
-
-    0% {
-
-      transform:
-        translateY(0);
-
-    }
-
-    100% {
-
-      transform:
-        translateY(365%);
-
-    }
-
-  }
-
-
-  /* ==============================================================
-     MOBILE
-     ============================================================== */
-
-  @media (max-width: 768px) {
-
-    #hero.sc-hero .hero-content {
-
-      width:
-        calc(100% - 2rem);
-
-      padding:
-        7rem 0 6rem;
-
-    }
-
-
-    #hero.sc-hero .hero-title {
-
-      font-size:
-        clamp(
-          3.4rem,
-          16vw,
-          6rem
-        );
-
-      line-height: .9;
-
-    }
-
-
-    #hero.sc-hero .hero-sub {
-
-      font-size: .9rem;
-
-      line-height: 1.65;
-
-    }
-
-
-    #hero.sc-hero .hero-btns {
-
-      width: 100%;
-
-    }
-
-
-    #hero.sc-hero .btn-primary,
-    #hero.sc-hero .btn-ghost {
-
-      flex: 1;
-
-      min-width:
-        145px;
-
-    }
-
-  }
-
-
-  /* ==============================================================
-     REDUCE MOTION
-     ============================================================== */
-
-  @media (prefers-reduced-motion: reduce) {
-
-    .sc-hero-atmosphere,
-    .hero-badge-dot,
-    #hero.sc-hero .scroll-line::after {
-
-      animation: none !important;
-
-    }
-
-  }
+}
 
 </style>
 
 
 
-<!-- ═══════════════════════════════════════════════════════════════
-     ORGANIC MOTION GRADIENT ENGINE
-     ═══════════════════════════════════════════════════════════════ -->
-
 <script>
+
+/* ═══════════════════════════════════════════════════════════════
+   SEASCAPE ORGANIC COLOR FIELD
+   ═══════════════════════════════════════════════════════════════ */
 
 (function () {
 
   "use strict";
 
 
-  /* --------------------------------------------------------------
-     Canvas
-     -------------------------------------------------------------- */
-
   const canvas =
     document.getElementById(
-      "sc-gradient-canvas"
+      "sc-motion-gradient"
     );
 
-  if (!canvas) return;
+
+  const hero =
+    document.getElementById(
+      "hero"
+    );
+
+
+  if (!canvas || !hero) return;
 
 
   const ctx =
-    canvas.getContext("2d", {
-      alpha: false
-    });
-
-
-  /* --------------------------------------------------------------
-     Device pixel ratio
-     -------------------------------------------------------------- */
-
-  let dpr =
-    Math.min(
-      window.devicePixelRatio || 1,
-      2
+    canvas.getContext(
+      "2d",
+      {
+        alpha: true
+      }
     );
 
 
   let width = 0;
   let height = 0;
+  let dpr = 1;
 
+
+  /* ============================================================
+     RESIZE
+     ============================================================ */
 
   function resize() {
 
     const rect =
-      canvas.getBoundingClientRect();
+      hero.getBoundingClientRect();
 
-    width = rect.width;
-    height = rect.height;
+
+    width =
+      rect.width;
+
+
+    height =
+      rect.height;
+
 
     dpr =
       Math.min(
@@ -1919,11 +2046,26 @@ body.cinematic-loop-active {
         2
       );
 
+
     canvas.width =
-      Math.round(width * dpr);
+      Math.round(
+        width * dpr
+      );
+
 
     canvas.height =
-      Math.round(height * dpr);
+      Math.round(
+        height * dpr
+      );
+
+
+    canvas.style.width =
+      width + "px";
+
+
+    canvas.style.height =
+      height + "px";
+
 
     ctx.setTransform(
       dpr,
@@ -1937,50 +2079,56 @@ body.cinematic-loop-active {
   }
 
 
-  window.addEventListener(
-    "resize",
-    resize,
-    { passive: true }
-  );
-
-
   resize();
 
 
-  /* --------------------------------------------------------------
-     Color palette
-     --------------------------------------------------------------
+  window.addEventListener(
+    "resize",
+    resize,
+    {
+      passive: true
+    }
+  );
 
-     Warm cream
-     Deep forest green
-     Emerald green
-     Burnished orange
-     Soft amber
-     -------------------------------------------------------------- */
 
-  const COLORS = {
+  /* ============================================================
+     COLORS
 
-    base:
-      [246, 242, 234],
+     GREEN replaces the reference purple.
+     ORANGE replaces the reference yellow.
+     ============================================================ */
 
-    green:
-      [35, 91, 61],
-
-    greenLight:
-      [89, 132, 69],
-
-    orange:
-      [231, 105, 28],
-
-    orangeLight:
-      [247, 164, 62]
-
+  const GREEN = {
+    r: 38,
+    g: 105,
+    b: 67
   };
 
 
-  /* --------------------------------------------------------------
-     Mouse / pointer
-     -------------------------------------------------------------- */
+  const GREEN_LIGHT = {
+    r: 107,
+    g: 151,
+    b: 81
+  };
+
+
+  const ORANGE = {
+    r: 231,
+    g: 104,
+    b: 27
+  };
+
+
+  const AMBER = {
+    r: 245,
+    g: 157,
+    b: 56
+  };
+
+
+  /* ============================================================
+     POINTER
+     ============================================================ */
 
   const pointer = {
 
@@ -2001,65 +2149,138 @@ body.cinematic-loop-active {
         event.clientX /
         window.innerWidth;
 
+
       pointer.targetY =
         event.clientY /
         window.innerHeight;
 
     },
-    { passive: true }
+    {
+      passive: true
+    }
   );
 
 
-  /* --------------------------------------------------------------
-     Utility
-     -------------------------------------------------------------- */
+  /* ============================================================
+     COLOR PARTICLES / FIELD
+     ============================================================ */
 
-  function clamp(
-    value,
-    min,
-    max
-  ) {
+  const fields = [
 
-    return Math.max(
-      min,
-      Math.min(max, value)
-    );
+    {
+      color: GREEN,
+      x: .18,
+      y: .25,
+      radius: .76,
+      speedX: .00007,
+      speedY: .00011,
+      phase: 0
+    },
 
-  }
+    {
+      color: GREEN_LIGHT,
+      x: .38,
+      y: .68,
+      radius: .62,
+      speedX: -.00005,
+      speedY: .00008,
+      phase: 1.8
+    },
+
+    {
+      color: ORANGE,
+      x: .79,
+      y: .28,
+      radius: .73,
+      speedX: .00006,
+      speedY: -.00009,
+      phase: 3.1
+    },
+
+    {
+      color: AMBER,
+      x: .70,
+      y: .72,
+      radius: .60,
+      speedX: -.00007,
+      speedY: -.00005,
+      phase: 4.8
+    }
+
+  ];
 
 
-  function ease(
-    value
-  ) {
+  /* ============================================================
+     USER-GENERATED COLOR EVENTS
+     ============================================================ */
 
-    return value * value *
-      (3 - 2 * value);
-
-  }
+  const interactions = [];
 
 
-  function rgba(
-    color,
-    alpha
-  ) {
+  hero.addEventListener(
+    "click",
+    function (event) {
 
-    return (
-      "rgba(" +
-      color[0] + "," +
-      color[1] + "," +
-      color[2] + "," +
-      alpha +
-      ")"
-    );
-
-  }
+      const rect =
+        hero.getBoundingClientRect();
 
 
-  /* --------------------------------------------------------------
-     Soft radial color field
-     -------------------------------------------------------------- */
+      const x =
+        event.clientX -
+        rect.left;
 
-  function drawGlow(
+
+      const y =
+        event.clientY -
+        rect.top;
+
+
+      const useGreen =
+        interactions.length % 2 === 0;
+
+
+      interactions.push({
+
+        x: x,
+
+        y: y,
+
+        radius: 0,
+
+        opacity: .48,
+
+        color:
+          useGreen
+            ? GREEN
+            : ORANGE,
+
+        created:
+          performance.now()
+
+      });
+
+
+      /*
+       Keep the field from accumulating indefinitely.
+      */
+
+      if (
+        interactions.length > 8
+      ) {
+
+        interactions.shift();
+
+      }
+
+    }
+  );
+
+
+  /* ============================================================
+     RADIAL FIELD
+     ============================================================ */
+
+  function drawField(
     x,
     y,
     radius,
@@ -2077,23 +2298,54 @@ body.cinematic-loop-active {
         radius
       );
 
-    gradient.addColorStop(
-      0,
-      rgba(color, opacity)
-    );
 
     gradient.addColorStop(
-      .38,
-      rgba(color, opacity * .55)
+      0,
+      `rgba(
+        ${color.r},
+        ${color.g},
+        ${color.b},
+        ${opacity}
+      )`
     );
+
+
+    gradient.addColorStop(
+      .25,
+      `rgba(
+        ${color.r},
+        ${color.g},
+        ${color.b},
+        ${opacity * .72}
+      )`
+    );
+
+
+    gradient.addColorStop(
+      .55,
+      `rgba(
+        ${color.r},
+        ${color.g},
+        ${color.b},
+        ${opacity * .28}
+      )`
+    );
+
 
     gradient.addColorStop(
       1,
-      rgba(color, 0)
+      `rgba(
+        ${color.r},
+        ${color.g},
+        ${color.b},
+        0
+      )`
     );
+
 
     ctx.fillStyle =
       gradient;
+
 
     ctx.fillRect(
       x - radius,
@@ -2105,11 +2357,11 @@ body.cinematic-loop-active {
   }
 
 
-  /* --------------------------------------------------------------
-     Animation
-     -------------------------------------------------------------- */
+  /* ============================================================
+     RENDER
+     ============================================================ */
 
-  let startTime =
+  const start =
     performance.now();
 
 
@@ -2117,34 +2369,205 @@ body.cinematic-loop-active {
     now
   ) {
 
-    const elapsed =
-      (now - startTime) /
-      1000;
+    const time =
+      now - start;
 
 
-    /* ------------------------------------------------------------
+    /* ----------------------------------------------------------
        Smooth pointer
-       ------------------------------------------------------------ */
+       ---------------------------------------------------------- */
 
     pointer.x +=
-      (pointer.targetX - pointer.x)
-      * .035;
+      (
+        pointer.targetX -
+        pointer.x
+      ) * .025;
+
 
     pointer.y +=
-      (pointer.targetY - pointer.y)
-      * .035;
+      (
+        pointer.targetY -
+        pointer.y
+      ) * .025;
 
 
-    /* ------------------------------------------------------------
-       Clear base
-       ------------------------------------------------------------ */
+    /* ----------------------------------------------------------
+       Clear canvas
+       ---------------------------------------------------------- */
+
+    ctx.clearRect(
+      0,
+      0,
+      width,
+      height
+    );
+
+
+    /* ----------------------------------------------------------
+       Soft blending
+       ---------------------------------------------------------- */
+
+    ctx.globalCompositeOperation =
+      "screen";
+
+
+    /* ----------------------------------------------------------
+       Main color fields
+       ---------------------------------------------------------- */
+
+    fields.forEach(
+      function (field) {
+
+        const waveX =
+          Math.sin(
+            time * field.speedX +
+            field.phase
+          );
+
+
+        const waveY =
+          Math.cos(
+            time * field.speedY +
+            field.phase * 1.37
+          );
+
+
+        /*
+         Pointer subtly bends the field.
+        */
+
+        const px =
+          (
+            pointer.x -
+            .5
+          ) * .13;
+
+
+        const py =
+          (
+            pointer.y -
+            .5
+          ) * .13;
+
+
+        const x =
+          width *
+          (
+            field.x +
+            waveX * .16 +
+            px
+          );
+
+
+        const y =
+          height *
+          (
+            field.y +
+            waveY * .18 +
+            py
+          );
+
+
+        /*
+         Radius breathes slowly.
+        */
+
+        const breathing =
+          1 +
+          Math.sin(
+            time * .00019 +
+            field.phase
+          ) * .12;
+
+
+        const radius =
+          Math.max(
+            width,
+            height
+          ) *
+          field.radius *
+          breathing;
+
+
+        drawField(
+          x,
+          y,
+          radius,
+          field.color,
+          .52
+        );
+
+      }
+    );
+
+
+    /* ----------------------------------------------------------
+       CENTRAL WHITE ATMOSPHERE
+       ---------------------------------------------------------- */
+
+    ctx.globalCompositeOperation =
+      "source-over";
+
+
+    const centerX =
+      width *
+      (
+        .5 +
+        Math.sin(
+          time * .00008
+        ) * .08
+      );
+
+
+    const centerY =
+      height *
+      (
+        .5 +
+        Math.cos(
+          time * .00007
+        ) * .07
+      );
+
+
+    const centerRadius =
+      Math.max(
+        width,
+        height
+      ) * .62;
+
+
+    const center =
+      ctx.createRadialGradient(
+        centerX,
+        centerY,
+        0,
+        centerX,
+        centerY,
+        centerRadius
+      );
+
+
+    center.addColorStop(
+      0,
+      "rgba(255,253,249,.55)"
+    );
+
+
+    center.addColorStop(
+      .35,
+      "rgba(255,253,249,.18)"
+    );
+
+
+    center.addColorStop(
+      1,
+      "rgba(255,253,249,0)"
+    );
+
 
     ctx.fillStyle =
-      "rgb(" +
-      COLORS.base[0] + "," +
-      COLORS.base[1] + "," +
-      COLORS.base[2] +
-      ")";
+      center;
+
 
     ctx.fillRect(
       0,
@@ -2154,185 +2577,67 @@ body.cinematic-loop-active {
     );
 
 
-    /* ------------------------------------------------------------
-       Organic motion
+    /* ----------------------------------------------------------
+       CLICK / TAP COLOR EVENTS
+       ---------------------------------------------------------- */
 
-       These deliberately use different frequencies so the
-       gradient never appears to repeat mechanically.
-       ------------------------------------------------------------ */
-
-    const greenX =
-      width *
-      (
-        .25 +
-        Math.sin(elapsed * .17) * .14 +
-        Math.cos(elapsed * .071) * .07 +
-        (pointer.x - .5) * .10
-      );
+    const currentTime =
+      performance.now();
 
 
-    const greenY =
-      height *
-      (
-        .30 +
-        Math.cos(elapsed * .13) * .18 +
-        Math.sin(elapsed * .053) * .06 +
-        (pointer.y - .5) * .10
-      );
+    interactions.forEach(
+      function (interaction) {
+
+        const age =
+          currentTime -
+          interaction.created;
 
 
-    const green2X =
-      width *
-      (
-        .44 +
-        Math.cos(elapsed * .097) * .19 +
-        Math.sin(elapsed * .041) * .07
-      );
+        const life =
+          Math.min(
+            age / 4200,
+            1
+          );
 
 
-    const green2Y =
-      height *
-      (
-        .66 +
-        Math.sin(elapsed * .11) * .16 +
-        Math.cos(elapsed * .063) * .08
-      );
+        const eased =
+          1 -
+          Math.pow(
+            life,
+            2
+          );
 
 
-    const orangeX =
-      width *
-      (
-        .76 +
-        Math.sin(elapsed * .12) * .15 +
-        Math.cos(elapsed * .057) * .08 +
-        (pointer.x - .5) * .12
-      );
+        const maxRadius =
+          Math.max(
+            width,
+            height
+          ) * .75;
 
 
-    const orangeY =
-      height *
-      (
-        .28 +
-        Math.cos(elapsed * .15) * .18 +
-        Math.sin(elapsed * .049) * .07 +
-        (pointer.y - .5) * .08
-      );
+        const radius =
+          maxRadius *
+          Math.min(
+            life * 1.35,
+            1
+          );
 
 
-    const orange2X =
-      width *
-      (
-        .70 +
-        Math.cos(elapsed * .085) * .17
-      );
+        drawField(
+          interaction.x,
+          interaction.y,
+          radius,
+          interaction.color,
+          .35 * eased
+        );
 
-
-    const orange2Y =
-      height *
-      (
-        .72 +
-        Math.sin(elapsed * .10) * .14
-      );
-
-
-    /* ------------------------------------------------------------
-       GREEN FIELD
-       ------------------------------------------------------------ */
-
-    drawGlow(
-      greenX,
-      greenY,
-      Math.max(width, height) * .72,
-      COLORS.green,
-      .72
+      }
     );
 
 
-    drawGlow(
-      green2X,
-      green2Y,
-      Math.max(width, height) * .55,
-      COLORS.greenLight,
-      .42
-    );
-
-
-    /* ------------------------------------------------------------
-       ORANGE FIELD
-       ------------------------------------------------------------ */
-
-    drawGlow(
-      orangeX,
-      orangeY,
-      Math.max(width, height) * .68,
-      COLORS.orange,
-      .62
-    );
-
-
-    drawGlow(
-      orange2X,
-      orange2Y,
-      Math.max(width, height) * .50,
-      COLORS.orangeLight,
-      .34
-    );
-
-
-    /* ------------------------------------------------------------
-       Subtle central atmospheric light
-       ------------------------------------------------------------ */
-
-    const centerX =
-      width *
-      (
-        .50 +
-        Math.sin(elapsed * .09) * .06
-      );
-
-    const centerY =
-      height *
-      (
-        .50 +
-        Math.cos(elapsed * .08) * .05
-      );
-
-
-    drawGlow(
-      centerX,
-      centerY,
-      Math.max(width, height) * .58,
-      [255,255,255],
-      .22
-    );
-
-
-    /* ------------------------------------------------------------
-       Slight pointer illumination
-
-       This is intentionally subtle. The background continues
-       moving even when the user does nothing.
-       ------------------------------------------------------------ */
-
-    const pointerX =
-      pointer.x * width;
-
-    const pointerY =
-      pointer.y * height;
-
-
-    drawGlow(
-      pointerX,
-      pointerY,
-      Math.max(width, height) * .32,
-      COLORS.orangeLight,
-      .075
-    );
-
-
-    /* ------------------------------------------------------------
-       Continue animation
-       ------------------------------------------------------------ */
+    /* ----------------------------------------------------------
+       Continue
+       ---------------------------------------------------------- */
 
     requestAnimationFrame(
       render
