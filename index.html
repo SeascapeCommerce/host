@@ -2405,7 +2405,540 @@ body.cinematic-loop-active {
 
 
 
+<!-- ===== ANIMATION JAVASCRIPT ===== -->
+<script>
 
+    // ============================================================
+    // Pixelated Video Reveal
+    // Robotoman.mp4
+    // 7x7 pixel transition
+    // ============================================================
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        'use strict';
+
+        // --------------------------------------------------------
+        // Configuration
+        // --------------------------------------------------------
+
+        const ANIMATION_DURATION = 0.3;
+        const GRID_SIZE = 7;
+
+        const PIXEL_SIZE = 100 / GRID_SIZE;
+
+
+        // --------------------------------------------------------
+        // Find cards
+        // --------------------------------------------------------
+
+        const cards = document.querySelectorAll(
+            '[data-pixelated-image-reveal]'
+        );
+
+        if (!cards.length) return;
+
+
+        // --------------------------------------------------------
+        // Detect touch devices
+        // --------------------------------------------------------
+
+        const isTouchDevice =
+            'ontouchstart' in window ||
+            navigator.maxTouchPoints > 0 ||
+            window.matchMedia('(pointer: coarse)').matches;
+
+
+        // --------------------------------------------------------
+        // Process card
+        // --------------------------------------------------------
+
+        cards.forEach(function (card) {
+
+            const pixelGrid =
+                card.querySelector(
+                    '[data-pixelated-image-reveal-grid]'
+                );
+
+            const video =
+                card.querySelector(
+                    '.pixelated-image-card__video'
+                );
+
+
+            if (!pixelGrid || !video) return;
+
+
+            // ----------------------------------------------------
+            // Ensure video plays
+            // ----------------------------------------------------
+
+            video.muted = true;
+            video.loop = true;
+            video.playsInline = true;
+
+            const startVideo = function () {
+
+                const playPromise = video.play();
+
+                if (playPromise !== undefined) {
+                    playPromise.catch(function () {
+                        // Browser may block autoplay until interaction.
+                    });
+                }
+
+            };
+
+            startVideo();
+
+
+            // ----------------------------------------------------
+            // Generate pixel grid
+            // ----------------------------------------------------
+
+            for (
+                let row = 0;
+                row < GRID_SIZE;
+                row++
+            ) {
+
+                for (
+                    let col = 0;
+                    col < GRID_SIZE;
+                    col++
+                ) {
+
+                    const pixel =
+                        document.createElement('div');
+
+                    pixel.classList.add(
+                        'pixelated-image-card__pixel'
+                    );
+
+
+                    // Position
+                    pixel.style.width =
+                        PIXEL_SIZE + '%';
+
+                    pixel.style.height =
+                        PIXEL_SIZE + '%';
+
+                    pixel.style.left =
+                        (col * PIXEL_SIZE) + '%';
+
+                    pixel.style.top =
+                        (row * PIXEL_SIZE) + '%';
+
+
+                    pixelGrid.appendChild(pixel);
+
+                }
+
+            }
+
+
+            // ----------------------------------------------------
+            // Get pixels
+            // ----------------------------------------------------
+
+            const pixels =
+                pixelGrid.querySelectorAll(
+                    '.pixelated-image-card__pixel'
+                );
+
+            const totalPixels = pixels.length;
+
+
+            // ----------------------------------------------------
+            // Stagger
+            // ----------------------------------------------------
+
+            const staggerDuration =
+                ANIMATION_DURATION / totalPixels;
+
+
+            // ----------------------------------------------------
+            // State
+            // ----------------------------------------------------
+
+            let isActive = false;
+            let delayedCall = null;
+
+
+            // ----------------------------------------------------
+            // Pixel animation
+            // ----------------------------------------------------
+
+            function animatePixels(activate) {
+
+                // Kill existing animation
+                gsap.killTweensOf(pixels);
+
+                if (delayedCall) {
+                    delayedCall.kill();
+                    delayedCall = null;
+                }
+
+
+                isActive = activate;
+
+
+                // -----------------------------------------------
+                // Hide pixels
+                // -----------------------------------------------
+
+                gsap.set(
+                    pixels,
+                    {
+                        display: 'none'
+                    }
+                );
+
+
+                // -----------------------------------------------
+                // Show pixels randomly
+                // -----------------------------------------------
+
+                gsap.to(
+                    pixels,
+                    {
+                        display: 'block',
+                        duration: 0,
+                        stagger: {
+                            each: staggerDuration,
+                            from: 'random'
+                        },
+                        ease: 'power1.inOut'
+                    }
+                );
+
+
+                // -----------------------------------------------
+                // Wait for pixel transition
+                // -----------------------------------------------
+
+                delayedCall =
+                    gsap.delayedCall(
+                        ANIMATION_DURATION,
+                        function () {
+
+                            // Keep the video visible.
+                            // The pixels simply act as the
+                            // transition effect.
+
+                            if (activate) {
+
+                                startVideo();
+
+                            } else {
+
+                                startVideo();
+
+                            }
+
+                        }
+                    );
+
+
+                // -----------------------------------------------
+                // Remove pixels
+                // -----------------------------------------------
+
+                gsap.to(
+                    pixels,
+                    {
+                        display: 'none',
+                        duration: 0,
+                        delay: ANIMATION_DURATION,
+                        stagger: {
+                            each: staggerDuration,
+                            from: 'random'
+                        },
+                        ease: 'power1.inOut'
+                    }
+                );
+
+            }
+
+
+            // ----------------------------------------------------
+            // Desktop hover
+            // ----------------------------------------------------
+
+            if (!isTouchDevice) {
+
+                card.addEventListener(
+                    'mouseenter',
+                    function () {
+
+                        if (!isActive) {
+                            animatePixels(true);
+                        }
+
+                    }
+                );
+
+
+                card.addEventListener(
+                    'mouseleave',
+                    function () {
+
+                        if (isActive) {
+                            animatePixels(false);
+                        }
+
+                    }
+                );
+
+            }
+
+
+            // ----------------------------------------------------
+            // Mobile / touch
+            // ----------------------------------------------------
+
+            else {
+
+                card.addEventListener(
+                    'click',
+                    function (e) {
+
+                        e.stopPropagation();
+
+                        animatePixels(!isActive);
+
+                    }
+                );
+
+            }
+
+        });
+
+    });
+
+</script>
+
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+ <section class="phone-section phones-arena" id="motion-trigger">
+
+
+<!-- BACKGROUND: Magnify image sits BEHIND the draggable phones -->
+<div class="content-overlay magnify-background">
+
+  <div class="magnify-image-wrapper">
+
+    <img
+      src="MagnifyPic.png"
+      alt="Magnify Your Webspace"
+      class="magnify-image"
+    >
+
+  </div>
+
+</div>
+
+
+<!-- Fluid distortion filter for the hover effect -->
+<svg
+  width="0"
+  height="0"
+  style="position:absolute; pointer-events:none;"
+  aria-hidden="true"
+>
+  <filter id="magnify-fluid">
+
+    <feTurbulence
+      type="fractalNoise"
+      baseFrequency="0.012 0.018"
+      numOctaves="2"
+      seed="8"
+      result="noise"
+    />
+
+    <feDisplacementMap
+      in="SourceGraphic"
+      in2="noise"
+      scale="0"
+      xChannelSelector="R"
+      yChannelSelector="G"
+      result="displaced"
+    />
+
+  </filter>
+</svg>
+
+
+<style>
+
+  /* =========================================================
+     MAGNIFY IMAGE BACKGROUND
+     ========================================================= */
+
+  .magnify-background {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    /*
+      IMPORTANT:
+      Phones are above this layer.
+    */
+    z-index: 0;
+
+    /*
+      Prevents the image from blocking
+      dragging/clicking the phones.
+    */
+    pointer-events: auto;
+  }
+
+
+  /* =========================================================
+     IMAGE CONTAINER
+     ========================================================= */
+
+  .magnify-image-wrapper {
+
+    width: 100%;
+    height: 100%;
+
+    max-width: 100%;
+    max-height: 100%;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+
+    pointer-events: auto;
+  }
+
+
+  /* =========================================================
+     MAGNIFY IMAGE
+     ========================================================= */
+
+ .magnify-image {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  max-width: 100%;
+  max-height: 100%;
+
+  object-fit: contain;
+  object-position: center center;
+
+  box-sizing: border-box;
+
+  opacity: 0.45;
+
+  pointer-events: auto;
+
+  will-change: filter, transform;
+}
+
+
+
+</style>
+<script>
+/*========================================================= MAGNIFY IMAGE — LOCALIZED FLUID CURSOR EFFECT Only activates when the cursor is directly over the image ========================================================= */ 
+  (() => { const image = document.querySelector('.magnify-image'); if (!image) return; let targetX = 0; let targetY = 0; let currentX = 0; let currentY = 0; let targetDistortion = 0; let currentDistortion = 0; 
+          /* --------------------------------------------------------- Cursor enters the IMAGE --------------------------------------------------------- */ 
+   image.addEventListener('pointerenter', () => { /* Reduced distortion strength. Previous value was 32. */ targetDistortion = 10; }); 
+   /* --------------------------------------------------------- Cursor moves over the IMAGE --------------------------------------------------------- */ 
+image.addEventListener('pointermove', (event) => { const rect = image.getBoundingClientRect(); /* Calculate cursor position relative to the image itself.
+Range: -1 = left/top 0 = center 1 = right/bottom */ targetX = 
+((event.clientX - rect.left) / rect.width) * 2 - 1; targetY = ((event.clientY - rect.top) / rect.height) * 2 - 1; }); 
+/* --------------------------------------------------------- Cursor leaves the IMAGE --------------------------------------------------------- */ 
+image.addEventListener('pointerleave', () => { /* Gradually return the image to its normal state. */ targetDistortion = 0; targetX = 0; targetY = 0; }); 
+/* --------------------------------------------------------- Animation --------------------------------------------------------- */ 
+function animateMagnify() { /* Smooth cursor tracking */ currentX += (targetX - currentX) * 0.08; currentY += (targetY - currentY) * 0.08; 
+/* Smooth distortion transition */ currentDistortion += (targetDistortion - currentDistortion) * 0.08; 
+/* Update the SVG displacement filter */ const displacement = document.querySelector( '#magnify-fluid feDisplacementMap' ); 
+if (displacement) { displacement.setAttribute( 'scale', currentDistortion.toFixed(2) ); } 
+/* Very subtle movement of the image. Reduced from 8px to 3px so the image doesn't appear to slide around. */ const moveX = currentX * 3; const moveY = currentY * 3;
+image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFrame(animateMagnify); } animateMagnify(); })(); </script>
+
+
+
+    <!-- BACKGROUND: the 4 draggable phones (z-index 1–15, always below text) -->
+     <!-- The phone with the YouTube video -->
+    <div class="phone draggable-phone" data-rot="-6">
+        <div class="phone-screen">
+          <img src="Screenshot4.png" class="ad-image" alt="Seascape Ad">
+          <ul class="menu">
+            <li>Seascape AI Dashboard</li><li>Smart Ads</li><li>Predictive Commerce</li>
+            <li>AI Shopper Insights</li><li>Logout</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <div class="phone draggable-phone" data-rot="4">
+    <div class="phone-screen">
+      <iframe
+        class="ad-video"
+        src="https://www.youtube.com/embed/HK-edzJRelg?autoplay=1&loop=1&playlist=HK-edzJRelg&mute=1&controls=0&modestbranding=1&rel=0""
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen>
+      </iframe>
+     </div>
+  </div>
+
+      <div class="phone draggable-phone" data-rot="5">
+        <div class="phone-screen">
+          <img src="Screenshot4.png" class="ad-image" alt="Seascape Ad">
+          <ul class="menu">
+            <li>Seascape AI Dashboard</li><li>Smart Ads</li><li>Predictive Commerce</li>
+            <li>AI Shopper Insights</li><li>Logout</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+   <div class="phone draggable-phone" data-rot="-3">
+    <div class="phone-screen">
+      <iframe
+        class="ad-video"
+        src="https://www.youtube.com/embed/c9pZVXvmohI?autoplay=1&loop=1&playlist=c9pZVXvmohI&mute=1&controls=0&modestbranding=1&rel=0"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen>
+      </iframe>
+     </div>
+  </div>
+
+
+  </section>
+
+  <!-- GSAP core + the two plugins you actually use -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
+  <script>gsap.registerPlugin(ScrollTrigger, Draggable);</script>
+  <script src="js/animations.js"></script>
+
+
+<div class="divider"></div>
 
 
   
