@@ -2724,680 +2724,95 @@ body.cinematic-loop-active {
 </script>
   
 
- 
 
+ <div class="divider"></div>
 
 
   
 <link rel="stylesheet" href="style.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
-<!-- ═══════════════════════════════════════════════════════
-     MAGNIFY YOUR WEBSPACE
-     ═══════════════════════════════════════════════════════ -->
+<script>
+/*========================================================= MAGNIFY IMAGE — LOCALIZED FLUID CURSOR EFFECT Only activates when the cursor is directly over the image ========================================================= */ 
+  (() => { const image = document.querySelector('.magnify-image'); if (!image) return; let targetX = 0; let targetY = 0; let currentX = 0; let currentY = 0; let targetDistortion = 0; let currentDistortion = 0; 
+          /* --------------------------------------------------------- Cursor enters the IMAGE --------------------------------------------------------- */ 
+   image.addEventListener('pointerenter', () => { /* Reduced distortion strength. Previous value was 32. */ targetDistortion = 10; }); 
+   /* --------------------------------------------------------- Cursor moves over the IMAGE --------------------------------------------------------- */ 
+image.addEventListener('pointermove', (event) => { const rect = image.getBoundingClientRect(); /* Calculate cursor position relative to the image itself.
+Range: -1 = left/top 0 = center 1 = right/bottom */ targetX = 
+((event.clientX - rect.left) / rect.width) * 2 - 1; targetY = ((event.clientY - rect.top) / rect.height) * 2 - 1; }); 
+/* --------------------------------------------------------- Cursor leaves the IMAGE --------------------------------------------------------- */ 
+image.addEventListener('pointerleave', () => { /* Gradually return the image to its normal state. */ targetDistortion = 0; targetX = 0; targetY = 0; }); 
+/* --------------------------------------------------------- Animation --------------------------------------------------------- */ 
+function animateMagnify() { /* Smooth cursor tracking */ currentX += (targetX - currentX) * 0.08; currentY += (targetY - currentY) * 0.08; 
+/* Smooth distortion transition */ currentDistortion += (targetDistortion - currentDistortion) * 0.08; 
+/* Update the SVG displacement filter */ const displacement = document.querySelector( '#magnify-fluid feDisplacementMap' ); 
+if (displacement) { displacement.setAttribute( 'scale', currentDistortion.toFixed(2) ); } 
+/* Very subtle movement of the image. Reduced from 8px to 3px so the image doesn't appear to slide around. */ const moveX = currentX * 3; const moveY = currentY * 3;
+image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFrame(animateMagnify); } animateMagnify(); })(); </script>
 
-<section
-  class="phone-section phones-arena"
-  id="motion-trigger"
-  aria-label="Magnify Your Webspace"
->
 
-  <!-- =====================================================
-       BACKGROUND — MAGNIFY IMAGE
-       ===================================================== -->
-
-  <div class="magnify-background" aria-hidden="true">
-
-    <div class="magnify-image-wrapper">
-
-      <img
-        src="MagnifyPic.png"
-        alt=""
-        class="magnify-image"
-        loading="eager"
-        decoding="async"
-      >
-
+   
+    <!-- BACKGROUND: the 4 draggable phones (z-index 1–15, always below text) -->
+     <!-- The phone with the YouTube video -->
+    <div class="phone draggable-phone" data-rot="-6">
+        <div class="phone-screen">
+          <img src="Screenshot4.png" class="ad-image" alt="Seascape Ad">
+          <ul class="menu">
+            <li>Seascape AI Dashboard</li><li>Smart Ads</li><li>Predictive Commerce</li>
+            <li>AI Shopper Insights</li><li>Logout</li>
+          </ul>
+        </div>
+      </div>
     </div>
+  <div class="phone draggable-phone" data-rot="4">
+    <div class="phone-screen">
+      <iframe
+        class="ad-video"
+        src="https://www.youtube.com/embed/HK-edzJRelg?autoplay=1&loop=1&playlist=HK-edzJRelg&mute=1&controls=0&modestbranding=1&rel=0""
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen>
+      </iframe>
+     </div>
+  </div>
 
+      <div class="phone draggable-phone" data-rot="5">
+        <div class="phone-screen">
+          <img src="Screenshot4.png" class="ad-image" alt="Seascape Ad">
+          <ul class="menu">
+            <li>Seascape AI Dashboard</li><li>Smart Ads</li><li>Predictive Commerce</li>
+            <li>AI Shopper Insights</li><li>Logout</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+   
+   <div class="phone draggable-phone" data-rot="-3">
+    <div class="phone-screen">
+      <iframe
+        class="ad-video"
+        src="https://www.youtube.com/embed/c9pZVXvmohI?autoplay=1&loop=1&playlist=c9pZVXvmohI&mute=1&controls=0&modestbranding=1&rel=0"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen>
+      </iframe>
+     </div>
   </div>
 
 
-  <!-- =====================================================
-       FLUID DISTORTION FILTER
-       ===================================================== -->
-
-  <svg
-    class="magnify-filter-defs"
-    width="0"
-    height="0"
-    aria-hidden="true"
-  >
-    <filter id="magnify-fluid">
-
-      <feTurbulence
-        type="fractalNoise"
-        baseFrequency="0.012 0.018"
-        numOctaves="2"
-        seed="8"
-        result="noise"
-      />
-
-      <feDisplacementMap
-        in="SourceGraphic"
-        in2="noise"
-        scale="0"
-        xChannelSelector="R"
-        yChannelSelector="G"
-        result="displaced"
-      />
-
-    </filter>
-  </svg>
-
-
-  <!-- =====================================================
-       DRAGGABLE PHONE STAGE
-       Phones sit ABOVE the background image.
-       ===================================================== -->
-
-  <div class="phones-stage">
-
-
-    <!-- ===================================================
-         PHONE 1 — AI DASHBOARD
-         =================================================== -->
-
-    <div
-      class="phone draggable-phone"
-      data-rot="-6"
-      data-phone-index="1"
-    >
-
-      <div class="phone-screen">
-
-        <img
-          src="Screenshot4.png"
-          class="ad-image"
-          alt="Seascape AI Dashboard"
-          loading="eager"
-          decoding="async"
-        >
-
-        <ul class="menu">
-
-          <li>Seascape AI Dashboard</li>
-          <li>Smart Ads</li>
-          <li>Predictive Commerce</li>
-          <li>AI Shopper Insights</li>
-          <li>Logout</li>
-
-        </ul>
-
-      </div>
-
-    </div>
-
-
-    <!-- ===================================================
-         PHONE 2 — YOUTUBE EXPERIENCE
-         =================================================== -->
-
-    <div
-      class="phone draggable-phone"
-      data-rot="4"
-      data-phone-index="2"
-    >
-
-      <div class="phone-screen">
-
-        <iframe
-          class="ad-video"
-          src="https://www.youtube.com/embed/HK-edzJRelg?autoplay=1&loop=1&playlist=HK-edzJRelg&mute=1&controls=0&modestbranding=1&rel=0"
-          title="Seascape Commerce video"
-          frameborder="0"
-          loading="lazy"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
-
-      </div>
-
-    </div>
-
-
-    <!-- ===================================================
-         PHONE 3 — AI DASHBOARD
-         =================================================== -->
-
-    <div
-      class="phone draggable-phone"
-      data-rot="5"
-      data-phone-index="3"
-    >
-
-      <div class="phone-screen">
-
-        <img
-          src="Screenshot4.png"
-          class="ad-image"
-          alt="Seascape AI Dashboard"
-          loading="lazy"
-          decoding="async"
-        >
-
-        <ul class="menu">
-
-          <li>Seascape AI Dashboard</li>
-          <li>Smart Ads</li>
-          <li>Predictive Commerce</li>
-          <li>AI Shopper Insights</li>
-          <li>Logout</li>
-
-        </ul>
-
-      </div>
-
-    </div>
-
-
-    <!-- ===================================================
-         PHONE 4 — YOUTUBE EXPERIENCE
-         =================================================== -->
-
-    <div
-      class="phone draggable-phone"
-      data-rot="-3"
-      data-phone-index="4"
-    >
-
-      <div class="phone-screen">
-
-        <iframe
-          class="ad-video"
-          src="https://www.youtube.com/embed/c9pZVXvmohI?autoplay=1&loop=1&playlist=c9pZVXvmohI&mute=1&controls=0&modestbranding=1&rel=0"
-          title="Seascape Commerce video"
-          frameborder="0"
-          loading="lazy"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
-
-      </div>
-
-    </div>
-
-
-  </div><!-- /.phones-stage -->
-
-</section>
-
-
-<!-- ═══════════════════════════════════════════════════════
-     MAGNIFY SECTION STYLES
-     ═══════════════════════════════════════════════════════ -->
-
-<style>
-
-  /* =======================================================
-     SECTION
-     ======================================================= */
-
-  #motion-trigger.phones-arena {
-
-    position: relative;
-
-    width: 100%;
-
-    min-height: 100vh;
-
-    overflow: hidden;
-
-    isolation: isolate;
-
-    background: #000;
-
-  }
-
-
-  /* =======================================================
-     MAGNIFY BACKGROUND
-     ======================================================= */
-
-  #motion-trigger .magnify-background {
-
-    position: absolute;
-
-    inset: 0;
-
-    width: 100%;
-    height: 100%;
-
-    z-index: 0;
-
-    pointer-events: none;
-
-    overflow: hidden;
-
-  }
-
-
-  #motion-trigger .magnify-image-wrapper {
-
-    position: absolute;
-
-    inset: 0;
-
-    width: 100%;
-    height: 100%;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    overflow: hidden;
-
-    pointer-events: none;
-
-  }
-
-
-  #motion-trigger .magnify-image {
-
-    display: block;
-
-    width: 100%;
-    height: 100%;
-
-    max-width: none;
-    max-height: none;
-
-    object-fit: contain;
-
-    object-position: center;
-
-    opacity: 0.45;
-
-    pointer-events: none;
-
-    user-select: none;
-
-    will-change: transform, filter;
-
-    transform: translate3d(0, 0, 0);
-
-  }
-
-
-  /* =======================================================
-     SVG FILTER
-     ======================================================= */
-
-  #motion-trigger .magnify-filter-defs {
-
-    position: absolute;
-
-    width: 0;
-    height: 0;
-
-    pointer-events: none;
-
-    overflow: hidden;
-
-  }
-
-
-  /* =======================================================
-     PHONE STAGE
-     ======================================================= */
-
-  #motion-trigger .phones-stage {
-
-    position: absolute;
-
-    inset: 0;
-
-    width: 100%;
-    height: 100%;
-
-    z-index: 10;
-
-    pointer-events: none;
-
-  }
-
-
-  /* =======================================================
-     PHONES
-     ======================================================= */
-
-  #motion-trigger .draggable-phone {
-
-    position: absolute;
-
-    z-index: 10;
-
-    pointer-events: auto;
-
-    /*
-      Ensures phones are rendered immediately.
-      Your GSAP animation can still modify these values.
-    */
-
-    opacity: 1;
-
-    visibility: visible;
-
-    transform-origin: center center;
-
-    will-change: transform;
-
-    backface-visibility: hidden;
-
-    -webkit-backface-visibility: hidden;
-
-    transform-style: preserve-3d;
-
-  }
-
-
-  /* =======================================================
-     PHONE CONTENT
-     ======================================================= */
-
-  #motion-trigger .phone-screen {
-
-    position: relative;
-
-    width: 100%;
-    height: 100%;
-
-    overflow: hidden;
-
-    border-radius: inherit;
-
-    background: #000;
-
-  }
-
-
-  #motion-trigger .ad-image {
-
-    display: block;
-
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-
-    user-select: none;
-
-    -webkit-user-drag: none;
-
-  }
-
-
-  /* =======================================================
-     YOUTUBE VIDEO
-     ======================================================= */
-
-  #motion-trigger .ad-video {
-
-    display: block;
-
-    width: 100%;
-    height: 100%;
-
-    border: 0;
-
-    background: #000;
-
-    pointer-events: none;
-
-  }
-
-
-  /* =======================================================
-     PHONE MENU
-     ======================================================= */
-
-  #motion-trigger .menu {
-
-    position: absolute;
-
-    inset: 0;
-
-    z-index: 2;
-
-    margin: 0;
-    padding: 1.5rem;
-
-    list-style: none;
-
-    pointer-events: none;
-
-  }
-
-
-  /* =======================================================
-     PERFORMANCE
-     ======================================================= */
-
-  #motion-trigger img {
-
-    content-visibility: auto;
-
-  }
-
-
-  /* =======================================================
-     MOBILE
-     ======================================================= */
-
-  @media (max-width: 768px) {
-
-    #motion-trigger.phones-arena {
-
-      min-height: 85vh;
-
-    }
-
-    #motion-trigger .phones-stage {
-
-      transform: scale(.9);
-
-      transform-origin: center center;
-
-    }
-
-  }
-
-
-  @media (max-width: 480px) {
-
-    #motion-trigger.phones-stage {
-
-      transform: scale(.78);
-
-    }
-
-  }
-
-</style>
-
-
-<!-- ═══════════════════════════════════════════════════════
-     MAGNIFY IMAGE CURSOR DISTORTION
-     ═══════════════════════════════════════════════════════ -->
-
-<script>
-
-(() => {
-
-  'use strict';
-
-
-  const section =
-    document.querySelector('#motion-trigger');
-
-  const image =
-    section?.querySelector('.magnify-image');
-
-  const displacement =
-    document.querySelector(
-      '#magnify-fluid feDisplacementMap'
-    );
-
-
-  if (!section || !image || !displacement) {
-    return;
-  }
-
-
-  let targetX = 0;
-  let targetY = 0;
-
-  let currentX = 0;
-  let currentY = 0;
-
-  let targetDistortion = 0;
-  let currentDistortion = 0;
-
-
-  /* =====================================================
-     POINTER ENTER
-     ===================================================== */
-
-  image.addEventListener('pointerenter', () => {
-
-    targetDistortion = 10;
-
-  });
-
-
-  /* =====================================================
-     POINTER MOVE
-     ===================================================== */
-
-  image.addEventListener('pointermove', (event) => {
-
-    const rect =
-      image.getBoundingClientRect();
-
-
-    if (!rect.width || !rect.height) {
-      return;
-    }
-
-
-    targetX =
-      ((event.clientX - rect.left) / rect.width) * 2 - 1;
-
-    targetY =
-      ((event.clientY - rect.top) / rect.height) * 2 - 1;
-
-  });
-
-
-  /* =====================================================
-     POINTER LEAVE
-     ===================================================== */
-
-  image.addEventListener('pointerleave', () => {
-
-    targetDistortion = 0;
-
-    targetX = 0;
-    targetY = 0;
-
-  });
-
-
-  /* =====================================================
-     ANIMATION LOOP
-     ===================================================== */
-
-  function animateMagnify() {
-
-    currentX +=
-      (targetX - currentX) * 0.08;
-
-    currentY +=
-      (targetY - currentY) * 0.08;
-
-    currentDistortion +=
-      (targetDistortion - currentDistortion) * 0.08;
-
-
-    displacement.setAttribute(
-      'scale',
-      currentDistortion.toFixed(2)
-    );
-
-
-    const moveX =
-      currentX * 3;
-
-    const moveY =
-      currentY * 3;
-
-
-    image.style.transform =
-      `translate3d(${moveX}px, ${moveY}px, 0)`;
-
-
-    requestAnimationFrame(animateMagnify);
-
-  }
-
-
-  animateMagnify();
-
-
-})();
-
-</script>
-
-
-<!-- ═══════════════════════════════════════════════════════
-     GSAP
-     Only load these if they are NOT already loaded
-     elsewhere in your site.
-     ═══════════════════════════════════════════════════════ -->
-
-<script>
-
-document.addEventListener('DOMContentLoaded', () => {
-
-  if (
-    typeof gsap === 'undefined' ||
-    typeof Draggable === 'undefined'
-  ) {
-    console.warn(
-      'Seascape: GSAP/Draggable not detected. Existing animations.js may load them.'
-    );
-
-    return;
-  }
-
-
-  /*
-   * Register only once.
-   */
-
-    gsap.registerPlugin(
-      Draggable
-    );
-
-  }
-
-});
-
-</script>
+  </section>
+
+  <!-- GSAP core + the two plugins you actually use -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
+  <script>gsap.registerPlugin(ScrollTrigger, Draggable);</script>
+  <script src="js/animations.js"></script>
 
 
 <div class="divider"></div>
