@@ -289,12 +289,4 @@ document.querySelectorAll(".service-card").forEach(card => {
 });
 
 
-gsap.utils.toArray(".industry-line").forEach(line => {
 
-  line.innerHTML = line.innerHTML
-    .replaceAll("✦","<span class='industry-symbol'>✦</span>")
-    .replaceAll("◇","<span class='industry-symbol'>◇</span>")
-    .replaceAll("●","<span class='industry-symbol'>●</span>")
-    .replaceAll("✳︎","<span class='industry-symbol'>✳︎</span>");
-
-});
