@@ -11,7 +11,119 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 
+/* ==========================================
+   INDUSTRY TEXT EXPERIENCE
+========================================== */
 
+.industries-section {
+
+  background:
+    radial-gradient(circle at top left,
+      rgba(255,160,60,.08),
+      transparent 40%),
+
+    radial-gradient(circle at bottom right,
+      rgba(255,255,255,.04),
+      transparent 45%),
+
+    linear-gradient(
+      180deg,
+      #050505,
+      #101010,
+      #050505
+    );
+
+}
+
+
+.industries-marquee {
+
+  margin-top: 4rem;
+
+  display:flex;
+  flex-direction:column;
+  gap:1.8rem;
+
+  max-width:1400px;
+}
+
+
+.industry-line {
+
+  font-size: clamp(1.2rem,1.8vw,2rem);
+
+  font-weight:700;
+
+  line-height:1.25;
+
+  letter-spacing:-.03em;
+
+  text-transform:none;
+
+  background:
+    linear-gradient(
+      90deg,
+      #ffffff,
+      #ffd89b,
+      #ff9d2f,
+      #ffffff
+    );
+
+  background-size:300% auto;
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  background-clip:text;
+
+  will-change:transform;
+
+}
+
+
+.industry-char {
+
+  display:inline-block;
+}
+
+
+.industry-symbol {
+
+  display:inline-block;
+
+  margin:0 .35rem;
+
+  color:#ffb547;
+
+  filter:drop-shadow(0 0 10px rgba(255,181,71,.4));
+}
+
+
+.section-title {
+
+  background:
+  linear-gradient(
+    90deg,
+    #ffffff,
+    #ffb547
+  );
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+}
+
+
+@media(max-width:768px){
+
+  .industry-line{
+
+    font-size:1rem;
+    line-height:1.4;
+
+  }
+
+}
   .industries-video {
     position: relative;
     width: 100%;
