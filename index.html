@@ -5876,108 +5876,356 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
 
 
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
+
 
 <!-- =========================================================
      INDUSTRIES SECTION
 ========================================================= -->
 
-<section id="industries" class="industries-section">
+<section id="industries">
 
- 
+  <!-- =======================================================
+       BACKGROUND VIDEO
+  ======================================================== -->
 
- 
+<video
+class="industries-background-video"
+autoplay
+muted
+loop
+playsinline
+preload="auto"
+aria-hidden="true"
 
-  <!-- DARK OVERLAY -->
+>
+
+```
+<source src="Industriesvideo.mp4" type="video/mp4">
+```
+
+  </video>
 
   <div class="industries-video-overlay"></div>
 
-  <!-- CONTENT -->
+  <!-- =======================================================
+       CONTENT
+  ======================================================== -->
 
   <div class="industries-content">
 
-    <div class="industries-header">
+```
+<!-- =====================================================
+     HEADER
+====================================================== -->
 
-      <span class="section-label">
-        Industries We Serve
-      </span>
+<div class="industries-header">
 
-      <h2 class="section-title">
-        Built For Every Industry
-      </h2>
+  <span class="section-label">
+    Industries We Serve
+  </span>
 
-    </div>
+  <h2 class="section-title">
+    Built For Every Industry
+  </h2>
 
-    <div class="industries-wall">
+</div>
 
-      <div class="industry-row">
-        E-Commerce ✦ Fashion ◇ Luxury Retail ● Sporting Goods ✳ Beauty Brands ✦ Marketplace Platforms
-      </div>
 
-      <div class="industry-row">
-        Automotive ✦ Dealerships ◇ Auto Repair ● Fleet Services ✳ Parts Suppliers ✦ Mobile Mechanics
-      </div>
+<!-- =====================================================
+     INDUSTRY WALL
 
-      <div class="industry-row">
-        Education ✦ AI Tutors ◇ Learning Platforms ● Adaptive Learning ✳ School Portals ✦ STEM Programs
-      </div>
+     Each .industry-item is individually animated.
+     data-direction controls the visual direction.
+====================================================== -->
 
-      <div class="industry-row">
-        Legal Firms ✦ Litigation Support ◇ Law Practices ● Legal Tech ✳ Case Management Systems
-      </div>
+<div class="industries-wall">
 
-      <div class="industry-row">
-        Accounting ✦ Tax Services ◇ Wealth Management ● Financial Advisors ✳ Insurance Agencies
-      </div>
 
-      <div class="industry-row">
-        Restaurants ✦ Coffee Shops ◇ Catering ● Hospitality ✳ Hotels ✦ Event Venues
-      </div>
+  <!-- ROW 01 -->
+  <div class="industry-row">
 
-      <div class="industry-row">
-        Healthcare ✦ Clinics ◇ Telehealth ● Dental Practices ✳ Wellness Platforms ✦ Fitness Brands
-      </div>
+    <span class="industry-item">E-Commerce</span>
+    <span class="industry-symbol">✦</span>
+    <span class="industry-item">Fashion</span>
+    <span class="industry-symbol">◇</span>
+    <span class="industry-item">Luxury Retail</span>
+    <span class="industry-symbol">●</span>
+    <span class="industry-item">Sporting Goods</span>
+    <span class="industry-symbol">✳</span>
+    <span class="industry-item">Beauty Brands</span>
+    <span class="industry-symbol">✦</span>
+    <span class="industry-item">Marketplace Platforms</span>
 
-      <div class="industry-row">
-        Construction ✦ Contractors ◇ HVAC ● Electrical Services ✳ Plumbing ✦ Architecture Firms
-      </div>
+  </div>
 
-      <div class="industry-row">
-        Real Estate ✦ Property Management ◇ Commercial Leasing ● Smart Buildings ✳ Vacation Rentals
-      </div>
 
-      <div class="industry-row">
-        Manufacturing ✦ Logistics ◇ Warehousing ● Distribution ✳ Industrial Supply ✦ Procurement
-      </div>
+  <!-- ROW 02 -->
+  <div class="industry-row">
 
-      <div class="industry-row">
-        SaaS Platforms ✦ AI Startups ◇ Software Companies ● Data Analytics ✳ Cloud Services
-      </div>
+    <span class="industry-item">Automotive</span>
+    <span class="industry-symbol">✦</span>
+    <span class="industry-item">Dealerships</span>
+    <span class="industry-symbol">◇</span>
+    <span class="industry-item">Auto Repair</span>
+    <span class="industry-symbol">●</span>
+    <span class="industry-item">Fleet Services</span>
+    <span class="industry-symbol">✳</span>
+    <span class="industry-item">Parts Suppliers</span>
+    <span class="industry-symbol">✦</span>
+    <span class="industry-item">Mobile Mechanics</span>
 
-      <div class="industry-row">
-        Creator Economy ✦ Membership Sites ◇ Online Communities ● Subscription Platforms ✳ Podcasts
-      </div>
+  </div>
 
-      <div class="industry-row">
-        Government ✦ Civic Portals ◇ Public Safety ● Smart Cities ✳ Nonprofits ✦ Community Organizations
-      </div>
 
-      <div class="industry-row">
-        Agriculture ✦ Maritime ◇ Aerospace ● Museums ✳ Sports Organizations ✦ Research Institutions
-      </div>
+  <!-- ROW 03 -->
+  <div class="industry-row">
 
-      <div class="industry-row">
-        AI Agents ✦ Knowledge Systems ◇ Customer Portals ● Digital Transformation ✳ Enterprise Platforms
-      </div>
+    <span class="industry-item">Education</span>
+    <span class="industry-symbol">✦</span>
+    <span class="industry-item">AI Tutors</span>
+    <span class="industry-symbol">◇</span>
+    <span class="industry-item">Learning Platforms</span>
+    <span class="industry-symbol">●</span>
+    <span class="industry-item">Adaptive Learning</span>
+    <span class="industry-symbol">✳</span>
+    <span class="industry-item">School Portals</span>
+    <span class="industry-symbol">✦</span>
+    <span class="industry-item">STEM Programs</span>
 
-    </div>
+  </div>
+
+
+  <!-- ROW 04 -->
+  <div class="industry-row">
+
+    <span class="industry-item">Legal Firms</span>
+    <span class="industry-symbol">✦</span>
+    <span class="industry-item">Litigation Support</span>
+    <span class="industry-symbol">◇</span>
+    <span class="industry-item">Law Practices</span>
+    <span class="industry-symbol">●</span>
+    <span class="industry-item">Legal Tech</span>
+    <span class="industry-symbol">✳</span>
+    <span class="industry-item">Case Management Systems</span>
+
+  </div>
+
+
+  <!-- ROW 05 -->
+  <div class="industry-row">
+
+    <span class="industry-item">Accounting</span>
+    <span class="industry-symbol">✦</span>
+    <span class="industry-item">Tax Services</span>
+    <span class="industry-symbol">◇</span>
+    <span class="industry-item">Wealth Management</span>
+    <span class="industry-symbol">●</span>
+    <span class="industry-item">Financial Advisors</span>
+    <span class="industry-symbol">✳</span>
+    <span class="industry-item">Insurance Agencies</span>
+
+  </div>
+
+
+  <!-- ROW 06 -->
+  <div class="industry-row">
+
+    <span class="industry-item">Restaurants</span>
+    <span class="industry-symbol">✦</span>
+    <span class="industry-item">Coffee Shops</span>
+    <span class="industry-symbol">◇</span>
+    <span class="industry-item">Catering</span>
+    <span class="industry-symbol">●</span>
+    <span class="industry-item">Hospitality</span>
+    <span class="industry-symbol">✳</span>
+    <span class="industry-item">Hotels</span>
+    <span class="industry-symbol">✦</span>
+    <span class="industry-item">Event Venues</span>
+
+  </div>
+
+
+  <!-- ROW 07 -->
+  <div class="industry-row">
+
+    <span class="industry-item">Healthcare</span>
+    <span class="industry-symbol">✦</span>
+    <span class="industry-item">Clinics</span>
+    <span class="industry-symbol">◇</span>
+    <span class="industry-item">Telehealth</span>
+    <span class="industry-symbol">●</span>
+    <span class="industry-item">Dental Practices</span>
+    <span class="industry-symbol">✳</span>
+    <span class="industry-item">Wellness Platforms</span>
+    <span class="industry-symbol">✦</span>
+    <span class="industry-item">Fitness Brands</span>
+
+  </div>
+
+
+  <!-- ROW 08 -->
+  <div class="industry-row">
+
+    <span class="industry-item">Construction</span>
+    <span class="industry-symbol">✦</span>
+    <span class="industry-item">Contractors</span>
+    <span class="industry-symbol">◇</span>
+    <span class="industry-item">HVAC</span>
+    <span class="industry-symbol">●</span>
+    <span class="industry-item">Electrical Services</span>
+    <span class="industry-symbol">✳</span>
+    <span class="industry-item">Plumbing</span>
+    <span class="industry-symbol">✦</span>
+    <span class="industry-item">Architecture Firms</span>
+
+  </div>
+
+
+  <!-- ROW 09 -->
+  <div class="industry-row">
+
+    <span class="industry-item">Real Estate</span>
+    <span class="industry-symbol">✦</span>
+    <span class="industry-item">Property Management</span>
+    <span class="industry-symbol">◇</span>
+    <span class="industry-item">Commercial Leasing</span>
+    <span class="industry-symbol">●</span>
+    <span class="industry-item">Smart Buildings</span>
+    <span class="industry-symbol">✳</span>
+    <span class="industry-item">Vacation Rentals</span>
+
+  </div>
+
+
+  <!-- ROW 10 -->
+  <div class="industry-row">
+
+    <span class="industry-item">Manufacturing</span>
+    <span class="industry-symbol">✦</span>
+    <span class="industry-item">Logistics</span>
+    <span class="industry-symbol">◇</span>
+    <span class="industry-item">Warehousing</span>
+    <span class="industry-symbol">●</span>
+    <span class="industry-item">Distribution</span>
+    <span class="industry-symbol">✳</span>
+    <span class="industry-item">Industrial Supply</span>
+    <span class="industry-symbol">✦</span>
+    <span class="industry-item">Procurement</span>
+
+  </div>
+
+
+  <!-- ROW 11 -->
+  <div class="industry-row">
+
+    <span class="industry-item">SaaS Platforms</span>
+    <span class="industry-symbol">✦</span>
+    <span class="industry-item">AI Startups</span>
+    <span class="industry-symbol">◇</span>
+    <span class="industry-item">Software Companies</span>
+    <span class="industry-symbol">●</span>
+    <span class="industry-item">Data Analytics</span>
+    <span class="industry-symbol">✳</span>
+    <span class="industry-item">Cloud Services</span>
+
+  </div>
+
+
+  <!-- ROW 12 -->
+  <div class="industry-row">
+
+    <span class="industry-item">Creator Economy</span>
+    <span class="industry-symbol">✦</span>
+    <span class="industry-item">Membership Sites</span>
+    <span class="industry-symbol">◇</span>
+    <span class="industry-item">Online Communities</span>
+    <span class="industry-symbol">●</span>
+    <span class="industry-item">Subscription Platforms</span>
+    <span class="industry-symbol">✳</span>
+    <span class="industry-item">Podcasts</span>
+
+  </div>
+
+
+  <!-- ROW 13 -->
+  <div class="industry-row">
+
+    <span class="industry-item">Government</span>
+    <span class="industry-symbol">✦</span>
+    <span class="industry-item">Civic Portals</span>
+    <span class="industry-symbol">◇</span>
+    <span class="industry-item">Public Safety</span>
+    <span class="industry-symbol">●</span>
+    <span class="industry-item">Smart Cities</span>
+    <span class="industry-symbol">✳</span>
+    <span class="industry-item">Nonprofits</span>
+    <span class="industry-symbol">✦</span>
+    <span class="industry-item">Community Organizations</span>
+
+  </div>
+
+
+  <!-- ROW 14 -->
+  <div class="industry-row">
+
+    <span class="industry-item">Agriculture</span>
+    <span class="industry-symbol">✦</span>
+    <span class="industry-item">Maritime</span>
+    <span class="industry-symbol">◇</span>
+    <span class="industry-item">Aerospace</span>
+    <span class="industry-symbol">●</span>
+    <span class="industry-item">Museums</span>
+    <span class="industry-symbol">✳</span>
+    <span class="industry-item">Sports Organizations</span>
+    <span class="industry-symbol">✦</span>
+    <span class="industry-item">Research Institutions</span>
+
+  </div>
+
+
+  <!-- ROW 15 -->
+  <div class="industry-row">
+
+    <span class="industry-item">AI Agents</span>
+    <span class="industry-symbol">✦</span>
+    <span class="industry-item">Knowledge Systems</span>
+    <span class="industry-symbol">◇</span>
+    <span class="industry-item">Customer Portals</span>
+    <span class="industry-symbol">●</span>
+    <span class="industry-item">Digital Transformation</span>
+    <span class="industry-symbol">✳</span>
+    <span class="industry-item">Enterprise Platforms</span>
+
+  </div>
+
+</div>
+```
 
   </div>
 
 </section>
 
 <div class="divider"></div>
+
+<!-- =========================================================
+     PLAYWRIGHT FONT
+========================================================= -->
+
+<link
+  rel="preconnect"
+  href="https://fonts.googleapis.com"
+>
+
+<link
+  rel="preconnect"
+  href="https://fonts.gstatic.com"
+  crossorigin
+>
+
+<link
+  href="https://fonts.googleapis.com/css2?family=Playwrite+US+Trad:wght@100..400&display=swap"
+  rel="stylesheet"
+>
 
 <style>
 
@@ -6000,6 +6248,7 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
   isolation: isolate;
 
   display: flex;
+
   align-items: center;
 
   background:
@@ -6014,7 +6263,7 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
 
 
 /* =========================================================
-   VIDEO
+   BACKGROUND VIDEO
 ========================================================= */
 
 #industries .industries-background-video {
@@ -6035,11 +6284,13 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
 
   pointer-events: none;
 
+  opacity: .42;
+
 }
 
 
 /* =========================================================
-   OVERLAY
+   VIDEO OVERLAY
 ========================================================= */
 
 #industries .industries-video-overlay {
@@ -6053,10 +6304,12 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
       180deg,
       rgba(5,5,5,.78),
       rgba(8,8,8,.82),
-      rgba(5,5,5,.86)
+      rgba(5,5,5,.88)
     );
 
   z-index: -2;
+
+  pointer-events: none;
 
 }
 
@@ -6084,9 +6337,16 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
 
 #industries .industries-header {
 
-  margin-bottom: 3rem;
+  margin-bottom: 3.5rem;
+
+  opacity: 0;
 
 }
+
+
+/* =========================================================
+   SECTION LABEL
+========================================================= */
 
 #industries .section-label {
 
@@ -6094,25 +6354,36 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
 
   margin-bottom: 1rem;
 
+  font-family: "Playwrite US Trad", cursive;
+
   font-size: .85rem;
 
-  letter-spacing: .2em;
+  letter-spacing: .15em;
 
   text-transform: uppercase;
 
-  color: rgba(255,255,255,.7);
+  color: rgba(255,255,255,.72);
 
 }
 
+
+/* =========================================================
+   MAIN TITLE
+========================================================= */
+
 #industries .section-title {
+
+  margin: 0;
+
+  font-family: "Playwrite US Trad", cursive;
 
   font-size: clamp(2.5rem, 5vw, 5rem);
 
-  font-weight: 800;
+  font-weight: 700;
 
   line-height: .95;
 
-  margin: 0;
+  letter-spacing: -.045em;
 
   background:
     linear-gradient(
@@ -6123,6 +6394,7 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
     );
 
   -webkit-background-clip: text;
+
   background-clip: text;
 
   color: transparent;
@@ -6140,19 +6412,64 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
 
   flex-direction: column;
 
-  gap: 1rem;
+  gap: .95rem;
+
+  perspective: 1200px;
 
 }
 
+
+/* =========================================================
+   INDUSTRY ROW
+========================================================= */
+
 #industries .industry-row {
 
-  font-size: clamp(.95rem, 1.3vw, 1.55rem);
+  display: flex;
 
-  font-weight: 700;
+  flex-wrap: wrap;
 
-  line-height: 1.3;
+  align-items: center;
 
-  letter-spacing: -.02em;
+  gap: .38em;
+
+  font-family: "Playwrite US Trad", cursive;
+
+  font-size: clamp(.9rem, 1.3vw, 1.5rem);
+
+  font-weight: 500;
+
+  line-height: 1.35;
+
+  letter-spacing: -.025em;
+
+  margin: 0;
+
+  perspective: 800px;
+
+}
+
+
+/* =========================================================
+   INDIVIDUAL WORD / BUSINESS USE-CASE
+========================================================= */
+
+#industries .industry-item {
+
+  display: inline-block;
+
+  position: relative;
+
+  opacity: 0;
+
+  transform:
+    translate3d(90px, 0, 0)
+    rotateY(-45deg)
+    scale(.92);
+
+  transform-origin: right center;
+
+  will-change: transform, opacity;
 
   background:
     linear-gradient(
@@ -6166,15 +6483,63 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
   background-size: 250% auto;
 
   -webkit-background-clip: text;
+
   background-clip: text;
 
   color: transparent;
 
+}
+
+
+/* =========================================================
+   SYMBOLS / EMOJIS
+========================================================= */
+
+#industries .industry-symbol {
+
+  display: inline-block;
+
   opacity: 0;
 
-  transform: translateY(40px);
+  font-family: Arial, sans-serif;
 
-  will-change: transform;
+  font-size: .75em;
+
+  font-weight: 400;
+
+  color: #ffb347;
+
+  transform:
+    translate3d(70px, 0, 0)
+    rotate(25deg)
+    scale(.5);
+
+  will-change: transform, opacity;
+
+  text-shadow:
+    0 0 12px rgba(255,179,71,.35);
+
+}
+
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+#industries .industry-item {
+
+  transition:
+    filter .3s ease,
+    text-shadow .3s ease;
+
+}
+
+#industries .industry-item:hover {
+
+  filter: brightness(1.35);
+
+  text-shadow:
+    0 0 18px rgba(255,179,71,.35);
 
 }
 
@@ -6197,11 +6562,53 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
 
   }
 
+  #industries .industries-header {
+
+    margin-bottom: 2.5rem;
+
+  }
+
+  #industries .section-title {
+
+    font-size: clamp(2.2rem, 10vw, 3.5rem);
+
+  }
+
   #industries .industry-row {
 
-    font-size: .95rem;
+    gap: .3em;
 
-    line-height: 1.45;
+    font-size: .92rem;
+
+    line-height: 1.55;
+
+  }
+
+  #industries .industry-item {
+
+    transform:
+      translate3d(45px, 0, 0)
+      rotateY(-30deg)
+      scale(.94);
+
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  #industries .industry-item,
+  #industries .industry-symbol,
+  #industries .industries-header {
+
+    opacity: 1 !important;
+
+    transform: none !important;
 
   }
 
@@ -6212,107 +6619,288 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
 <script>
 
 /* =========================================================
-   GSAP INDUSTRIES ANIMATION
+   GSAP INDUSTRIES — SPLIT / NESTED ELEMENT ANIMATION
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
 
   if (typeof gsap === "undefined") {
+
     console.warn("GSAP not loaded.");
+
     return;
+
   }
 
-  if (typeof ScrollTrigger !== "undefined") {
-    gsap.registerPlugin(ScrollTrigger);
+
+  /*
+   * ScrollTrigger is already registered globally
+   * in the site's main JavaScript.
+   *
+   * Registering it again is intentionally avoided.
+   */
+
+  if (typeof ScrollTrigger === "undefined") {
+
+    console.warn("ScrollTrigger not loaded.");
+
+    return;
+
   }
 
-  const rows = document.querySelectorAll(
-    "#industries .industry-row"
-  );
 
-  rows.forEach((row, index) => {
+  /* =======================================================
+     ELEMENTS
+  ======================================================== */
 
-    gsap.to(row, {
+  const section =
+    document.querySelector("#industries");
 
+  const header =
+    section.querySelector(".industries-header");
+
+  const rows =
+    section.querySelectorAll(".industry-row");
+
+
+  /* =======================================================
+     HEADER ANIMATION
+  ======================================================== */
+
+  gsap.fromTo(
+
+    header,
+
+    {
+      opacity: 0,
+
+      y: 60,
+
+      filter: "blur(8px)"
+
+    },
+
+    {
       opacity: 1,
 
       y: 0,
 
-      duration: 1.2,
+      filter: "blur(0px)",
 
-      delay: index * 0.06,
+      duration: 1.25,
 
       ease: "power3.out",
 
       scrollTrigger: {
 
-        trigger: row,
+        trigger: section,
 
-        start: "top 92%"
+        start: "top 78%",
+
+        once: true
+
+      }
+
+    }
+
+  );
+
+
+  /* =======================================================
+     EACH ROW
+  ======================================================== */
+
+  rows.forEach((row, rowIndex) => {
+
+
+    const items =
+      row.querySelectorAll(
+        ".industry-item, .industry-symbol"
+      );
+
+
+    /*
+     * The items are animated in REVERSE DOM order.
+     *
+     * Example:
+     *
+     * Marketplace Platforms
+     *          ↓
+     * ✦
+     *          ↓
+     * Beauty Brands
+     *          ↓
+     * ✳
+     *          ↓
+     * Sporting Goods
+     *
+     * This creates the right → left movement.
+     */
+
+    const reversedItems =
+      Array.from(items).reverse();
+
+
+    /* =====================================================
+       CREATE A TIMELINE FOR THE ROW
+    ====================================================== */
+
+    const rowTimeline = gsap.timeline({
+
+      paused: true
+
+    });
+
+
+    /* =====================================================
+       RIGHT → LEFT SPLIT ANIMATION
+    ====================================================== */
+
+    reversedItems.forEach((item, index) => {
+
+      const isSymbol =
+        item.classList.contains("industry-symbol");
+
+
+      rowTimeline.to(
+
+        item,
+
+        {
+
+          opacity: 1,
+
+          x: 0,
+
+          y: 0,
+
+          rotationY: 0,
+
+          rotation: 0,
+
+          scale: 1,
+
+          duration: isSymbol ? .45 : .72,
+
+          ease: isSymbol
+            ? "back.out(2)"
+            : "power3.out"
+
+        },
+
+        index === 0
+          ? 0
+          : "-=.22"
+
+      );
+
+    });
+
+
+    /* =====================================================
+       SCROLL TRIGGER
+    ====================================================== */
+
+    ScrollTrigger.create({
+
+      trigger: row,
+
+      start: "top 91%",
+
+      once: true,
+
+      onEnter: () => {
+
+        /*
+         * Small row-based offset gives the entire wall
+         * a cascading vertical rhythm.
+         */
+
+        gsap.delayedCall(
+
+          rowIndex * .045,
+
+          () => rowTimeline.play()
+
+        );
 
       }
 
     });
 
-    gsap.to(row, {
 
-      backgroundPosition: "250% center",
+    /* =====================================================
+       CONTINUOUS GRADIENT MOVEMENT
+    ====================================================== */
 
-      duration: 8,
+    const wordItems =
+      row.querySelectorAll(".industry-item");
 
-      repeat: -1,
 
-      ease: "none"
+    wordItems.forEach((item, itemIndex) => {
+
+      gsap.to(
+
+        item,
+
+        {
+
+          backgroundPosition: "250% center",
+
+          duration: 6 + (itemIndex * .15),
+
+          repeat: -1,
+
+          ease: "none"
+
+        }
+
+      );
 
     });
 
+
   });
 
+
+  /* =======================================================
+     SUBTLE FLOATING MOTION
+  ======================================================== */
+
   gsap.to(
+
     "#industries .industry-row",
+
     {
 
-      y: "+=8",
+      y: "+=5",
 
-      duration: 2.6,
+      duration: 2.8,
 
       repeat: -1,
 
       yoyo: true,
 
-      stagger: 0.08,
+      stagger: .09,
 
       ease: "sine.inOut"
 
     }
+
   );
 
-  gsap.from(
-    "#industries .industries-header",
-    {
 
-      y: 60,
+  /* =======================================================
+     REFRESH SCROLLTRIGGER
+  ======================================================== */
 
-      opacity: 0,
+  ScrollTrigger.refresh();
 
-      duration: 1.4,
-
-      ease: "power3.out",
-
-      scrollTrigger: {
-
-        trigger: "#industries",
-
-        start: "top 80%"
-
-      }
-
-    }
-  );
 
 });
 
 </script>
+
 
 
 
