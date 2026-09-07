@@ -5931,45 +5931,66 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
         <span class="industry-item">Marketplace Platforms</span>
       <span class="industry-symbol">✦</span>
    
+        <span class="industry-group">
         <span class="industry-item">Automotive</span>
         <span class="industry-symbol">✦</span>
+        </span>
+
 
         <span class="industry-item">Dealerships</span>
         <span class="industry-symbol">◇</span>
 
+
+
         <span class="industry-item">Auto Repair</span>
         <span class="industry-symbol">●</span>
 
+
+       
         <span class="industry-item">Fleet Services</span>
         <span class="industry-symbol">✳</span>
 
+
+    
         <span class="industry-item">Parts Suppliers</span>
         <span class="industry-symbol">✦</span>
+
+
 
         <span class="industry-item">Mobile Mechanics</span>
       <span class="industry-symbol">✦</span>
 
+
+        <span class="industry-group">
         <span class="industry-item">Education</span>
         <span class="industry-symbol">✦</span>
+        </span>
 
         <span class="industry-item">AI Tutors</span>
         <span class="industry-symbol">◇</span>
 
         <span class="industry-item">Learning Platforms</span>
         <span class="industry-symbol">●</span>
+   
 
+     
         <span class="industry-item">Adaptive Learning</span>
         <span class="industry-symbol">✳</span>
+ 
 
+  
         <span class="industry-item">School Portals</span>
         <span class="industry-symbol">✦</span>
-
+   
         <span class="industry-item">STEM Programs</span>
       <span class="industry-symbol">✦</span>
 
+        <span class="industry-group">
         <span class="industry-item">Legal Firms</span>
         <span class="industry-symbol">✦</span>
+        </span>
 
+        
         <span class="industry-item">Litigation Support</span>
         <span class="industry-symbol">◇</span>
 
@@ -6058,7 +6079,7 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
         <span class="industry-symbol">◇</span>
 
         <span class="industry-item">Commercial Leasing</span>
-        <span class="industry-symbol">●</span>
+        <span class="industry-symbol">● </span> 
 
         <span class="industry-item">Smart Buildings</span>
         <span class="industry-symbol">✳</span>
@@ -6349,18 +6370,20 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
 
 #industries .industries-wall {
 
-  position: relative;
-
   display: flex;
 
   flex-direction: column;
 
   width: 100%;
 
-  gap: 0.25rem;
+  /*
+   * Distance between actual industry categories
+   */
+  gap: .35rem;
+
+  box-sizing: border-box;
 
 }
-
 
 /* =========================================================
    ROW
@@ -6410,16 +6433,26 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
 
   position: relative;
 
+  /*
+   * NEVER allow a business/use-case itself
+   * to shrink or collapse.
+   */
+  flex: 0 0 auto;
+
   white-space: nowrap;
+
+  max-width: 100%;
+
+  box-sizing: border-box;
 
   opacity: 0;
 
-    transform:
-  translate3d(-100px, 0, 0)
-  rotateY(25deg)
-  scale(.96);
+  transform:
+    translate3d(-100px, 0, 0)
+    rotateY(25deg)
+    scale(.96);
 
-  transform-origin: right center;
+  transform-origin: left center;
 
   will-change:
     transform,
@@ -6444,7 +6477,6 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
 
 }
 
-
 /* =========================================================
    SYMBOLS
 ========================================================= */
@@ -6453,7 +6485,15 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
 
   display: inline-block;
 
+  position: relative;
+
   flex: 0 0 auto;
+
+  width: auto;
+
+  margin: 0;
+
+  padding: 0;
 
   opacity: 0;
 
@@ -6467,10 +6507,12 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
 
   color: #ffb347;
 
-transform:
-  translate3d(-65px, 0, 0)
-  rotate(-35deg)
-  scale(.5);
+  transform:
+    translate3d(-65px, 0, 0)
+    rotate(-35deg)
+    scale(.5);
+
+  transform-origin: center;
 
   will-change:
     transform,
@@ -6480,7 +6522,6 @@ transform:
     0 0 12px rgba(255,179,71,.3);
 
 }
-
 
 /* =========================================================
    SUBTLE HOVER
