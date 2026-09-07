@@ -5949,11 +5949,7 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
 
         <span class="industry-item">Mobile Mechanics</span>
 
-      </div>
 
-
-      <!-- 03 -->
-      <div class="industry-row">
 
         <span class="industry-item">Education</span>
         <span class="industry-symbol">✦</span>
@@ -5972,11 +5968,7 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
 
         <span class="industry-item">STEM Programs</span>
 
-      </div>
 
-
-      <!-- 04 -->
-      <div class="industry-row">
 
         <span class="industry-item">Legal Firms</span>
         <span class="industry-symbol">✦</span>
@@ -5992,11 +5984,7 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
 
         <span class="industry-item">Case Management Systems</span>
 
-      </div>
 
-
-      <!-- 05 -->
-      <div class="industry-row">
 
         <span class="industry-item">Accounting</span>
         <span class="industry-symbol">✦</span>
@@ -6012,11 +6000,7 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
 
         <span class="industry-item">Insurance Agencies</span>
 
-      </div>
 
-
-      <!-- 06 -->
-      <div class="industry-row">
 
         <span class="industry-item">Restaurants</span>
         <span class="industry-symbol">✦</span>
@@ -6035,11 +6019,7 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
 
         <span class="industry-item">Event Venues</span>
 
-      </div>
 
-
-      <!-- 07 -->
-      <div class="industry-row">
 
         <span class="industry-item">Healthcare</span>
         <span class="industry-symbol">✦</span>
@@ -6058,11 +6038,7 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
 
         <span class="industry-item">Fitness Brands</span>
 
-      </div>
 
-
-      <!-- 08 -->
-      <div class="industry-row">
 
         <span class="industry-item">Construction</span>
         <span class="industry-symbol">✦</span>
@@ -6101,11 +6077,7 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
 
         <span class="industry-item">Vacation Rentals</span>
 
-      </div>
 
-
-      <!-- 10 -->
-      <div class="industry-row">
 
         <span class="industry-item">Manufacturing</span>
         <span class="industry-symbol">✦</span>
@@ -6124,11 +6096,7 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
 
         <span class="industry-item">Procurement</span>
 
-      </div>
 
-
-      <!-- 11 -->
-      <div class="industry-row">
 
         <span class="industry-item">SaaS Platforms</span>
         <span class="industry-symbol">✦</span>
@@ -6164,11 +6132,7 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
 
         <span class="industry-item">Podcasts</span>
 
-      </div>
 
-
-      <!-- 13 -->
-      <div class="industry-row">
 
         <span class="industry-item">Government</span>
         <span class="industry-symbol">✦</span>
@@ -6187,11 +6151,7 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
 
         <span class="industry-item">Community Organizations</span>
 
-      </div>
 
-
-      <!-- 14 -->
-      <div class="industry-row">
 
         <span class="industry-item">Agriculture</span>
         <span class="industry-symbol">✦</span>
@@ -6210,11 +6170,7 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
 
         <span class="industry-item">Research Institutions</span>
 
-      </div>
 
-
-      <!-- 15 -->
-      <div class="industry-row">
 
         <span class="industry-item">AI Agents</span>
         <span class="industry-symbol">✦</span>
@@ -6424,7 +6380,7 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
 
   width: 100%;
 
-  gap: clamp(.65rem, 1vw, 1rem);
+  gap: 0.25rem;
 
 }
 
@@ -6460,7 +6416,7 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
 
   font-weight: 400;
 
-  line-height: 1.65;
+  line-height: 1.03;
 
   letter-spacing: -.025em;
 
@@ -6481,10 +6437,10 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
 
   opacity: 0;
 
-  transform:
-    translate3d(100px, 0, 0)
-    rotateY(-25deg)
-    scale(.96);
+    transform:
+  translate3d(-100px, 0, 0)
+  rotateY(25deg)
+  scale(.96);
 
   transform-origin: right center;
 
@@ -6534,10 +6490,10 @@ image.style.transform = `translate(${moveX}px, ${moveY}px)`; requestAnimationFra
 
   color: #ffb347;
 
-  transform:
-    translate3d(65px, 0, 0)
-    rotate(35deg)
-    scale(.5);
+transform:
+  translate3d(-65px, 0, 0)
+  rotate(-35deg)
+  scale(.5);
 
   will-change:
     transform,
@@ -6761,12 +6717,13 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
 
-    /*
-     * Start from the RIGHTMOST element.
-     */
+   /*
+ * Start from the LEFTMOST element
+ * and animate naturally left → right.
+ */
 
-    const reversed =
-      [...elements].reverse();
+const ordered =
+  [...elements];
 
 
     /*
@@ -6788,7 +6745,7 @@ document.addEventListener("DOMContentLoaded", () => {
      * the visual sequence begins at the right side.
      */
 
-    reversed.forEach((element, index) => {
+    ordered.forEach((element, index) => {
 
       const symbol =
         element.classList.contains(
